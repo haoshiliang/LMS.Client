@@ -76,8 +76,22 @@
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command == 'loginout'){
-                    this.$common.removeSessionStorage('token');
-                    this.$router.push('/login');
+                  apis.shiroApi.loginOut(this.$common.getSessionStorage("loginName"))
+                    .then((data) => {
+                      if (data && data.data) {
+                        var json = data.data;
+                        if (json.status == '1') {
+                          this.$common.removeSessionStorage('token');
+                          this.$router.push('/login');
+                        }
+                        else if (json.message) {
+                          this.$message.error(json.message);
+                        }
+                      }
+                    })
+                    .catch((err) => {
+                      this.$message.error(err);
+                    });
                 }
             },
             // 侧边栏折叠

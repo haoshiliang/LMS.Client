@@ -16,8 +16,11 @@ export default {
     /**
      * 退出登陆
      */
-    loginOut: function () {
-        return Axios.post('/api/shiro-api/loginout');
+    loginOut: function (loginName) {
+      var param = {
+        loginName: loginName
+      };
+      return Axios.post('/api/Loginout',param);
     },
     /**
      * 记录登陆日志
