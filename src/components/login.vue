@@ -128,7 +128,6 @@ export default {
                     //this.$store.dispatch("loginLog",loginLog);
                 })
                 .catch((err) => {
-                    console.log('error:', err);
                     this.errorInfo.isShowError = true;
                     this.errorInfo.text = '系统接口异常';
                 });

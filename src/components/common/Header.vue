@@ -44,6 +44,7 @@
 </template>
 <script>
     import bus from './bus';
+    import apis from '../../apis/apis';
     export default {
         data() {
             return {

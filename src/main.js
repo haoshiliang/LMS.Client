@@ -25,6 +25,46 @@ Vue.config.productionTip = false
 Vue.use(util);
 Vue.use(Vuex);
 
+// http request 拦截器
+Axios.interceptors.request.use(
+  config => {
+    return config;
+  },
+  err => {
+    return Promise.reject(err);
+  });
+
+// http response 拦截器
+Axios.interceptors.response.use(
+  response => {
+    if (response && response.data) {
+      if (response.data.status == '-1') {
+        sessionStorage.removeItem('token');
+        router.replace({
+          path: 'login',
+          query: {redirect: router.currentRoute.fullPath}
+        });
+      }
+    }
+    return response;
+  },
+  error => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          sessionStorage.removeItem('token');
+          router.replace({
+            path: 'login',
+            query: {redirect: router.currentRoute.fullPath}
+          })
+      }
+      if(router.currentRoute.path!='/login'){
+        console.log("提示");
+      }
+      return Promise.reject(error);
+    }
+  });
+
 process.env.MOCK && require('@/apimock')
 
 /* eslint-disable no-new */

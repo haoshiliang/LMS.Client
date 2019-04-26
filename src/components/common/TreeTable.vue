@@ -80,7 +80,7 @@
         return func.apply(null, args);
       },
       gridHeight:function () {
-        return this.$refs.gridDiv.offsetHeight;
+        return 200;
       }
     },
     methods: {
