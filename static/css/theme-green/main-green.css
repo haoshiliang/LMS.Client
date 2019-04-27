@@ -34,3 +34,9 @@
 .el-menu--popup{
   padding: 0;
 }
+.el-pagination ul li,.el-pagination .btn-prev,.el-pagination .btn-next{
+  background: #f5f6fa;
+}
+.tableHeaderStyle{
+  background: linear-gradient(#f0f0f0,#fff);
+}

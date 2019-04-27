@@ -1,36 +1,34 @@
 <template>
-  <div ref="gridDiv" style="height:100%;">
-    <el-table ref="multipleTable" :data="formatData" :row-style="showRow" v-bind="$attrs" :height="gridHeight">   <!--  @header-click="chooseall" -->
-      <el-table-column :render-header="renderHeader" width="50" align="center">
-        <template slot-scope="scope">
-          <el-checkbox v-model="scope.row.checks" @change="toselect(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="columns.length===0" width="150">
-        <template slot-scope="scope">
-          <span v-for="space in scope.row._level" :key="space" class="ms-tree-space"/>
-          <span v-if="iconShow(0,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
+  <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :max-height="gridHeight"  size="small">   <!--  @header-click="chooseall" -->
+    <el-table-column :render-header="renderHeader" width="50" align="center">
+      <template slot-scope="scope">
+        <el-checkbox v-model="scope.row.checks" @change="toselect(scope.row)"></el-checkbox>
+      </template>
+    </el-table-column>
+    <el-table-column v-if="columns.length===0" width="150">
+      <template slot-scope="scope">
+        <span v-for="space in scope.row._level" :key="space" class="ms-tree-space"/>
+        <span v-if="iconShow(0,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
             <i v-if="!scope.row._expanded" class="el-icon-plus"/>
             <i v-else class="el-icon-minus"/>
           </span>
-          {{ scope.$index }}
-        </template>
-      </el-table-column>
-      <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text" :width="column.width" header-align="center">
-        <template slot-scope="scope">
-          <!-- Todo -->
-          <!-- eslint-disable-next-line vue/no-confusing-v-for-v-if -->
-          <span v-for="space in scope.row._level" v-if="index === 0" :key="space" class="ms-tree-space"/>
-          <span v-if="iconShow(index,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
+        {{ scope.$index }}
+      </template>
+    </el-table-column>
+    <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text" :width="column.width" header-align="center">
+      <template slot-scope="scope">
+        <!-- Todo -->
+        <!-- eslint-disable-next-line vue/no-confusing-v-for-v-if -->
+        <span v-for="space in scope.row._level" v-if="index === 0" :key="space" class="ms-tree-space"/>
+        <span v-if="iconShow(index,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
             <i v-if="!scope.row._expanded" class="el-icon-plus"/>
             <i v-else class="el-icon-minus"/>
           </span>
-          {{ scope.row[column.value] }}
-        </template>
-      </el-table-column>
-      <slot/>
-    </el-table>
-  </div>
+        {{ scope.row[column.value] }}
+      </template>
+    </el-table-column>
+    <slot/>
+  </el-table>
 </template>
 
 <script>
@@ -45,6 +43,7 @@
       return {
         chooseson: true, //全选
         key: true, //单个点击直到全部选中
+        gridHeight:$(".custom-grid-container").height()
       };
     },
     props: {
@@ -78,9 +77,6 @@
           ? [tmp, this.expandAll].concat(this.evalArgs)
           : [tmp, this.expandAll];
         return func.apply(null, args);
-      },
-      gridHeight:function () {
-        return 200;
       }
     },
     methods: {
@@ -100,7 +96,7 @@
       },
       // 图标显示
       iconShow(index, record) {
-        return index === 0 && record.children && record.children.length > 0;
+        return index === 0 && record.ChildList && record.ChildList.length > 0;
       },
 
       //设置表头全选
@@ -122,8 +118,8 @@
           Vue.set(v,"checks",key);
           //v.checks = key;
           // v._expanded = key;//选中后展开子项
-          if (v.children) {
-            this.setchildtobeselect(v.children, v.checks);
+          if (v.ChildList) {
+            this.setchildtobeselect(v.ChildList, v.checks);
           }
         });
       },
@@ -133,34 +129,34 @@
           if (!v.checks) {
             this.key = false;
           }
-          if (v.children) {
-            this.isallchecked(v.children);
+          if (v.ChildList) {
+            this.isallchecked(v.ChildList);
           }
         });
       },
       //设置父级为 未选中状态（父级的父级没改变-有bug）
       setparentfalse(arr, id, level) {
         arr.forEach((v, i) => {
-          if (v._level == level - 1 && v.children) {
-            v.children.forEach((val, ind) => {
+          if (v._level == level - 1 && v.ChildList) {
+            v.ChildList.forEach((val, ind) => {
               if (val.id == id) {
                 v.checks = false;
                 return false; //终止此次循环，减少循环次数
               }
             });
           }
-          if (v.children) {
-            this.setparentfalse(v.children, id, level);
+          if (v.ChildList) {
+            this.setparentfalse(v.ChildList, id, level);
           }
         });
       },
       //设置父级为 选中状态
       setparenttrue(arr, id, level) {
         arr.forEach((v, i) => {
-          if (v._level == level - 1 && v.children) {
+          if (v._level == level - 1 && v.ChildList) {
             let key = true;
             let sameidkey = false;
-            v.children.forEach((val, ind) => {
+            v.ChildList.forEach((val, ind) => {
               if (val.id == id) {
                 //确保当前点击的在该父级内
                 sameidkey = true;
@@ -173,8 +169,8 @@
               v.checks = true;
             }
           }
-          if (v.children) {
-            this.setparentfalse(v.children, id, level);
+          if (v.ChildList) {
+            this.setparentfalse(v.ChildList, id, level);
           }
         });
       },
@@ -183,8 +179,8 @@
         console.log(row);
         // row._expanded = row.checks;//选中后是否展开
         //1、若有子集先让子选中
-        if (row.children) {
-          this.setchildtobeselect(row.children, row.checks);
+        if (row.ChildList) {
+          this.setchildtobeselect(row.ChildList, row.checks);
         }
         //2、然后判断是否全选中
         this.key = true; //重置为true，防止上次已经是false的状态
@@ -212,6 +208,12 @@
             that.setchildtobeselect(that.formatData, false);
           }
         };
+        this.gridHeight = $(".custom-grid-container").height();
+        console.log(this.gridHeight);
+        // 通过捕获系统的onresize事件触发去改变原有的高度
+        window.onresize = function() {
+          that.gridHeight = $(".custom-grid-container").height();
+        }
       });
     }
   };
@@ -248,6 +250,14 @@
   }
   .ms-tree-space::before {
     content: "";
+  }
+  .el-icon-plus::after{
+    content:"";
+    margin: 0 1px;
+  }
+  .el-icon-minus::after{
+    content:"";
+    margin: 0 1px;
   }
   .processContainer {
     width: 100%;

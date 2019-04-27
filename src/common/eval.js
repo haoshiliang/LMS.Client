@@ -25,8 +25,8 @@ export default function treeToArray(
       Vue.set(record, "parent", parent);
     }
     tmp.push(record);
-    if (record.children && record.children.length > 0) {
-      const child = treeToArray(record.children, expandAll, record, _level);
+    if (record.ChildList && record.ChildList.length > 0) {
+      const child = treeToArray(record.ChildList, expandAll, record, _level);
       tmp = tmp.concat(child);
     }
   });
