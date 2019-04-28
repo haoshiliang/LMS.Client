@@ -28,38 +28,60 @@ Vue.use(Vuex);
 // http request 拦截器
 Axios.interceptors.request.use(
   config => {
+    if (router.currentRoute.path!='/login') {
+      Vue.prototype.$common.openLoading();
+    }
     return config;
   },
   err => {
+    Vue.prototype.$common.closeLoading();
     return Promise.reject(err);
   });
 
 // http response 拦截器
 Axios.interceptors.response.use(
   response => {
+    Vue.prototype.$common.closeLoading();
     if (response && response.data) {
       if (response.data.status == '-1') {
         sessionStorage.removeItem('token');
-        router.replace({
-          path: 'login',
-          query: {redirect: router.currentRoute.fullPath}
-        });
+        if(router.currentRoute.path!='/login'){
+          Vue.prototype.$alert(response.data.message,'错误提示',{
+            confirmButtonText: '确定',
+            type: 'error',
+            callback:action => {
+              router.replace({
+                path: 'login',
+                query: {redirect: router.currentRoute.fullPath}
+              });
+            }
+          })
+        }
+      }
+      else if (response.data.status == "0"){
+        this.$message({type:"error",message:resultData.data.message});
       }
     }
     return response;
   },
   error => {
+    Vue.prototype.$common.closeLoading();
     if (error.response) {
       switch (error.response.status) {
         case 401:
           sessionStorage.removeItem('token');
-          router.replace({
-            path: 'login',
-            query: {redirect: router.currentRoute.fullPath}
-          })
-      }
-      if(router.currentRoute.path!='/login'){
-        console.log("提示");
+          if(router.currentRoute.path!='/login'){
+            Vue.prototype.$alert(response.data.message,'错误提示',{
+              confirmButtonText: '确定',
+              type: 'error',
+              callback:action => {
+                router.replace({
+                  path: 'login',
+                  query: {redirect: router.currentRoute.fullPath}
+                });
+              }
+            });
+          }
       }
       return Promise.reject(error);
     }

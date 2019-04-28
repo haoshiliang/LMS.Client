@@ -87,22 +87,14 @@
         },
         getList: function() {
           var _this = this;
-          this.$common.openLoading();
           this.$ajax({
             method: "get",
             url: "/api/Corporation"
           }).then(
             function(resultData) {
-              _this.$common.closeLoading();
               if (resultData.data.status=='1'){
                 _this.data = resultData.data.data;
-              } else{
-                _this.$message({type:"error",message:resultData.data.message});
               }
-            },
-            function(resultData) {
-              _this.$common.closeLoading();
-              _this.$message({type:"error",message:"Local Reeuest Error!"});
             }
           );
 

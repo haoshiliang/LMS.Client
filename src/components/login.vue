@@ -98,7 +98,6 @@ export default {
             //调用后端登陆接口
             apis.shiroApi.loginIn(this.formLogin)
                 .then((data) => {
-                    console.log('success:', data);
                     if (data && data.data) {
                         var json = data.data;
                         if (json.status == '1') {
