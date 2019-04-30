@@ -239,4 +239,7 @@ body .el-table th.gutter {
   background: #f5f6fa;
   border-radius: 1px;
 }
+.dialog-footer{
+  text-align: center;
+}
 

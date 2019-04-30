@@ -33,7 +33,7 @@
       </el-row>
       <el-row class="buttonForm">
         <el-col :span="8">
-          <el-button type="text" size="small" icon="el-icon-circle-plus-outline">添加</el-button>
+          <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
           <el-button type="text" size="small" icon="el-icon-edit" >修改</el-button>
           <el-button type="text" size="small" icon="el-icon-delete">删除</el-button>
         </el-col>
@@ -48,16 +48,20 @@
         </el-col>
       </el-row>
         <div class="custom-grid-container">
-        <tree-table :data="data" :columns="columns" border/>
+        <tree-table :data="data" :columns="columns" :isShowCheck="isShowCheck" border/>
       </div>
+      <el-dialog title="新增公司" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
+        <add-corp/>
+      </el-dialog>
     </div>
 </template>
 
 <script>
   import treeTable from "@/components/common/TreeTable";
+  import addCorp from "@/components/systemmgr/orgmgr/CorporationAdd"
     export default {
       name: "Corporation",
-      components: { treeTable },
+      components: { treeTable,addCorp },
       data() {
         return {
           columns: [
@@ -75,7 +79,9 @@
               value: "ParentName"
             }
           ],
-          data: []
+          data: [],
+          isShowCheck:false,
+          addFormVisible: false
         };
       },
       methods:{
@@ -97,7 +103,9 @@
               }
             }
           );
-
+        },
+        handleAdd: function() {
+          this.addFormVisible = true;
         }
       },
       mounted(){

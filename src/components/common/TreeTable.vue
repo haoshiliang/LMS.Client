@@ -1,6 +1,6 @@
 <template>
   <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :max-height="gridHeight"  size="small">   <!--  @header-click="chooseall" -->
-    <el-table-column :render-header="renderHeader" width="50" align="center">
+    <el-table-column :render-header="renderHeader" width="50" align="center" v-if="isShowCheck">
       <template slot-scope="scope">
         <el-checkbox v-model="scope.row.checks" @change="toselect(scope.row)"></el-checkbox>
       </template>
@@ -61,6 +61,10 @@
       expandAll: {
         type: Boolean,
         default: false
+      },
+      isShowCheck:{
+        type:Boolean,
+        default:false
       }
     },
     computed: {
@@ -200,14 +204,16 @@
     mounted() {
       this.$nextTick(() => {
         var that = this;
-        const all = document.getElementById("chooseall");
-        all.onchange = function(e) {
-          if (all.checked == true) {
-            that.setchildtobeselect(that.formatData, true);
-          } else {
-            that.setchildtobeselect(that.formatData, false);
-          }
-        };
+        if (this.isShowCheck) {
+          const all = document.getElementById("chooseall");
+          all.onchange = function (e) {
+            if (all.checked == true) {
+              that.setchildtobeselect(that.formatData, true);
+            } else {
+              that.setchildtobeselect(that.formatData, false);
+            }
+          };
+        }
         this.gridHeight = $(".custom-grid-container").height();
         console.log(this.gridHeight);
         // 通过捕获系统的onresize事件触发去改变原有的高度

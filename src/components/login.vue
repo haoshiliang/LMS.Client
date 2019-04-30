@@ -107,7 +107,6 @@ export default {
                             this.$common.setSessionStorage('lev',json.data.UserInfo.RoleList);
                             //存入菜单,渲染菜单
                             this.$store.dispatch("add_Menus",json.data.SysRoleVoList);
-                          console.log('输出路由:',JSON.stringify(json.data.SysRoleVoList));
                              //动态设置路由
                             this.$store.dispatch("add_Routes", json.data.SysRoleVoList);
                             this.$router.replace({ path: "/index" });
