@@ -8,3 +8,12 @@
     @import "../static/css/theme-green/color-green.css";
     /* @import '../static/css/theme-green/index.css'; */
 </style>
+<script>
+  export default {
+    name: 'app',
+    components: {},
+    created: function () {
+      this.$router.replace('/index')
+    }
+  }
+</script>

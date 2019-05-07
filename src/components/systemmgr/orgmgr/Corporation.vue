@@ -51,7 +51,7 @@
         <tree-table :data="data" :columns="columns" :isShowCheck="isShowCheck" border/>
       </div>
       <el-dialog title="新增公司" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
-        <add-corp/>
+        <add-corp ref="addForm"/>
       </el-dialog>
     </div>
 </template>
@@ -85,12 +85,6 @@
         };
       },
       methods:{
-        openLoading:function () {
-          this.$common.openLoading();
-          setTimeout(() => {
-            this.$common.closeLoading();
-          }, 2000);
-        },
         getList: function() {
           var _this = this;
           this.$ajax({
@@ -106,6 +100,12 @@
         },
         handleAdd: function() {
           this.addFormVisible = true;
+          if (this.$refs.addForm) {
+            this.$refs.addForm.getCorpList();
+          }
+        },
+        handleClose:function () {
+          this.addFormVisible = false;
         }
       },
       mounted(){

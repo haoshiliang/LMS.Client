@@ -58,8 +58,8 @@ Axios.interceptors.response.use(
           })
         }
       }
-      else if (response.data.status == "0"){
-        this.$message({type:"error",message:resultData.data.message});
+      else if (response.data.status == "0" && router.currentRoute.path!='/login'){
+        Vue.prototype.$message({type:"error",message:response.data.message});
       }
     }
     return response;
