@@ -41,6 +41,7 @@
           },
           corpList: [],
           corpForm: {
+            Id:'',
             ParentId: '',
             ParentName: '',
             CorpCode: '',
@@ -73,6 +74,9 @@
             this.corpForm = editFormData;
           } else {
             this.title = "添加公司信息";
+            this.corpForm.Id="";
+            this.corpForm.CorpCode="";
+            this.corpForm.CorpName="";
           }
           this.getCorpList();
           this.corpForm.ParentId = parentId;
