@@ -36,6 +36,8 @@
     props: {
       // 接收绑定参数
       value: String,
+      //值
+      showText:String,
       // 输入框宽度
       width: String,
       // 选项数据
@@ -97,14 +99,13 @@
         // 输入框显示值
         labelModel: '',
         // 实际请求传值
-        valueModel: '0',
+        valueModel: '',
       };
     },
     created() {
       // 检测输入框原有值并显示对应 label
-      if (this.value) {
-        this.labelModel = this.queryTree(this.data, this.value);
-      }
+      console.log(this.showText);
+      this.labelModel = this.showText;
       // 获取输入框宽度同步至树状菜单宽度
       this.$nextTick(() => {
         this.treeWidth = `${(this.width || this.$refs.input.$refs.input.clientWidth) - 24}px`;

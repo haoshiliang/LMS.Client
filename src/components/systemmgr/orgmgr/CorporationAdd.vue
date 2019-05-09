@@ -1,21 +1,23 @@
 <template>
-  <div>
-    <el-form :model="corpForm" ref="corpForm" label-width="80px" :rules="corpRules">
-      <el-form-item label="公司父级" prop="parentId">
-        <select-tree v-model="corpForm.parentId" :options="corpList" :props="defaultProps" />
-      </el-form-item>
-      <el-form-item label="公司编码"  prop="corpCode">
-        <el-input auto-complete="off" prop="corpCode" placeholder="公司编码" v-model="corpForm.corpCode"></el-input>
-      </el-form-item>
-      <el-form-item label="公司名称"  prop="corpName">
-        <el-input auto-complete="off" prop="corpName" placeholder="公司名称" v-model="corpForm.corpName"></el-input>
-      </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submitForm">提交</el-button>
-      <el-button @click="resetForm">重置</el-button>
-      <el-button @click="closeForm">取消</el-button>
-    </div>
+  <div v-if="addFormVisible">
+    <el-dialog :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
+      <el-form :model="corpForm" ref="corpForm" label-width="80px" :rules="corpRules">
+        <el-form-item label="公司父级" prop="ParentId">
+          <select-tree v-model="corpForm.ParentId" :showText="corpForm.ParentName" :options="corpList" :props="defaultProps" />
+        </el-form-item>
+        <el-form-item label="公司编码"  prop="CorpCode">
+          <el-input auto-complete="off" placeholder="公司编码" v-model="corpForm.CorpCode"></el-input>
+        </el-form-item>
+        <el-form-item label="公司名称"  prop="CorpName">
+          <el-input auto-complete="off" placeholder="公司名称" v-model="corpForm.CorpName"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">提交</el-button>
+        <el-button @click="resetForm">重置</el-button>
+        <el-button @click="closeForm">取消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -23,9 +25,7 @@
   import SelectTree from '@/components/common/SelectTree.vue';
     export default {
       name: "CorporationAdd",
-      components: {
-        SelectTree
-      },
+      components: {SelectTree},
       data() {
         return {
           // 数据默认字段
@@ -36,65 +36,80 @@
             children: 'ChildList'
           },
           corpRules: {
-            corpCode: [{required: true, message: '请输入公司编码', trigger: 'blur'}],
-            corpName: [{required: true, message: '请输入公司名称', trigger: 'blur'}]
+            CorpCode: [{required: true, message: '请输入公司编码', trigger: 'blur'}],
+            CorpName: [{required: true, message: '请输入公司名称', trigger: 'blur'}]
           },
           corpList: [],
           corpForm: {
-            parentId: '',
-            corpCode: '',
-            corpName: ''
-          }
+            ParentId: '',
+            ParentName: '',
+            CorpCode: '',
+            CorpName: ''
+          },
+          title: "",
+          addFormVisible: false,
         }
       },
       methods: {
-        getCorpList: function () {
+        async getCorpList() {
           var _this = this;
-          this.$ajax({
+          var res = await this.$ajax({
             method: "get",
             url: "/api/Corporation?id=&isTree=true"
-          }).then(
-            function (resultData) {
-              if (resultData.data.status == '1') {
-                console.log("获取公司列表!");
-                console.log(resultData.data.data);
-                _this.corpList = resultData.data.data;
-              }
-            }
-          );
+          });
+          if (res.data.status == '1') {
+            _this.corpList = res.data.data;
+          }
         },
         resetForm: function () {
-          this.$refs["corpForm"].resetFields();
+          if (this.$refs["corpForm"])
+            this.$refs["corpForm"].resetFields();
+        },
+        setAddForm: function (id, parentId, parentName,editFormData) {
+          this.addFormVisible = true;
+          this.resetForm();
+          if (id != "") {
+            this.title = "修改公司信息";
+            this.corpForm = editFormData;
+          } else {
+            this.title = "添加公司信息";
+          }
+          this.getCorpList();
+          this.corpForm.ParentId = parentId;
+          this.corpForm.ParentName = parentName;
         },
         submitForm: function () {
           this.$refs.corpForm.validate(valid => {
             if (valid) {
               let param = Object.assign({}, this.corpForm);
+              if (param.ChildList){
+                delete param.ChildList;
+              }
+              if(param.parent){
+                delete param.parent;
+              }
               this.$ajax({
                 method: "post",
                 url: "/api/Corporation",
                 data: param
               }).then(res => {
-                if (res.data.status=="1"){
-                  this.$message({ message: "提交成功", type: "success"});
-                  this.$refs["corpForm"].resetFields();
+                if (res.data.status == "1") {
+                  this.$message({message: "提交成功", type: "success"});
                   this.$parent.getList();
                   this.closeForm();
                 }
-                else{
-                  this.$message({ message: res.data.message, type: "error"});
+                else {
+                  this.$message({message: res.data.message, type: "error"});
                 }
               });
             }
           });
         },
         closeForm: function () {
-          this.$refs["corpForm"].resetFields();
-          this.$parent.handleClose();
+          this.addFormVisible = false;
         }
       },
       mounted() {
-        this.getCorpList();
       },
       created() {
       }

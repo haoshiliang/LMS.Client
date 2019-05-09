@@ -1,5 +1,6 @@
 <template>
-  <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :max-height="gridHeight"  size="small">   <!--  @header-click="chooseall" -->
+  <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :max-height="gridHeight"
+             size="small" highlight-current-row @current-change="handleCurrentChange">   <!--  @header-click="chooseall" -->
     <el-table-column :render-header="renderHeader" width="50" align="center" v-if="isShowCheck">
       <template slot-scope="scope">
         <el-checkbox v-model="scope.row.checks" @change="toselect(scope.row)"></el-checkbox>
@@ -39,7 +40,8 @@
       return {
         chooseson: true, //全选
         key: true, //单个点击直到全部选中
-        gridHeight:$(".custom-grid-container").height()
+        gridHeight:$(".custom-grid-container").height(),
+        selectedRow:null
       };
     },
     props: {
@@ -195,6 +197,9 @@
         if (this.key) {
           document.getElementById("chooseall").checked = true; //设置全选框的状态
         }
+      },
+      handleCurrentChange(val) {
+        this.selectedRow = val;
       }
     },
     mounted() {
@@ -211,7 +216,6 @@
           };
         }
         this.gridHeight = $(".custom-grid-container").height();
-        console.log(this.gridHeight);
         // 通过捕获系统的onresize事件触发去改变原有的高度
         window.onresize = function() {
           that.gridHeight = $(".custom-grid-container").height();

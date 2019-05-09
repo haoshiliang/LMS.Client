@@ -12,7 +12,7 @@
                     <el-input v-model="formLogin.password" placeholder="密码"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="login">登陆</el-button>
+                    <el-button type="primary" @click="login" :loading="showLoading">登陆</el-button>
                     <span v-show="this.errorInfo.isShowError" class='error'>
                         {{this.errorInfo.text}}
                     </span>
@@ -80,8 +80,8 @@ export default {
             errorInfo: {
                 text: '登陆失败,请重试',
                 isShowError: false //显示错误提示
-            }
-
+            },
+            showLoading:false
         }
     },
     mounted() {
@@ -96,8 +96,10 @@ export default {
     methods: {
         login() {
             //调用后端登陆接口
+            this.showLoading=true;
             apis.shiroApi.loginIn(this.formLogin)
                 .then((data) => {
+                    this.showLoading=false;
                     if (data && data.data) {
                         var json = data.data;
                         if (json.status == '1') {
@@ -126,6 +128,7 @@ export default {
                     //this.$store.dispatch("loginLog",loginLog);
                 })
                 .catch((err) => {
+                    this.showLoading = false;
                     this.errorInfo.isShowError = true;
                     this.errorInfo.text = '系统接口异常';
                 });
