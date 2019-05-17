@@ -85,6 +85,12 @@ const dynamicRouter = [
     meta: { title: '机构管理' }
   },
   {
+    name: 'Department',
+    path: '/Department',
+    component: resolve => require(['@/components/systemmgr/orgmgr/Department.vue'], resolve),
+    meta: { title: '部门管理' }
+  },
+  {
     name: 'SysUser',
     path: '/sysUser',
     component: resolve => require(['@/components/admin/SysUser.vue'], resolve),

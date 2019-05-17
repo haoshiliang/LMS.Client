@@ -11,9 +11,11 @@ import router from './router'
 
 import 'babel-polyfill'
 import util from './common/util'
+import format from './common/format'
 import Vuex from 'vuex'
 import store from './store'
 import Axios from "axios";
+import commonComponent from "./components/common/component";
 import qs from "qs";
 
 window.moment=require('moment')
@@ -23,7 +25,11 @@ Vue.prototype.$ajax=axios
 Vue.config.productionTip = false
 
 Vue.use(util);
+Vue.use(format);
 Vue.use(Vuex);
+
+//公共组件
+Vue.use(commonComponent);
 
 // http request 拦截器
 Axios.interceptors.request.use(
@@ -39,6 +45,7 @@ Axios.interceptors.request.use(
   });
 
 // http response 拦截器
+
 Axios.interceptors.response.use(
   response => {
     Vue.prototype.$common.closeLoading();
