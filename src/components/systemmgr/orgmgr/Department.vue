@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <el-row class="searchForm">
-        <common-search :handle-get-list="this.getList" :where-list="this.queryParam.WhereList"/>
+        <common-search :handle-get-list="this.getList" :query-param="this.queryParam"/>
       </el-row>
       <el-row class="buttonForm">
         <el-col :span="8">
@@ -38,7 +38,11 @@
           data: [],
           recondTotal:0,
           queryParam:{
-            WhereList:[{Title:'部门名称',Field:'DepartName',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[]}],
+            IsAdvancedQuery:false,
+            WhereList:[
+              {Title:'科室编码',Field:'DepartCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsAdvancedQuery:false},
+              {Title:'部门名称',Field:'DepartName',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsAdvancedQuery:false}
+              ],
             SortList:[]
           }
         };
