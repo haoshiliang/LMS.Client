@@ -41,7 +41,7 @@
             IsAdvancedQuery:false,
             WhereList:[
               {Title:'科室编码',Field:'DepartCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:false},
-              {Title:'部门名称',Field:'DepartName',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true}
+              {Title:'部门名称',Field:'DepartName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true}
               ],
             SortList:[]
           },
