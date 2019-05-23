@@ -12,8 +12,8 @@
         </el-col>
       </el-row>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" size="small" @click="this.getList">查询</el-button>
-        <el-button type="primary" size="small" @click="this.closeWin">关闭</el-button>
+        <el-button type="primary" @click="this.getList">查询</el-button>
+        <el-button type="primary" @click="this.closeWin">关闭</el-button>
       </div>
     </el-dialog>
   </div>

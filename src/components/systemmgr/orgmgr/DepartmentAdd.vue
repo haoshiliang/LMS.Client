@@ -1,15 +1,12 @@
 <template>
   <div v-if="addFormVisible">
     <el-dialog :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
-      <el-form :model="corpForm" ref="corpForm" label-width="80px" :rules="corpRules">
-        <el-form-item label="公司父级" prop="ParentId">
-          <select-tree v-model="corpForm.ParentId" :showText="corpForm.ParentName" :options="corpList" :props="defaultProps" />
+      <el-form :model="formData" ref="formData" label-width="80px" :rules="rules">
+        <el-form-item label="科室编码"  prop="DepartCode">
+          <el-input auto-complete="off" placeholder="公司编码" v-model="formData.DepartCode"></el-input>
         </el-form-item>
-        <el-form-item label="公司编码"  prop="CorpCode">
-          <el-input auto-complete="off" placeholder="公司编码" v-model="corpForm.CorpCode"></el-input>
-        </el-form-item>
-        <el-form-item label="公司名称"  prop="CorpName">
-          <el-input auto-complete="off" placeholder="公司名称" v-model="corpForm.CorpName"></el-input>
+        <el-form-item label="科室名称"  prop="DepartName">
+          <el-input auto-complete="off" placeholder="公司名称" v-model="formData.DepartName"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -22,79 +19,47 @@
 </template>
 
 <script>
-  import SelectTree from '@/components/common/SelectTree.vue';
     export default {
-      name: "CorporationAdd",
-      components: {SelectTree},
+      name: "DepartmentAdd",
       data() {
         return {
-          // 数据默认字段
-          defaultProps: {
-            parent: 'ParentId',   // 父级唯一标识
-            value: 'Id',          // 唯一标识
-            label: 'CorpName',       // 标签显示
-            children: 'ChildList'
+          rules: {
+            DepartCode: [{required: true, message: '请输入科室编码', trigger: 'blur'}],
+            DepartName: [{required: true, message: '请输入科室名称', trigger: 'blur'}]
           },
-          corpRules: {
-            CorpCode: [{required: true, message: '请输入公司编码', trigger: 'blur'}],
-            CorpName: [{required: true, message: '请输入公司名称', trigger: 'blur'}]
-          },
-          corpList: [],
-          corpForm: {
+          formData: {
             Id:'',
-            ParentId: '',
-            ParentName: '',
-            CorpCode: '',
-            CorpName: ''
+            DepartCode: '',
+            DepartName: ''
           },
+          defalutData:{},
           title: "",
           addFormVisible: false,
         }
       },
       methods: {
-        async getCorpList() {
-          var _this = this;
-          var res = await this.$ajax({
-            method: "get",
-            url: "/api/Corporation?id=&isTree=true"
-          });
-          if (res.data.status == '1') {
-            _this.corpList = res.data.data;
-          }
-        },
         resetForm: function () {
-          if (this.$refs["corpForm"])
-            this.$refs["corpForm"].resetFields();
+          if (this.$refs["formData"])
+            this.$refs["formData"].resetFields();
         },
-        setAddForm: function (id, parentId, parentName,editFormData) {
+        setAddForm: function (id, editFormData) {
           this.addFormVisible = true;
           this.resetForm();
           if (id != "") {
-            this.title = "修改公司信息";
-            this.corpForm = editFormData;
+            this.title = "修改科室信息";
+            this.formData = editFormData;
           } else {
-            this.title = "添加公司信息";
-            this.corpForm.Id="";
-            this.corpForm.CorpCode="";
-            this.corpForm.CorpName="";
+            this.formData = Object.assign({}, this.defalutData);
+            this.title = "添加科室信息";
           }
-          this.getCorpList();
-          this.corpForm.ParentId = parentId;
-          this.corpForm.ParentName = parentName;
         },
         submitForm: function () {
-          this.$refs.corpForm.validate(valid => {
+          this.$refs.formData.validate(valid => {
             if (valid) {
-              let param = Object.assign({}, this.corpForm);
-              if (param.ChildList){
-                delete param.ChildList;
-              }
-              if(param.parent){
-                delete param.parent;
-              }
+              let param = Object.assign({}, this.formData);
               this.$ajax({
                 method: "post",
-                url: "/api/Corporation",
+                url: "/api/Department",
                 data: param
               }).then(res => {
                 if (res.data.status == "1") {
@@ -114,6 +79,7 @@
         }
       },
       mounted() {
+        this.defalutData = Object.assign({}, this.formData);
       },
       created() {
       }
