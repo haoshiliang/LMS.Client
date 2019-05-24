@@ -60,6 +60,7 @@
           });
           if (res.data.status == '1') {
             _this.corpList = res.data.data;
+            this.addFormVisible = true;
           }
         },
         resetForm: function () {
@@ -67,7 +68,6 @@
             this.$refs["corpForm"].resetFields();
         },
         setAddForm: function (id, parentId, parentName,editFormData) {
-          this.addFormVisible = true;
           this.resetForm();
           if (id != "") {
             this.title = "修改公司信息";
