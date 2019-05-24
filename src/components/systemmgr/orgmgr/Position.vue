@@ -1,36 +1,36 @@
 <template>
-    <div class="container">
-      <el-row class="searchForm">
-        <common-search :handle-get-list="this.getList" :query-param="this.queryParam"/>
-      </el-row>
-      <el-row class="buttonForm">
-        <el-col :span="8">
-          <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
-          <el-button type="text" size="small" icon="el-icon-edit" @click="handleEdit">修改</el-button>
-          <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-        </el-col>
-        <el-col :span="16" style="text-align:right;">
-          <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
-        </el-col>
-      </el-row>
-        <div class="custom-grid-container">
-          <template>
-            <el-table :data="data" style="width: 100%" @sort-change="handleSort"
-                       :max-height="gridHeight" size="small" border  highlight-current-row @current-change="handleCurrentChange">
-              <el-table-column prop="DepartCode" label="科室编码" sortable width="180"></el-table-column>
-              <el-table-column prop="DepartName" label="科室名称" sortable width="180"></el-table-column>
-              <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"></el-table-column>
-            </el-table>
-          </template>
-      </div>
-      <add-dept ref="addForm"/>
+  <div class="container">
+    <el-row class="searchForm">
+      <common-search :handle-get-list="this.getList" :query-param="this.queryParam"/>
+    </el-row>
+    <el-row class="buttonForm">
+      <el-col :span="8">
+        <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
+        <el-button type="text" size="small" icon="el-icon-edit" @click="handleEdit">修改</el-button>
+        <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+      </el-col>
+      <el-col :span="16" style="text-align:right;">
+        <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
+      </el-col>
+    </el-row>
+    <div class="custom-grid-container">
+      <template>
+        <el-table :data="data" style="width: 100%" @sort-change="handleSort"
+                  :max-height="gridHeight" size="small" border  highlight-current-row @current-change="handleCurrentChange">
+          <el-table-column prop="PositionCode" label="职位编码" sortable width="180"></el-table-column>
+          <el-table-column prop="PositionName" label="职位名称" sortable width="180"></el-table-column>
+          <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"></el-table-column>
+        </el-table>
+      </template>
     </div>
+    <add-dept ref="addForm"/>
+  </div>
 </template>
 
 <script>
-  import addDept from "@/components/systemmgr/orgmgr/DepartmentAdd"
+  import addDept from "@/components/systemmgr/orgmgr/PositionAdd"
     export default {
-      name: "Department",
+      name: "Position",
       components: {addDept},
       data() {
         return {
@@ -40,9 +40,10 @@
           queryParam:{
             IsAdvancedQuery:false,
             WhereList:[
-              {Title:'科室编码',Field:'DepartCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true},
-              {Title:'部门名称',Field:'DepartName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true}
-              ],
+              {Title:'职位编码',Field:'PositionCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true},
+              {Title:'职位名称',Field:'PositionName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true},
+              {Title:'职位名称',Field:'PositionName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true}
+            ],
             SortList:[]
           },
           selectedRow:null
@@ -53,7 +54,7 @@
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/Department?pagination="+encodeURI(_this.$refs.cPagination.paginationJson)+"&queryParam="+encodeURI(JSON.stringify(this.queryParam))
+            url: "/api/Position?pagination="+encodeURI(_this.$refs.cPagination.paginationJson)+"&queryParam="+encodeURI(JSON.stringify(this.queryParam))
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
@@ -83,7 +84,7 @@
             var id = this.selectedRow.Id;
             this.$ajax({
               method: "get",
-              url: "/api/Department?id="+id
+              url: "/api/Position?id="+id
             }).then(
               function (resultData) {
                 if (resultData.data.status == '1') {
@@ -102,7 +103,7 @@
               .then(() => {
                 this.$ajax({
                   method: "delete",
-                  url: "/api/Department?id="+this.selectedRow.Id,
+                  url: "/api/Position?id="+this.selectedRow.Id,
                 }).then(res => {
                   if (res.data.status == "1") {
                     this.$message({message: "删除成功", type: "success"});
@@ -133,3 +134,7 @@
       }
     }
 </script>
+
+<style scoped>
+
+</style>

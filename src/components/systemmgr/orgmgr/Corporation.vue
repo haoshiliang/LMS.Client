@@ -5,20 +5,23 @@
           <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
           <el-button type="text" size="small" icon="el-icon-edit" @click="handleEdit">修改</el-button>
           <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+          <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleDeptPostion">部门职位维护</el-button>
         </el-col>
       </el-row>
         <div class="custom-grid-container">
         <common-tree-table ref="tGrid" :data="data" :columns="columns" :isShowCheck="isShowCheck" :expandAll="true" border/>
       </div>
       <add-corp ref="addForm"/>
+      <dept-position ref="deptPositionForm"/>
     </div>
 </template>
 
 <script>
   import addCorp from "@/components/systemmgr/orgmgr/CorporationAdd"
+  import deptPosition from "@/components/systemmgr/orgmgr/DeptPosition"
     export default {
       name: "Corporation",
-      components: { addCorp },
+      components: { addCorp,deptPosition },
       data() {
         return {
           columns: [
@@ -93,6 +96,15 @@
           }
           else {
             this.$message.info("请选择要删除的行!");
+          }
+        },
+        handleDeptPostion:function () {
+          if (this.$refs.tGrid.selectedRow != null) {
+            var id = this.$refs.tGrid.selectedRow.Id;
+            this.$refs.deptPositionForm.setAddForm(id);
+          }
+          else {
+            this.$message.info("请选择要维护部门职位的公司!");
           }
         }
       },

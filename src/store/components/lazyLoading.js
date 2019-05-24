@@ -39,14 +39,6 @@ const dynamicRouter = [
     }
   },
   {
-    name: 'searchinput',
-    path: '/searchinput',
-    component: resolve => require(['@/components/searchinput/searchinput.vue'], resolve),
-    meta: {
-      title: '查询输入页'
-    }
-  },
-  {
     name: 'tabpage',
     path: '/tabpage',
     component: resolve => require(['@/components/tabpage/tabpage.vue'], resolve),
@@ -89,6 +81,12 @@ const dynamicRouter = [
     path: '/Department',
     component: resolve => require(['@/components/systemmgr/orgmgr/Department.vue'], resolve),
     meta: { title: '部门管理' }
+  },
+  {
+    name: 'Position',
+    path: '/Position',
+    component: resolve => require(['@/components/systemmgr/orgmgr/Position.vue'], resolve),
+    meta: { title: '职位管理' }
   },
   {
     name: 'SysUser',
