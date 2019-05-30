@@ -72,19 +72,19 @@ const dynamicRouter = [
   },
   {
     name: 'Corporation',
-    path: '/Corporation',
+    path: '/OrgMgr/Corporation',
     component: resolve => require(['@/components/systemmgr/orgmgr/Corporation.vue'], resolve),
     meta: { title: '机构管理' }
   },
   {
     name: 'Department',
-    path: '/Department',
+    path: '/OrgMgr/Department',
     component: resolve => require(['@/components/systemmgr/orgmgr/Department.vue'], resolve),
     meta: { title: '部门管理' }
   },
   {
     name: 'Position',
-    path: '/Position',
+    path: '/OrgMgr/Position',
     component: resolve => require(['@/components/systemmgr/orgmgr/Position.vue'], resolve),
     meta: { title: '职位管理' }
   },

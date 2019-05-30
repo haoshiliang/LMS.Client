@@ -2,10 +2,10 @@
     <div class="container">
       <el-row class="buttonForm">
         <el-col :span="24">
-          <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
-          <el-button type="text" size="small" icon="el-icon-edit" @click="handleEdit">修改</el-button>
-          <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-          <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleDeptPostion">部门职位维护</el-button>
+          <el-button type="text" size="small" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
+          <el-button type="text" size="small" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
+          <el-button type="text" size="small" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+          <el-button type="text" size="small" v-if="fList.DeptPosition" icon="el-icon-circle-plus-outline" @click="handleDeptPostion">部门职位维护</el-button>
         </el-col>
       </el-row>
         <div class="custom-grid-container">
@@ -41,7 +41,8 @@
             }
           ],
           data: [],
-          isShowCheck: false
+          isShowCheck: false,
+          fList: this.$common.getFList(this.$route.params.mid)
         };
       },
       methods: {

@@ -5,9 +5,9 @@
       </el-row>
       <el-row class="buttonForm">
         <el-col :span="8">
-          <el-button type="text" size="small" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
-          <el-button type="text" size="small" icon="el-icon-edit" @click="handleEdit">修改</el-button>
-          <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+          <el-button type="text" size="small" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
+          <el-button type="text" size="small" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
+          <el-button type="text" size="small" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
         </el-col>
         <el-col :span="16" style="text-align:right;">
           <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
@@ -45,7 +45,8 @@
               ],
             SortList:[]
           },
-          selectedRow:null
+          selectedRow:null,
+          fList: this.$common.getFList(this.$route.params.mid)
         };
       },
       methods: {

@@ -6,10 +6,10 @@
                     <h2 class="title">后台管理系统</h2>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="formLogin.loginName" placeholder="账号"></el-input>
+                    <el-input v-model="formLogin.loginName" :disabled="isDisabled" placeholder="账号"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="formLogin.password" placeholder="密码"></el-input>
+                    <el-input type="password" v-model="formLogin.password" show-password="true" :disabled="isDisabled" placeholder="密码"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="login" :loading="showLoading">登陆</el-button>
@@ -81,7 +81,8 @@ export default {
                 text: '登陆失败,请重试',
                 isShowError: false //显示错误提示
             },
-            showLoading:false
+            showLoading:false,
+            isDisabled:false
         }
     },
     mounted() {
@@ -97,9 +98,11 @@ export default {
         login() {
             //调用后端登陆接口
             this.showLoading=true;
+            this.isDisabled=true;
             apis.shiroApi.loginIn(this.formLogin)
                 .then((data) => {
                     this.showLoading=false;
+                    this.isDisabled=false;
                     if (data && data.data) {
                         var json = data.data;
                         if (json.status == '1') {
@@ -107,6 +110,7 @@ export default {
                             this.$common.setSessionStorage('username',json.data.UserInfo.Name);
                             this.$common.setSessionStorage('loginName',json.data.UserInfo.LoginName);
                             this.$common.setSessionStorage('lev',json.data.UserInfo.RoleList);
+                            this.$common.setSessionStorage('menuList',json.data.SysRoleVoList);
                             //存入菜单,渲染菜单
                             this.$store.dispatch("add_Menus",json.data.SysRoleVoList);
                              //动态设置路由
@@ -129,6 +133,7 @@ export default {
                 })
                 .catch((err) => {
                     this.showLoading = false;
+                    this.isDisabled=false;
                     this.errorInfo.isShowError = true;
                     this.errorInfo.text = '系统接口异常';
                 });

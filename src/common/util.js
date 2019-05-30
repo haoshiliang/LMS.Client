@@ -51,6 +51,33 @@ exports.install = function (Vue,options){
       }
     }
   /**
+   * 获取菜单功能
+   */
+  Common.getFList=function(mId){
+    var menuList=Common.getSessionStorage("menuList",true);
+    var currentMenu = getFList(menuList,mId);
+    return currentMenu.FunctionList;
+  }
+
+  /**
+   * 获取菜单功能
+   * @param menuList
+   */
+  function getFList(menuList,mId) {
+    var returnValue = {FunctionList: {}};
+    for (var i in menuList) {
+      let item = menuList[i];
+      if (item.Id == mId) {
+        returnValue = item;
+        break;
+      }
+      else if (item.ChildList && item.ChildList.length > 0) {
+        returnValue = getFList(item.ChildList, mId);
+      }
+    }
+    return returnValue;
+  }
+  /**
    * 读取sessionStorage
    */
   Common.getSessionStorage=function(key,isObj){

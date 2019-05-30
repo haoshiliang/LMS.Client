@@ -16,6 +16,7 @@ const addMenus = {
         function _addMenu(menuList,params){
             for(var i=0;i<params.length;i++){
                  var menu={
+                        id:'',
                         icon: 'el-icon-tickets',
                         index: '1',
                         title: '工作台',
@@ -26,10 +27,12 @@ const addMenus = {
                  if(menuParam.IsFunction == true){
                     continue;
                 }
+                menu.id = menuParam.Id;
                 menu.icon=menuParam.Icon;
                 menu.index=menuParam.ModulePath;
                 menu.title=menuParam.Name;
                 menu.isAllowClose=true;
+
                 if(menuParam.ChildList && menuParam.ChildList.length>0){
                     _addMenu(menu.subs,menuParam.ChildList);
                 }

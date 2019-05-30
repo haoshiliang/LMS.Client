@@ -15,13 +15,13 @@
                   <template slot="title">
                     <i :class="subItem.icon+' sidebar-icon-color'"></i><span slot="title">{{ subItem.title }}</span>
                   </template>
-                  <el-menu-item  v-for="(leafItem,i) in subItem.subs" :key="i" :index="leafItem.index">
+                  <el-menu-item  v-for="(leafItem,i) in subItem.subs" :key="i" :index="'/'+leafItem.index+'/'+leafItem.id">
                     <span class="sidebar-el-subitem">{{ leafItem.title }}</span>
                   </el-menu-item>
                 </el-submenu>
               </template>
               <template v-else>
-                <el-menu-item :index="subItem.index" :key="j">
+                <el-menu-item :index="subItem.index+'/'+subItem.id" :key="j">
                   <span class="sidebar-el-subitem">{{ subItem.title }}</span>
                 </el-menu-item>
               </template>
