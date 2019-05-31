@@ -1,0 +1,49 @@
+.el-submenu__title{
+  height: 40px;
+  line-height: 40px;
+  border-bottom:1px solid rgba(0, 30, 21, 0.17);
+}
+.el-submenu.is-active .el-submenu__title{
+  border-bottom-color:rgba(0, 30, 21, 0.17);
+}
+.el-submenu__title i{
+  color:#fff;
+}
+.sidebar-el-subitem{
+  margin-left: 10px;
+}
+.sidebar-title{
+  font-size: 16px;
+  font-family: 微软雅黑;
+  color:#fff;
+  background: #506aa9;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  border-bottom:1px solid rgba(0, 30, 21, 0.17);
+  width:200px;
+}
+.sidebar-title-collapse{
+  background: #506aa9;
+  height: 30px;
+  line-height: 30px;
+  border-bottom:1px solid rgba(0, 30, 21, 0.17);
+  -webkit-transition: left .3s ease-in-out;
+  transition: left .3s ease-in-out;
+}
+.el-menu--popup{
+  padding: 0;
+}
+.el-pagination ul li,.el-pagination .btn-prev,.el-pagination .btn-next{
+  background: #f5f6fa;
+}
+.tableHeaderStyle{
+  background: linear-gradient(#f0f0f0,#fff);
+}
+.el-dialog__header{
+  color:#fff;
+  background: #506aa9;
+  border-radius: 0px 2px;
+  line-height: 20px;
+  font-size: 16px;
+}
