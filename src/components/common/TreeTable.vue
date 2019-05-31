@@ -1,6 +1,6 @@
 <template>
   <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :max-height="gridHeight"
-             size="small" highlight-current-row @current-change="handleCurrentChange">   <!--  @header-click="chooseall" -->
+             size="medium" highlight-current-row @current-change="handleCurrentChange">   <!--  @header-click="chooseall" -->
     <el-table-column :render-header="renderHeader" width="50" align="center" v-if="isShowCheck">
       <template slot-scope="scope">
         <el-checkbox v-model="scope.row.checks" @change="toselect(scope.row)"></el-checkbox>

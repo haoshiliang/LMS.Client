@@ -45,7 +45,6 @@ Axios.interceptors.request.use(
   });
 
 // http response 拦截器
-
 Axios.interceptors.response.use(
   response => {
     Vue.prototype.$common.closeLoading();

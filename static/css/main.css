@@ -32,15 +32,12 @@ body .el-table th.gutter {
   overflow:no-display;
   -webkit-transition: left .3s ease-in-out;
   transition: left .3s ease-in-out;
-  background: #f0f0f0;
 }
 
 .content {
   width: auto;
   overflow-y:auto;
-  border-top:8px solid #f0f0f0;
   border-bottom: none;
-  background: #fff;
 }
 
 .content-collapse {

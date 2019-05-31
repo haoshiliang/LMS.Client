@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">后台管理系统</div>
+        <div class="logo">至诚运营管理平台</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- <marquee onMouseOver="this.start()" style="font-size:18px;padding-bottom:4px;width:100px;" scrollamount="1">{{getlev}}</marquee> -->

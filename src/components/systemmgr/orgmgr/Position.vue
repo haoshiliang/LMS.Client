@@ -5,9 +5,9 @@
     </el-row>
     <el-row class="buttonForm">
       <el-col :span="8">
-        <el-button type="text" size="small" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
-        <el-button type="text" size="small" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
-        <el-button type="text" size="small" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+        <el-button type="text" size="medium" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
+        <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
+        <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
       </el-col>
       <el-col :span="16" style="text-align:right;">
         <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
@@ -16,7 +16,7 @@
     <div class="custom-grid-container">
       <template>
         <el-table :data="data" style="width: 100%" @sort-change="handleSort"
-                  :max-height="gridHeight" size="small" border  highlight-current-row @current-change="handleCurrentChange">
+                  :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
           <el-table-column prop="PositionCode" label="职位编码" sortable width="180"></el-table-column>
           <el-table-column prop="PositionName" label="职位名称" sortable width="180"></el-table-column>
           <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"></el-table-column>
