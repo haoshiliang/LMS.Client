@@ -28,7 +28,7 @@
     background: #3d5490;
 }
 .content-box{
-  background: #506aa9;
+  background: #3d5490;
 }
 .content {
   border-top:8px solid #506aa9;
@@ -56,4 +56,7 @@
 }
 .tags-li.active .tags-li-title {
   color: #fff;
+}
+.footer_content{
+  color:#fff;
 }

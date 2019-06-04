@@ -41,7 +41,6 @@
             IsAdvancedQuery:false,
             WhereList:[
               {Title:'职位编码',Field:'PositionCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true},
-              {Title:'职位名称',Field:'PositionName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true},
               {Title:'职位名称',Field:'PositionName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true}
             ],
             SortList:[]

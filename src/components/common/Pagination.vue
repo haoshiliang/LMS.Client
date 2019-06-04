@@ -45,7 +45,9 @@
       }
     }
 </script>
-
 <style scoped>
-
+  .el-pagination button:disabled{
+    color: transparent;
+    background-color: transparent;
+  }
 </style>

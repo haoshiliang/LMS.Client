@@ -1,6 +1,6 @@
 <template>
   <div v-if="showAdvancedQuery">
-    <el-dialog title="高级查询" :visible.sync="showAdvancedQuery" width="870px" :close-on-click-modal="false">
+    <el-dialog title="高级查询" :visible.sync="showAdvancedQuery" :width="dialogWidth" :close-on-click-modal="false">
       <el-row style="margin: -20px 0 0 0;">
         <el-col :span="24">
           <template v-for="field in this.queryParam.WhereList">
@@ -22,9 +22,9 @@
 <script>
     export default {
       name: "SearchAdvanced",
-      data(){
+      data() {
         return {
-          showAdvancedQuery:false
+          showAdvancedQuery: false
         }
       },
       props: {
@@ -40,13 +40,25 @@
         getList() {
           this.queryParam.IsAdvancedQuery = true;
           this.handleGetList();
-          this.showAdvancedQuery=false;
+          this.showAdvancedQuery = false;
         },
-        openWin(){
-          this.showAdvancedQuery=true;
+        openWin() {
+          this.showAdvancedQuery = true;
         },
-        closeWin(){
-          this.showAdvancedQuery=false;
+        closeWin() {
+          this.showAdvancedQuery = false;
+        }
+      },
+      computed: {
+        dialogWidth: function () {
+          let wCount = this.queryParam.WhereList.length;
+          if (wCount <= 5) {
+            return '400px';
+          } else if (wCount <= 10) {
+            return '600px';
+          } else {
+            return '870px';
+          }
         }
       }
     }

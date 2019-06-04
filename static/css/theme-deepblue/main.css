@@ -41,9 +41,14 @@
   background: linear-gradient(#f0f0f0,#fff);
 }
 .el-dialog__header{
-  color:#fff;
   background: #506aa9;
   border-radius: 0px 2px;
-  line-height: 20px;
+  line-height: 10px;
   font-size: 16px;
+}
+.el-dialog__title,.el-dialog__headerbtn{
+  color:#fff;
+}
+.el-pagination button:disabled{
+  background-color: transparent;
 }

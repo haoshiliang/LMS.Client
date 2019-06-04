@@ -16,7 +16,6 @@ footer{
     text-align: center;
     line-height: 40px;
     height: 40px;
-    color:#606266;
     font-size: 13px;
   }
 }
