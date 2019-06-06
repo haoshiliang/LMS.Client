@@ -31,14 +31,6 @@ const dynamicRouter = [
     }
   },
   {
-    name: 'messageboard',
-    path: '/messageboard',
-    component: resolve => require(['@/components/tablepage/messageboard.vue'], resolve),
-    meta: {
-      title: '系统首页'
-    }
-  },
-  {
     name: 'tabpage',
     path: '/tabpage',
     component: resolve => require(['@/components/tabpage/tabpage.vue'], resolve),
@@ -101,10 +93,10 @@ const dynamicRouter = [
     meta: { title: '角色资源管理' }
   },
   {
-    name: 'SysMenu',
-    path: '/sysMenu',
-    component: resolve => require(['@/components/admin/SysMenu.vue'], resolve),
-    meta: { title: '菜单管理' }
+    name: 'SysModule',
+    path: '/ModuleMgr/SysModule',
+    component: resolve => require(['@/components/systemmgr/modulemgr/Module.vue'], resolve),
+    meta: { title: '模块管理' }
   },
   {
     name: 'SysResource',

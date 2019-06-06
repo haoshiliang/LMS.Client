@@ -6,6 +6,17 @@ exports.install = function (Vue,options){
   var Format=Vue.prototype.$format={};
 
   /**
+   * 格式化是否可用
+   * @param row
+   * @param column
+   * @param cellValue
+   */
+  Format.rowEnabled=function(row,column,cellValue){
+    console.log(cellValue);
+
+    return cellValue == "1"?"启用":"禁用";
+  }
+  /**
    * 格式化日期
    * @param formatDate
    * @constructor

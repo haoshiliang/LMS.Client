@@ -24,7 +24,7 @@
 <script>
   import SelectTree from '@/components/common/SelectTree.vue';
     export default {
-      name: "CorporationAdd",
+      name: "ModuleAdd",
       components: {SelectTree},
       data() {
         return {
@@ -42,12 +42,10 @@
           corpList: [],
           corpForm: {
             Id:'',
-            OldParentId:'',
             ParentId: '',
             ParentName: '',
             CorpCode: '',
-            CorpName: '',
-            AutomaticCode:''
+            CorpName: ''
           },
           title: "",
           addFormVisible: false,
@@ -103,6 +101,9 @@
                   this.$message({message: "提交成功", type: "success"});
                   this.$parent.getList();
                   this.closeForm();
+                }
+                else {
+                  this.$message({message: res.data.message, type: "error"});
                 }
               });
             }

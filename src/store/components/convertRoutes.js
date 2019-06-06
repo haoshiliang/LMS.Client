@@ -19,7 +19,7 @@ function toRoutes(routerList,routeHideList, sysMenuList) {
           children: []
         };
         if (code && code != '') {
-          if (sysMenuNode.IsFunction == false) {
+          if (sysMenuNode.IsFunction == 0) {
             routerList.push(routeNode);
           }
           else {

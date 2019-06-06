@@ -9,7 +9,7 @@
                     <el-input v-model="formLogin.loginName" :disabled="isDisabled" placeholder="账号"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input type="password" v-model="formLogin.password" show-password="true" :disabled="isDisabled" placeholder="密码"></el-input>
+                    <el-input v-model="formLogin.password" show-password :disabled="isDisabled" placeholder="密码"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="login" :loading="showLoading">登陆</el-button>

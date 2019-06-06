@@ -24,7 +24,7 @@ const addMenus = {
                         subs: []
                 };
                 var menuParam=params[i];
-                 if(menuParam.IsFunction == true){
+                 if(menuParam.IsFunction == 1){
                     continue;
                 }
                 menu.id = menuParam.Id;
