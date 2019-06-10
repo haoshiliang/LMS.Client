@@ -5,21 +5,23 @@
           <el-button type="text" size="medium" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
           <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
           <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-          <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">模块功能维护</el-button>
+          <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleModuleFunction">模块功能维护</el-button>
         </el-col>
       </el-row>
         <div class="custom-grid-container">
         <common-tree-table ref="tGrid" :data="data" :columns="columns" :isShowCheck="isShowCheck" :expandAll="true" border/>
       </div>
       <add-module ref="addForm"/>
+      <add-module-function ref="addMFForm"/>
     </div>
 </template>
 
 <script>
   import addModule from "@/components/systemmgr/modulemgr/ModuleAdd"
+  import addModuleFunction from "@/components/systemmgr/modulemgr/ModuleFunctionAdd"
     export default {
       name: "Module",
-      components: { addModule },
+      components: { addModule,addModuleFunction },
       data() {
         return {
           columns: [
@@ -63,7 +65,14 @@
             var id = this.$refs.tGrid.selectedRow.Id;
             var parentId = this.$refs.tGrid.selectedRow.ParentId;
             var parentName = this.$refs.tGrid.selectedRow.ParentName;
-            this.$refs.addForm.setAddForm(id, parentId, parentName, Object.assign({}, this.$refs.tGrid.selectedRow));
+            this.$ajax({
+              method: "get",
+              url: "/api/Module?id="+this.$refs.tGrid.selectedRow.Id,
+            }).then(res => {
+              if (res.data.status == "1") {
+                this.$refs.addForm.setAddForm(id, parentId, parentName, res.data.data);
+              }
+            });
           }
           else {
             this.$message.info("请选择要修改的行!");
@@ -75,7 +84,7 @@
               .then(() => {
                 this.$ajax({
                   method: "delete",
-                  url: "/api/Corporation?id="+this.$refs.tGrid.selectedRow.Id,
+                  url: "/api/Module?id="+this.$refs.tGrid.selectedRow.Id,
                 }).then(res => {
                   if (res.data.status == "1") {
                     this.$message({message: "删除成功", type: "success"});
@@ -89,19 +98,27 @@
             this.$message.info("请选择要删除的行!");
           }
         },
-        handleDeptPostion:function () {
+        handleModuleFunction: function () {
+          var _this = this;
           if (this.$refs.tGrid.selectedRow != null) {
-            var id = this.$refs.tGrid.selectedRow.Id;
-            this.$refs.deptPositionForm.setAddForm(id);
+            this.$ajax({
+              method: "get",
+              url: "/api/Function?id="+this.$refs.tGrid.selectedRow.Id
+            }).then(
+              function (resultData) {
+                if (resultData.data.status == '1') {
+                  _this.$refs.addMFForm.setAddForm(_this.$refs.tGrid.selectedRow.Id, resultData.data.data);
+                }
+              }
+            );
           }
           else {
-            this.$message.info("请选择要维护部门职位的公司!");
+            this.$message.info("请选择要添加功能的行!");
           }
         }
       },
       mounted() {
         this.getList();
-        console.log(this.$common.getFList(this.$route.params.mid));
       }
     }
 </script>

@@ -55,27 +55,27 @@ exports.install = function (Vue,options){
    */
   Common.getFList=function(mId){
     var menuList=Common.getSessionStorage("menuList",true);
-    var currentMenu = getFList(menuList,mId);
-    return currentMenu.FunctionList;
+    var currentMenu = [];
+    getMenuList(menuList,mId,currentMenu);
+    console.log(currentMenu);
+    if (currentMenu.length==0) {
+      return {FunctionList: {}};
+    }
+    return currentMenu[0].FunctionList;
   }
-
   /**
    * 获取菜单功能
    * @param menuList
    */
-  function getFList(menuList,mId) {
-    var returnValue = {FunctionList: {}};
-    for (var i in menuList) {
-      let item = menuList[i];
-      if (item.Id == mId) {
-        returnValue = item;
-        break;
+  function getMenuList(menuList,mId,currentMenu) {
+    for (var i=0,len=menuList.length;i<len;i++) {
+      if (menuList[i].Id.toUpperCase()==mId.toUpperCase()){
+        currentMenu.push(menuList[i]);
       }
-      else if (item.ChildList && item.ChildList.length > 0) {
-        returnValue = getFList(item.ChildList, mId);
+      else if (menuList[i].ChildList && menuList[i].ChildList.length>0){
+        getMenuList(menuList[i].ChildList,mId,currentMenu);
       }
     }
-    return returnValue;
   }
   /**
    * 读取sessionStorage

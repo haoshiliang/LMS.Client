@@ -58,7 +58,7 @@
           var _this = this;
           var res = await this.$ajax({
             method: "get",
-            url: "/api/Corporation?id=&isTree=true"
+            url: "/api/Corporation?id="+this.corpForm.Id+"&isTree=true"
           });
           if (res.data.status == '1') {
             _this.corpList = res.data.data;

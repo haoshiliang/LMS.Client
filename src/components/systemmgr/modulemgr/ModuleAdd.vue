@@ -1,15 +1,24 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
-      <el-form :model="corpForm" ref="corpForm" label-width="80px" :rules="corpRules">
-        <el-form-item label="公司父级" prop="ParentId">
-          <select-tree v-model="corpForm.ParentId" :showText="corpForm.ParentName" :options="corpList" :props="defaultProps" />
+    <el-dialog :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
+      <el-form :model="moduleForm" :inline="true" ref="moduleForm" label-width="80px" :rules="moduleRules">
+        <el-form-item label="模块父级" prop="ParentId">
+          <select-tree v-model="moduleForm.ParentId" :showText="moduleForm.ParentName" :options="moduleList" :props="defaultProps" width="207" />
         </el-form-item>
-        <el-form-item label="公司编码"  prop="CorpCode">
-          <el-input auto-complete="off" placeholder="公司编码" v-model="corpForm.CorpCode"></el-input>
+        <el-form-item label="模块编码"  prop="Code">
+          <el-input auto-complete="off" placeholder="模块编码" v-model="moduleForm.Code"></el-input>
         </el-form-item>
-        <el-form-item label="公司名称"  prop="CorpName">
-          <el-input auto-complete="off" placeholder="公司名称" v-model="corpForm.CorpName"></el-input>
+        <el-form-item label="模块名称"  prop="Name">
+          <el-input auto-complete="off" placeholder="模块名称" v-model="moduleForm.Name"></el-input>
+        </el-form-item>
+        <el-form-item label="模块图标"  prop="Icon">
+          <el-input auto-complete="off" placeholder="模块图标" v-model="moduleForm.Icon"></el-input>
+        </el-form-item>
+        <el-form-item label="模块路径"  prop="ModulePath">
+          <el-input auto-complete="off" placeholder="模块路径" v-model="moduleForm.ModulePath"></el-input>
+        </el-form-item>
+        <el-form-item label="启   用"  prop="IsEnabled">
+          <el-switch v-model="moduleForm.IsEnabled"></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -32,60 +41,64 @@
           defaultProps: {
             parent: 'ParentId',   // 父级唯一标识
             value: 'Id',          // 唯一标识
-            label: 'CorpName',       // 标签显示
+            label: 'Name',       // 标签显示
             children: 'ChildList'
           },
-          corpRules: {
-            CorpCode: [{required: true, message: '请输入公司编码', trigger: 'blur'}],
-            CorpName: [{required: true, message: '请输入公司名称', trigger: 'blur'}]
+          moduleRules: {
+            Code: [{required: true, message: '请输入模块编码', trigger: 'blur'}],
+            Name: [{required: true, message: '请输入模块名称', trigger: 'blur'}]
           },
-          corpList: [],
-          corpForm: {
+          moduleList: [],
+          moduleForm: {
             Id:'',
             ParentId: '',
             ParentName: '',
-            CorpCode: '',
-            CorpName: ''
+            Code: '',
+            Name: '',
+            Icon:'',
+            ModulePath:'',
+            IsEnabled:true
           },
           title: "",
           addFormVisible: false,
         }
       },
       methods: {
-        async getCorpList() {
+        async getModuleList() {
           var _this = this;
           var res = await this.$ajax({
             method: "get",
-            url: "/api/Corporation?id=&isTree=true"
+            url: "/api/Module?id="+this.moduleForm.Id+"&isTree=true"
           });
           if (res.data.status == '1') {
-            _this.corpList = res.data.data;
+            _this.moduleList = res.data.data;
             this.addFormVisible = true;
           }
         },
         resetForm: function () {
-          if (this.$refs["corpForm"])
-            this.$refs["corpForm"].resetFields();
+          if (this.$refs["moduleForm"])
+            this.$refs["moduleForm"].resetFields();
         },
         setAddForm: function (id, parentId, parentName,editFormData) {
           this.resetForm();
           if (id != "") {
-            this.title = "修改公司信息";
-            this.corpForm = editFormData;
+            this.title = "修改模块信息";
+            this.moduleForm = editFormData;
           } else {
-            this.title = "添加公司信息";
-            this.corpForm.Id="";
-            this.corpForm.CorpCode="";
-            this.corpForm.CorpName="";
+            this.title = "添加模块信息";
+            this.moduleForm.Id="";
+            this.moduleForm.Code="";
+            this.moduleForm.Name="";
+            this.moduleForm.IsEnabled=true;
           }
-          this.getCorpList();
-          this.corpForm.ParentId = parentId;
-          this.corpForm.ParentName = parentName;
+          this.getModuleList();
+          this.moduleForm.ParentId = parentId;
+          this.moduleForm.ParentName = parentName;
         },
         submitForm: function () {
-          this.$refs.corpForm.validate(valid => {
+          this.$refs.moduleForm.validate(valid => {
             if (valid) {
-              let param = Object.assign({}, this.corpForm);
+              let param = Object.assign({}, this.moduleForm);
               if (param.ChildList){
                 delete param.ChildList;
               }
@@ -94,7 +107,7 @@
               }
               this.$ajax({
                 method: "post",
-                url: "/api/Corporation",
+                url: "/api/Module",
                 data: param
               }).then(res => {
                 if (res.data.status == "1") {
