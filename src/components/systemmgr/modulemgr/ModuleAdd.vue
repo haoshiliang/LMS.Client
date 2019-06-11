@@ -17,7 +17,7 @@
         <el-form-item label="模块路径"  prop="ModulePath">
           <el-input auto-complete="off" placeholder="模块路径" v-model="moduleForm.ModulePath"></el-input>
         </el-form-item>
-        <el-form-item label="启   用"  prop="IsEnabled">
+        <el-form-item label="启用"  prop="IsEnabled">
           <el-switch v-model="moduleForm.IsEnabled"></el-switch>
         </el-form-item>
       </el-form>
