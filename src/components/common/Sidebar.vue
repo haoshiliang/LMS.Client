@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div :class="titleStyle">{{title}}</div><!--deepblue:506aa9;green:009676-->
     <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#506aa9"
-             text-color="#eee" active-text-color="#feff3f" unique-opened router>
+             text-color="#eee" active-text-color="#ccca37" unique-opened router>
       <template v-for="(item,i) in menuList">
         <template v-if="item.subs&&item.subs.length">
           <el-submenu :index="'i+1'" :key="i">
@@ -46,7 +46,7 @@
     computed:mapState({
       menuList:state=>state.menu.menuList,
       onRoutes(){
-        return this.$route.path.replace('/','');
+        return this.$route.path;
       },
       titleStyle:function () {
         return this.collapse?"sidebar-title-collapse":"sidebar-title";
