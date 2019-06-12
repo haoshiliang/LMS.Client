@@ -99,16 +99,16 @@ const dynamicRouter = [
     meta: { title: '模块管理' }
   },
   {
+    name: 'SysRole',
+    path: '/RoleUserMgr/SysRole',
+    component: resolve => require(['@/components/systemmgr/roleusermgr/Role.vue'], resolve),
+    meta: { title: '角色管理' }
+  },
+  {
     name: 'SysResource',
     path: '/sysResource',
     component: resolve => require(['@/components/admin/SysResource.vue'], resolve),
     meta: { title: '资源管理' }
-  },
-  {
-    name: 'SysRole',
-    path: '/sysRole',
-    component: resolve => require(['@/components/admin/SysRole.vue'], resolve),
-    meta: { title: '角色管理' }
   },
   {
     name: 'sysRoleMap',

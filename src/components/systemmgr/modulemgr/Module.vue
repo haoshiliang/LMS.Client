@@ -5,7 +5,7 @@
           <el-button type="text" size="medium" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
           <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
           <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-          <el-button type="text" size="medium" v-if="fList.ModuleFunction" icon="el-icon-delete" @click="handleModuleFunction">模块功能维护</el-button>
+          <el-button type="text" size="medium" v-if="fList.ModuleFunction" icon="el-icon-coin" @click="handleModuleFunction">模块功能维护</el-button>
         </el-col>
       </el-row>
         <div class="custom-grid-container">
@@ -56,7 +56,7 @@
           var parentName="";
           if (this.$refs.tGrid.selectedRow != null) {
             parentId=this.$refs.tGrid.selectedRow.Id;
-            parentName = this.$refs.tGrid.selectedRow.CorpName;
+            parentName = this.$refs.tGrid.selectedRow.Name;
           }
           this.$refs.addForm.setAddForm("",parentId ,parentName , {});
         },

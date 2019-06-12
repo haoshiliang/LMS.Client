@@ -76,7 +76,7 @@
           this.addFormVisible = true;
         },
         addRow:function () {
-          this.ruleForm.functionList.push({Id:'',Name:'',ParentId:this.mId,IsEnabled:true});
+          this.ruleForm.functionList.push({Id:(new Date()).getTime().toString(),Name:'',ParentId:this.mId,IsEnabled:true});
         },
         delRow:function () {
           if (this.selectedRow != null) {

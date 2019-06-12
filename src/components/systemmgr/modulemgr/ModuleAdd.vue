@@ -61,6 +61,7 @@
           },
           title: "",
           addFormVisible: false,
+          defalutData:{}
         }
       },
       methods: {
@@ -86,10 +87,7 @@
             this.moduleForm = editFormData;
           } else {
             this.title = "添加模块信息";
-            this.moduleForm.Id="";
-            this.moduleForm.Code="";
-            this.moduleForm.Name="";
-            this.moduleForm.IsEnabled=true;
+            this.moduleForm = Object.assign({}, this.defalutData);
           }
           this.getModuleList();
           this.moduleForm.ParentId = parentId;
@@ -127,6 +125,7 @@
         }
       },
       mounted() {
+        this.defalutData = Object.assign({}, this.moduleForm);
       },
       created() {
       }
