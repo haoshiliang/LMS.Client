@@ -73,7 +73,17 @@
             var id = this.$refs.tGrid.selectedRow.Id;
             var parentId = this.$refs.tGrid.selectedRow.ParentId;
             var parentName = this.$refs.tGrid.selectedRow.ParentName;
-            this.$refs.addForm.setAddForm(id, parentId, parentName, Object.assign({}, this.$refs.tGrid.selectedRow));
+            var _this = this;
+            this.$ajax({
+              method: "get",
+              url: "/api/Corporation?id="+id
+            }).then(
+              function (resultData) {
+                if (resultData.data.status == '1') {
+                  _this.$refs.addForm.setAddForm(id, parentId, parentName, Object.assign({}, resultData.data.data));
+                }
+              }
+            );
           }
           else {
             this.$message.info("请选择要修改的行!");

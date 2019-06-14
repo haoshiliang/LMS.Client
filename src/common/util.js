@@ -39,7 +39,7 @@ exports.install = function (Vue,options){
       lock: true,
       text: loadText,
       spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.5)'
+      background: "rgba(127, 127, 127, 0.7)"
     });
   },
     /**

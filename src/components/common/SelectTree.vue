@@ -21,7 +21,6 @@
       slot="reference"
       ref="input"
       v-model="labelModel"
-      clearable
       :style="`width: ${width}px`"
       :class="{ 'rotate': showStatus }"
       suffix-icon="el-icon-arrow-down"

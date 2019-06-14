@@ -3,7 +3,7 @@
     <el-dialog :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
       <el-form :model="corpForm" ref="corpForm" label-width="80px" :rules="corpRules">
         <el-form-item label="公司父级" prop="ParentId">
-          <select-tree v-model="corpForm.ParentId" :showText="corpForm.ParentName" :options="corpList" :props="defaultProps" />
+          <select-tree v-model="corpForm.ParentId" :showText="corpForm.ParentCorp.CorpName" :options="corpList" :props="defaultProps" />
         </el-form-item>
         <el-form-item label="公司编码"  prop="CorpCode">
           <el-input auto-complete="off" placeholder="公司编码" v-model="corpForm.CorpCode"></el-input>
@@ -44,7 +44,7 @@
             Id:'',
             OldParentId:'',
             ParentId: '',
-            ParentName: '',
+            ParentCorp: {CorpName:''},
             CorpCode: '',
             CorpName: '',
             AutomaticCode:''
@@ -74,6 +74,7 @@
           if (id != "") {
             this.title = "修改公司信息";
             this.corpForm = editFormData;
+            this.corpForm.OldParentId = parentId;
           } else {
             this.title = "添加公司信息";
             this.corpForm.Id="";
@@ -82,7 +83,7 @@
           }
           this.getCorpList();
           this.corpForm.ParentId = parentId;
-          this.corpForm.ParentName = parentName;
+          this.corpForm.ParentCorp.CorpName = parentName;
         },
         submitForm: function () {
           this.$refs.corpForm.validate(valid => {
