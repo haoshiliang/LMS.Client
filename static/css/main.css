@@ -217,10 +217,23 @@ body .el-table th.gutter {
   float: left;
   display:flex;
   flex-direction: row;
-  margin: 0 5px 5px 0;
+  margin: 0 10px 5px 0;
 }
-.searchForm .el-col .searchItem span{
-  margin: 5px 0;
+.searchForm .el-col .searchItem .searchTitle{
+  float:left;
+  min-width: 70px;
+  margin: 0 5px 0 0;
+  text-align: justify;
+  text-align-last:justify;
+  -moz-text-align-last:justify;
+  line-height: 30px;
+}
+.searchForm .el-col .searchItem .searchFlag{
+  float:left;
+  margin:5px 0;
+}
+.searchForm .el-col .searchItem .searchInputDiv{
+  float:left;
 }
 .searchForm .el-col .searchItem .searchInput{
   width: 200px;

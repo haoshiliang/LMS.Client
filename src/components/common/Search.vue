@@ -3,8 +3,22 @@
     <el-col :span="24">
       <template v-for="field in this.queryParam.WhereList">
         <div class="searchItem" v-if="field.ControlType=='TextBox' && field.IsDefaultQuery">
-          <span>{{field.Title}}：</span>
-          <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList"></el-input>
+          <div class="searchTitle">{{field.Title}}</div>
+          <span class="searchFlag">：</span>
+          <div class="searchInputDiv">
+            <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList"></el-input>
+          </div>
+          <div style="clear:both;"></div>
+        </div>
+        <div class="searchItem" v-else-if="field.ControlType=='ComboRadioBox' && field.IsDefaultQuery">
+          <div class="searchTitle">{{field.Title}}</div>
+          <span class="searchFlag">：</span>
+          <div class="searchInputDiv">
+            <el-select size="small" v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange">
+              <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
+            </el-select>
+          </div>
+          <div style="clear:both;"></div>
         </div>
       </template>
       <div class="searchButton">
@@ -37,6 +51,10 @@
         },
         opensAdvanced(){
           this.$refs.sAdvanced.openWin();
+        },
+        selectChange:function(v) {
+          alert(v);
+          this.getList();
         }
       },
       created: function () {

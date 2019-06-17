@@ -82,15 +82,9 @@ const dynamicRouter = [
   },
   {
     name: 'SysUser',
-    path: '/sysUser',
-    component: resolve => require(['@/components/admin/SysUser.vue'], resolve),
+    path: '/RoleUserMgr/SysUser',
+    component: resolve => require(['@/components/systemmgr/roleusermgr/User.vue'], resolve),
     meta: { title: '用户管理' }
-  },
-  {
-    name: 'SysAcl',
-    path: '/sysAcl',
-    component: resolve => require(['@/components/admin/SysAcl.vue'], resolve),
-    meta: { title: '角色资源管理' }
   },
   {
     name: 'SysModule',

@@ -5,8 +5,22 @@
         <el-col :span="24">
           <template v-for="field in this.queryParam.WhereList">
             <div class="searchItem" v-if="field.ControlType=='TextBox'">
-              <span>{{field.Title}}：</span>
-              <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList"></el-input>
+              <div class="searchTitle">{{field.Title}}</div>
+              <span class="searchFlag">：</span>
+              <div class="searchInputDiv">
+                <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList"></el-input>
+              </div>
+              <div style="clear:both;"></div>
+            </div>
+            <div class="searchItem" v-else-if="field.ControlType=='ComboRadioBox'">
+              <div class="searchTitle">{{field.Title}}</div>
+              <span class="searchFlag">：</span>
+              <div class="searchInputDiv">
+                <el-select size="small" v-model="field.Value" placeholder="--全部--" class="searchInput" @change="getList">
+                  <el-option v-for="item in field.BinderList":key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+              </div>
+              <div style="clear:both;"></div>
             </div>
           </template>
         </el-col>
@@ -55,9 +69,9 @@
           if (wCount <= 5) {
             return '400px';
           } else if (wCount <= 10) {
-            return '600px';
+            return '650px';
           } else {
-            return '870px';
+            return '940px';
           }
         }
       }

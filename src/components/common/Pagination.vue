@@ -40,7 +40,7 @@
       },
       computed:{
         paginationJson:function () {
-          return JSON.stringify({pageIndex:this.pageIndex,pageSize:this.pageSize});
+          return {pageIndex:this.pageIndex,pageSize:this.pageSize};
         }
       }
     }

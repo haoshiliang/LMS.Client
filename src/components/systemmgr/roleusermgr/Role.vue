@@ -42,8 +42,8 @@
           queryParam:{
             IsAdvancedQuery:false,
             WhereList:[
-              {Title:'角色编码',Field:'RoleCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true},
-              {Title:'角色名称',Field:'RoleName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],IsDefaultQuery:true}
+              {Title:'角色编码',Field:'RoleCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],AllBinderList:[],TargetName:'',SourceName:'',IsDefaultQuery:true},
+              {Title:'角色名称',Field:'RoleName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],AllBinderList:[],TargetName:'',SourceName:'',IsDefaultQuery:true}
             ],
             SortList:[]
           },
@@ -55,8 +55,9 @@
         getList: function () {
           var _this = this;
           this.$ajax({
-            method: "get",
-            url: "/api/Role?pagination="+encodeURI(_this.$refs.cPagination.paginationJson)+"&queryParam="+encodeURI(JSON.stringify(this.queryParam))
+            method: "post",
+            url: "/api/Role/List",
+            data: {paginationModel: _this.$refs.cPagination.paginationJson, queryParamModel: this.queryParam}
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
