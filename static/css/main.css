@@ -252,4 +252,9 @@ body .el-table th.gutter {
 .dialog-footer{
   text-align: center;
 }
+.el-select__tags {
+  height: 25px;
+  line-height: 25px;
+  overflow: hidden;
+}
 

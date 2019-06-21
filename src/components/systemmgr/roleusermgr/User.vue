@@ -53,7 +53,6 @@
                 BinderList: [],
                 AllBinderList: [],
                 TargetName: '',
-                SourceName: '',
                 IsDefaultQuery: true
               },
               {
@@ -67,7 +66,6 @@
                 BinderList: [],
                 AllBinderList: [],
                 TargetName: '',
-                SourceName: '',
                 IsDefaultQuery: true
               },
               {
@@ -81,7 +79,6 @@
                 BinderList: [],
                 AllBinderList: [],
                 TargetName: '',
-                SourceName: '',
                 IsDefaultQuery: true
               },
               {
@@ -95,7 +92,6 @@
                 BinderList: [],
                 AllBinderList: [],
                 TargetName: '',
-                SourceName: '',
                 IsDefaultQuery: false
               },
               {
@@ -109,7 +105,6 @@
                 BinderList: [],
                 AllBinderList: [],
                 TargetName: '',
-                SourceName: '',
                 IsDefaultQuery: false
               },
               {
@@ -119,8 +114,8 @@
                 Operator: 'like',
                 Value: '',
                 DataType: 'String',
-                ControlType: 'ComboRadioBox',
-                BinderList: [{Id:'1',Name:'公司测试',RelationId:''}],
+                ControlType: 'ComboTreeBox',
+                BinderList: [{Id:'1',Name:'公司测试',ParentId:'',RelationId:'',ChildList:[]}],
                 AllBinderList: [],
                 TargetName: 'DeptId',
                 IsDefaultQuery: true
@@ -134,8 +129,11 @@
                 DataType: 'String',
                 ControlType: 'ComboRadioBox',
                 BinderList: [],
-                AllBinderList: [{Id:'1',Name:'部门测试',RelationId:'1'}],
+                AllBinderList: [{Id:'1',Name:'部门测试',RelationId_1:'1'}],
                 TargetName: 'PositionId',
+                RelationId_1:'CorpId',
+                RelationId_2:'',
+                RelationId_3:'',
                 IsDefaultQuery: true
               },
               {
@@ -147,8 +145,11 @@
                 DataType: 'String',
                 ControlType: 'ComboRadioBox',
                 BinderList: [],
-                AllBinderList: [{Id:'1',Name:'职位测试',RelationId:'1'}],
+                AllBinderList: [{Id:'1',Name:'职位测试',RelationId_1:'1',RelationId_2:'1'}],
                 TargetName: '',
+                RelationId_1:'CorpId',
+                RelationId_2:'DeptId',
+                RelationId_3:'',
                 IsDefaultQuery: true
               }
             ],

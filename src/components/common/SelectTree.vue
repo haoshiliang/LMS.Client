@@ -3,11 +3,13 @@
     ref="popover"
     placement="bottom-start"
     trigger="click"
+    :size="size"
     @show="onShowPopover"
     @hide="onHidePopover">
     <el-tree
       ref="tree"
       class="select-tree"
+      :size="size"
       highlight-current
       :style="`min-width: ${treeWidth}`"
       :data="data"
@@ -20,10 +22,13 @@
     <el-input
       slot="reference"
       ref="input"
+      :size="size"
+      clearable
       v-model="labelModel"
       :style="`width: ${width}px`"
       :class="{ 'rotate': showStatus }"
       suffix-icon="el-icon-arrow-down"
+      @clear="clearInput"
       :placeholder="placeholder">
     </el-input>
   </el-popover>
@@ -31,7 +36,7 @@
 
 <script>
   export default {
-    name: 'Pagination',
+    name: 'SelectTree',
     props: {
       // 接收绑定参数
       value: String,
@@ -44,12 +49,19 @@
         type: Array,
         required: true,
       },
+      size: {
+        type: String,
+        required: false,
+        default: 'medium',
+      },
       // 输入框占位符
       placeholder: {
         type: String,
         required: false,
         default: '请选择',
       },
+      change: {},//值改变时调用的方法
+      targetName:String,//在查询中的目标名称
       // 树节点配置选项
       props: {
         type: Object,
@@ -116,6 +128,9 @@
         this.labelModel = node[this.props.label];
         this.valueModel = node[this.props.value];
         this.onCloseTree();
+        if (this.change) {
+          this.change(this.labelModel.this.targetName);
+        }
       },
       // 偏平数组转化为树状层级结构
       switchTree() {
@@ -185,6 +200,11 @@
         };
         return fa(data);
       },
+      clearInput:function () {
+        if (this.change) {
+          this.change(this.labelModel.this.targetName);
+        }
+      }
     },
   };
 </script>
