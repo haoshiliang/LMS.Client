@@ -14,7 +14,7 @@
           <div class="searchTitle">{{field.Title}}</div>
           <span class="searchFlag">：</span>
           <div class="searchInputDiv">
-            <select-tree v-model="field.Value" size="small" :options="field.BinderList" :targetName="field.TargetName" @change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
+            <select-tree v-model="field.Value" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
           </div>
           <div style="clear:both;"></div>
         </div>

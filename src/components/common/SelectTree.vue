@@ -128,7 +128,7 @@
         this.valueModel = node[this.props.value];
         this.onCloseTree();
         if (this.change) {
-          this.change(this.labelModel.this.targetName);
+          this.change(this.labelModel,this.targetName);
         }
       },
       // 偏平数组转化为树状层级结构
