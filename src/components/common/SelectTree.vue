@@ -23,7 +23,6 @@
       slot="reference"
       ref="input"
       :size="size"
-      clearable
       v-model="labelModel"
       :style="`width: ${width}px`"
       :class="{ 'rotate': showStatus }"
