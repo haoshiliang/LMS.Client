@@ -27,7 +27,6 @@
       :style="`width: ${width}px`"
       :class="{ 'rotate': showStatus }"
       suffix-icon="el-icon-arrow-down"
-      @clear="clearInput"
       :placeholder="placeholder">
     </el-input>
   </el-popover>
@@ -52,6 +51,11 @@
         type: String,
         required: false,
         default: 'medium',
+      },
+      isExecSelect: {
+        type:Boolean,
+        required: false,
+        default: false,
       },
       // 输入框占位符
       placeholder: {
@@ -93,6 +97,13 @@
       labelModel(val) {
         if (!val) {
           this.valueModel = '';
+          if (this.isExecSelect) {
+            this.$emit('selected', this.valueModel);
+            if (this.change) {
+              this.change('',this.targetName);
+            }
+          }
+          this.isExecSelect=true;
         }
         this.$refs.tree.filter(val);
       },
@@ -109,13 +120,13 @@
         // 输入框显示值
         labelModel: '',
         // 实际请求传值
-        valueModel: '',
+        valueModel: ''
       };
     },
     created() {
       // 检测输入框原有值并显示对应 label
-      console.log(this.showText);
       this.labelModel = this.showText;
+      //this.isExecSelect=true;
       // 获取输入框宽度同步至树状菜单宽度
       this.$nextTick(() => {
         this.treeWidth = `${(this.width || this.$refs.input.$refs.input.clientWidth) - 24}px`;
@@ -126,9 +137,10 @@
       onClickNode(node) {
         this.labelModel = node[this.props.label];
         this.valueModel = node[this.props.value];
+        this.$emit('selected', this.valueModel);
         this.onCloseTree();
         if (this.change) {
-          this.change(this.labelModel,this.targetName);
+          this.change(this.valueModel,this.targetName);
         }
       },
       // 偏平数组转化为树状层级结构
@@ -147,7 +159,6 @@
       // 隐藏时触发
       onHidePopover() {
         this.showStatus = false;
-        this.$emit('selected', this.valueModel);
       },
       // 树节点过滤方法
       filterNode(query, data) {
@@ -198,11 +209,6 @@
           return list;
         };
         return fa(data);
-      },
-      clearInput:function () {
-        if (this.change) {
-          this.change(this.labelModel.this.targetName);
-        }
       }
     },
   };

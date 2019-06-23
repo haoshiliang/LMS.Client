@@ -14,7 +14,7 @@
           <div class="searchTitle">{{field.Title}}</div>
           <span class="searchFlag">：</span>
           <div class="searchInputDiv">
-            <select-tree v-model="field.Value" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
+            <select-tree v-model="field.Value" width="200" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
           </div>
           <div style="clear:both;"></div>
         </div>
@@ -99,17 +99,17 @@
               whereValue.Value="";
               for (var i=0,len=whereValue.AllBinderList.length;i<len;i++){
                 let isAdd = false;
-                if (whereValue.RelationId_1 && whereValue.RelationId_1!='') {
+                if (whereValue.RelationId_1) {
                   let v = this.getSourceValue(whereValue.RelationId_1);
-                  isAdd = this.isAllowAddBinderValue(whereValue,"RelationId_1",v);
+                  isAdd = this.isAllowAddBinderValue(whereValue,"RelationId_1",whereValue.AllBinderList[i],v);
                 }
-                if (whereValue.RelationId_2 && whereValue.RelationId_2!='') {
-                  let v = this.getSourceValue(whereValue.RelationId_1);
-                  isAdd = isAdd && this.isAllowAddBinderValue(whereValue,"RelationId_1",v);
+                if (whereValue.RelationId_2) {
+                  let v = this.getSourceValue(whereValue.RelationId_2);
+                  isAdd = isAdd && this.isAllowAddBinderValue(whereValue,"RelationId_2",whereValue.AllBinderList[i],v);
                 }
-                if (whereValue.RelationId_3 && whereValue.RelationId_3!='') {
-                  let v = this.getSourceValue(whereValue.RelationId_1);
-                  isAdd = isAdd && this.isAllowAddBinderValue(whereValue,"RelationId_1",v);
+                if (whereValue.RelationId_3) {
+                  let v = this.getSourceValue(whereValue.RelationId_3);
+                  isAdd = isAdd && this.isAllowAddBinderValue(whereValue,"RelationId_3",whereValue.AllBinderList[i],v);
                 }
                 if (isAdd){
                   binderList.push(whereValue.AllBinderList[i]);
@@ -130,15 +130,17 @@
           }
           return returnValue;
         },
-        isAllowAddBinderValue:function (whereValue,relationId,v) {
+        isAllowAddBinderValue:function (whereValue,relationId,binderValue,v) {
           let returnValue = false;
-          if (v instanceof Array) {
-            if (v.indexOf(whereValue.AllBinderList[i][relationId])>-1){
-              returnValue = true;
-            }
-          }else{
-            if (whereValue.AllBinderList[i][relationId]===v){
-              returnValue = true;
+          if (binderValue[relationId]!="" && v!=''){
+            if (v instanceof Array) {
+              if (v.indexOf(binderValue[relationId])>-1){
+                returnValue = true;
+              }
+            }else{
+              if (binderValue[relationId]===v){
+                returnValue = true;
+              }
             }
           }
           return returnValue;

@@ -115,7 +115,7 @@
                 Value: '',
                 DataType: 'String',
                 ControlType: 'ComboTreeBox',
-                BinderList: [{Id:'1',Name:'公司测试',ParentId:'',RelationId:'',ChildList:[]}],
+                BinderList: [],
                 AllBinderList: [],
                 TargetName: 'DeptId',
                 IsDefaultQuery: true
@@ -129,7 +129,7 @@
                 DataType: 'String',
                 ControlType: 'ComboRadioBox',
                 BinderList: [],
-                AllBinderList: [{Id:'1',Name:'部门测试',RelationId_1:'1'}],
+                AllBinderList: [],
                 TargetName: 'PositionId',
                 RelationId_1:'CorpId',
                 RelationId_2:'',
@@ -145,7 +145,7 @@
                 DataType: 'String',
                 ControlType: 'ComboRadioBox',
                 BinderList: [],
-                AllBinderList: [{Id:'1',Name:'职位测试',RelationId_1:'1',RelationId_2:'1'}],
+                AllBinderList: [],
                 TargetName: '',
                 RelationId_1:'CorpId',
                 RelationId_2:'DeptId',
@@ -174,6 +174,71 @@
               }
             }
           );
+        },
+        getCorp:function(){
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/Corporation/TreeList",
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                var whereItem=_this.getWhereItem("CorpId");
+                if (whereItem) {
+                  console.log(resultData.data.data.List);
+
+                  whereItem.BinderList = resultData.data.data.List;
+                }
+                _this.getDept();
+              }
+            }
+          );
+        },
+        getDept:function(){
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/CorpDepartPosition/DeptList",
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                var whereItem=_this.getWhereItem("DeptId");
+                if (whereItem) {
+                  whereItem.AllBinderList = resultData.data.data.List;
+                }
+                _this.getPosition();
+              }
+            }
+          );
+        },
+        getPosition:function(){
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/CorpDepartPosition/PositionList",
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                var whereItem=_this.getWhereItem("PositionId");
+                if (whereItem) {
+                  whereItem.AllBinderList = resultData.data.data.List;
+                }
+                _this.getList();
+              }
+            }
+          );
+        },
+        getWhereItem:function (targetName) {
+          var whereValue = null;
+          if (targetName != "") {
+            for (var i = 0, len = this.queryParam.WhereList.length; i < len; i++) {
+              if (this.queryParam.WhereList[i].ParamName === targetName) {
+                whereValue = this.queryParam.WhereList[i];
+                break;
+              }
+            }
+          }
+          return whereValue;
         },
         handleSort: function (column) {
           var sortLen = this.queryParam.SortList.length;
@@ -238,7 +303,7 @@
         }
       },
       mounted() {
-        this.getList();
+        this.getCorp();
         this.$nextTick(() => {
           var that = this;
           this.gridHeight = $(".custom-grid-container").height();
