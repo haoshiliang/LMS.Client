@@ -185,9 +185,7 @@
               if (resultData.data.status == '1') {
                 var whereItem=_this.getWhereItem("CorpId");
                 if (whereItem) {
-                  console.log(resultData.data.data.List);
-
-                  whereItem.BinderList = resultData.data.data.List;
+                  whereItem.BinderList = resultData.data.data;
                 }
                 _this.getDept();
               }
@@ -204,7 +202,7 @@
               if (resultData.data.status == '1') {
                 var whereItem=_this.getWhereItem("DeptId");
                 if (whereItem) {
-                  whereItem.AllBinderList = resultData.data.data.List;
+                  whereItem.AllBinderList = resultData.data.data;
                 }
                 _this.getPosition();
               }
@@ -221,7 +219,7 @@
               if (resultData.data.status == '1') {
                 var whereItem=_this.getWhereItem("PositionId");
                 if (whereItem) {
-                  whereItem.AllBinderList = resultData.data.data.List;
+                  whereItem.AllBinderList = resultData.data.data;
                 }
                 _this.getList();
               }

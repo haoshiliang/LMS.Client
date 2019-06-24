@@ -52,11 +52,6 @@
         required: false,
         default: 'medium',
       },
-      isExecSelect: {
-        type:Boolean,
-        required: false,
-        default: false,
-      },
       // 输入框占位符
       placeholder: {
         type: String,
@@ -94,18 +89,17 @@
       },
     },
     watch: {
-      labelModel(val) {
-        if (!val) {
+      labelModel(newVal,oldVal) {
+        oldVal = (!oldVal?"":oldVal);
+        newVal = (!newVal?"":newVal);
+        if (newVal=='' && (newVal!=oldVal)) {
           this.valueModel = '';
-          if (this.isExecSelect) {
             this.$emit('selected', this.valueModel);
             if (this.change) {
               this.change('',this.targetName);
             }
-          }
-          this.isExecSelect=true;
         }
-        this.$refs.tree.filter(val);
+        this.$refs.tree.filter(newVal);
       },
       value(val) {
         this.labelModel = this.queryTree(this.data, val);
@@ -125,12 +119,14 @@
     },
     created() {
       // 检测输入框原有值并显示对应 label
-      this.labelModel = this.showText;
-      //this.isExecSelect=true;
+      //this.labelModel = this.showText;
+      this.labelModel = this.queryTree(this.data, this.value);
       // 获取输入框宽度同步至树状菜单宽度
       this.$nextTick(() => {
         this.treeWidth = `${(this.width || this.$refs.input.$refs.input.clientWidth) - 24}px`;
       });
+    },
+    mounted(){
     },
     methods: {
       // 单击节点

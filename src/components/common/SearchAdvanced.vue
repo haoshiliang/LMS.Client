@@ -12,14 +12,31 @@
               </div>
               <div style="clear:both;"></div>
             </div>
+            <div class="searchItem" v-else-if="field.ControlType=='ComboTreeBox'">
+              <div class="searchTitle">{{field.Title}}</div>
+              <span class="searchFlag">：</span>
+              <div class="searchInputDiv">
+                <select-tree v-model="field.Value" width="200" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
+              </div>
+              <div style="clear:both;"></div>
+            </div>
             <div class="searchItem" v-else-if="field.ControlType=='ComboRadioBox'">
               <div class="searchTitle">{{field.Title}}</div>
               <span class="searchFlag">：</span>
               <div class="searchInputDiv">
-                <el-select size="small" v-model="field.Value" placeholder="--全部--" class="searchInput" @change="getList">
-                  <el-option v-for="item in field.BinderList":key="item.value" :label="item.label" :value="item.value"></el-option>
+                <el-select size="small" clearable v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
+                  <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
                 </el-select>
               </div>
+              <div style="clear:both;"></div>
+            </div>
+            <div class="searchItem" v-else-if="field.ControlType=='ComboMultipleBox'">
+              <div class="searchTitle">{{field.Title}}</div>
+              <span class="searchFlag">：</span>
+              <div class="searchInputDiv">
+                <el-select size="small" clearable multiple v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
+                  <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
+                </el-select>          </div>
               <div style="clear:both;"></div>
             </div>
           </template>
@@ -34,10 +51,19 @@
 </template>
 
 <script>
+  import selectTree from '@/components/common/SelectTree.vue';
     export default {
       name: "SearchAdvanced",
+      components: { selectTree },
       data() {
         return {
+          // 数据默认字段
+          treeDefaultProps: {
+            parent: 'ParentId',   // 父级唯一标识
+            value: 'Id',          // 唯一标识
+            label: 'Name',       // 标签显示
+            children: 'ChildList'
+          },
           showAdvancedQuery: false
         }
       },
@@ -61,6 +87,70 @@
         },
         closeWin() {
           this.showAdvancedQuery = false;
+        },
+        selectChange:function(v,targetName) {
+          this.getSelectBinder(v,targetName);
+          this.getList();
+        },
+        getSelectBinder:function (parentValue,targetName) {
+          if (targetName!=""){
+            var whereValue=null;
+            for(var i=0,len=this.queryParam.WhereList.length;i<len;i++){
+              if (this.queryParam.WhereList[i].ParamName===targetName){
+                whereValue = this.queryParam.WhereList[i];
+                break;
+              }
+            }
+            if (whereValue!=null){
+              var binderList=[];
+              whereValue.Value="";
+              for (var i=0,len=whereValue.AllBinderList.length;i<len;i++){
+                let isAdd = false;
+                if (whereValue.RelationId_1) {
+                  let v = this.getSourceValue(whereValue.RelationId_1);
+                  isAdd = this.isAllowAddBinderValue(whereValue,"RelationId_1",whereValue.AllBinderList[i],v);
+                }
+                if (whereValue.RelationId_2) {
+                  let v = this.getSourceValue(whereValue.RelationId_2);
+                  isAdd = isAdd && this.isAllowAddBinderValue(whereValue,"RelationId_2",whereValue.AllBinderList[i],v);
+                }
+                if (whereValue.RelationId_3) {
+                  let v = this.getSourceValue(whereValue.RelationId_3);
+                  isAdd = isAdd && this.isAllowAddBinderValue(whereValue,"RelationId_3",whereValue.AllBinderList[i],v);
+                }
+                if (isAdd){
+                  binderList.push(whereValue.AllBinderList[i]);
+                }
+              }
+              whereValue.BinderList = binderList;
+              this.getSelectBinder('',whereValue.TargetName);
+            }
+          }
+        },
+        getSourceValue:function (paramName) {
+          var returnValue = '';
+          for(var i=0,len=this.queryParam.WhereList.length;i<len;i++){
+            if (this.queryParam.WhereList[i].ParamName===paramName){
+              returnValue = this.queryParam.WhereList[i].Value;
+              break;
+            }
+          }
+          return returnValue;
+        },
+        isAllowAddBinderValue:function (whereValue,relationId,binderValue,v) {
+          let returnValue = false;
+          if (binderValue[relationId]!="" && v!=''){
+            if (v instanceof Array) {
+              if (v.indexOf(binderValue[relationId])>-1){
+                returnValue = true;
+              }
+            }else{
+              if (binderValue[relationId]===v){
+                returnValue = true;
+              }
+            }
+          }
+          return returnValue;
         }
       },
       computed: {
