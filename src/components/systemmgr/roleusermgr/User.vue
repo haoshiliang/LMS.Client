@@ -21,19 +21,23 @@
           <el-table-column prop="Code" label="用户编码" sortable width="130"></el-table-column>
           <el-table-column prop="Name" label="用户名称" sortable width="130"></el-table-column>
           <el-table-column prop="LoginName" label="登录名称" sortable  width="130"></el-table-column>
+          <el-table-column prop="IsEnable" sort-by="Enable" label="用户状态"  sortable :formatter="this.$format.rowEnabled"  width="110" align="center"></el-table-column>
           <el-table-column prop="Tel" label="电话" width="180"></el-table-column>
           <el-table-column prop="Address" label="地址" ></el-table-column>
           <el-table-column prop="CorpName" label="所属职位" :formatter="corpFormatter"  width="220"></el-table-column>
-          <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"  width="130"></el-table-column>
+          <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"  width="140"></el-table-column>
         </el-table>
       </template>
     </div>
+    <add-user ref="addForm"/>
   </div>
 </template>
 
 <script>
+  import addUser from "@/components/systemmgr/roleusermgr/UserAdd"
     export default {
       name: "User",
+      components:{ addUser },
       data() {
         return {
           gridHeight: $(".custom-grid-container").height(),
@@ -106,6 +110,19 @@
                 AllBinderList: [],
                 TargetName: '',
                 IsDefaultQuery: false
+              },
+              {
+                Title: '用户状态',
+                Field: 'u.IS_ENABLE',
+                ParamName: 'IsEnable',
+                Operator: '=',
+                Value: '1',
+                DataType: 'String',
+                ControlType: 'ComboRadioBox',
+                BinderList: [{Id:'1',Name:'可用'},{Id:'0',Name:'禁用'}],
+                AllBinderList: [],
+                TargetName: '',
+                IsDefaultQuery: true
               },
               {
                 Title: '所属公司',
@@ -187,7 +204,6 @@
                 if (whereItem) {
                   whereItem.BinderList = resultData.data.data;
                 }
-                _this.getDept();
               }
             }
           );
@@ -204,7 +220,6 @@
                 if (whereItem) {
                   whereItem.AllBinderList = resultData.data.data;
                 }
-                _this.getPosition();
               }
             }
           );
@@ -221,7 +236,6 @@
                 if (whereItem) {
                   whereItem.AllBinderList = resultData.data.data;
                 }
-                _this.getList();
               }
             }
           );
@@ -245,7 +259,7 @@
           }
           if (column.prop != null) {
             this.queryParam.SortList.push({
-              SortValue: column.prop,
+              SortValue: column.column.sortBy?column.column.sortBy:column.prop,
               SortType: (column.order === 'ascending' ? 'asc' : 'desc')
             })
           }
@@ -260,7 +274,7 @@
             var id = this.selectedRow.Id;
             this.$ajax({
               method: "get",
-              url: "/api/Role?id=" + id
+              url: "/api/User?id=" + id
             }).then(
               function (resultData) {
                 if (resultData.data.status == '1') {
@@ -279,7 +293,7 @@
               .then(() => {
                 this.$ajax({
                   method: "delete",
-                  url: "/api/Role?id=" + this.selectedRow.Id,
+                  url: "/api/User?id=" + this.selectedRow.Id,
                 }).then(res => {
                   if (res.data.status == "1") {
                     this.$message({message: "删除成功", type: "success"});
@@ -302,6 +316,9 @@
       },
       mounted() {
         this.getCorp();
+        this.getDept();
+        this.getPosition();
+        this.getList();
         this.$nextTick(() => {
           var that = this;
           this.gridHeight = $(".custom-grid-container").height();

@@ -25,20 +25,10 @@
       data() {
         return {
           columns: [
-            {
-              text: "公司名称",
-              value: "CorpName",
-              width: 200
-            },
-            {
-              text: "公司编号",
-              value: "CorpCode",
-
-            },
-            {
-              text: "上级公司名称",
-              value: "ParentName"
-            }
+            {text: "公司名称", value: "CorpName", width: 200},
+            {text: "公司编号", value: "CorpCode"},
+            {text: "自动编号", value: "AutomaticCode"},
+            {text: "上级公司名称", value: "ParentName"}
           ],
           data: [],
           isShowCheck: false,

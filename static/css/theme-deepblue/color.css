@@ -60,3 +60,6 @@
 .footer_content{
   color:#fff;
 }
+.el-dialog__footer{
+  border-top:1px solid #506aa9;
+}

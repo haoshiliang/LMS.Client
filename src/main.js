@@ -47,8 +47,8 @@ Axios.interceptors.request.use(
 // http response 拦截器
 Axios.interceptors.response.use(
   response => {
-    Vue.prototype.$common.closeLoading();
     if (response && response.data) {
+      Vue.prototype.$common.closeLoading();
       if (response.data.status == '-1') {
         sessionStorage.removeItem('token');
         if(router.currentRoute.path!='/login'){

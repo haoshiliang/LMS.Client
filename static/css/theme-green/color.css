@@ -63,4 +63,7 @@
 .footer_content{
   color:#606266;
 }
+.el-dialog__footer{
+  border-top:1px solid #606266;
+}
 

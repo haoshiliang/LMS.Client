@@ -5,6 +5,7 @@ exports.install = function (Vue,options){
   var _this=Vue.prototype;
   var Common=Vue.prototype.$common={};
   var loading=null;
+  var loadingCnt = 0;
   /**
    * 在新页面打开
    * @param {*} $this
@@ -35,6 +36,7 @@ exports.install = function (Vue,options){
    */
   Common.openLoading=function(loadText){
     loadText=(loadText=="" || loadText==null)?"正在加载，请稍候...":loadText;
+    loadingCnt+=1;
     loading = _this.$loading({
       lock: true,
       text: loadText,
@@ -46,7 +48,9 @@ exports.install = function (Vue,options){
      * 关闭Loading
      */
     Common.closeLoading=function(){
-      if (loading){
+      loadingCnt-=1;
+      if (loading && loadingCnt<=0){
+        loadingCnt = 0;
         loading.close();
       }
     }

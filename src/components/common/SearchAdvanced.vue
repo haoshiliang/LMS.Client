@@ -90,7 +90,6 @@
         },
         selectChange:function(v,targetName) {
           this.getSelectBinder(v,targetName);
-          this.getList();
         },
         getSelectBinder:function (parentValue,targetName) {
           if (targetName!=""){

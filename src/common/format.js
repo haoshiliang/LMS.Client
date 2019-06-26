@@ -12,8 +12,6 @@ exports.install = function (Vue,options){
    * @param cellValue
    */
   Format.rowEnabled=function(row,column,cellValue){
-    console.log(cellValue);
-
     return cellValue == "1"?"启用":"禁用";
   }
   /**
