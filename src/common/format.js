@@ -4,9 +4,17 @@
 exports.install = function (Vue,options){
   var _this=Vue.prototype;
   var Format=Vue.prototype.$format={};
-
   /**
-   * 格式化是否可用
+   * 格式化是/否
+   * @param row
+   * @param column
+   * @param cellValue
+   */
+  Format.rowYesOrNo=function(row,column,cellValue){
+    return cellValue == "1"?"是":"否";
+  }
+  /**
+   * 格式化启用/禁用
    * @param row
    * @param column
    * @param cellValue

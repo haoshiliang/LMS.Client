@@ -17,6 +17,7 @@
           <template>
             <el-table :data="data" style="width: 100%" @sort-change="handleSort"
                        :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
+              <el-table-column label="序号" width="50" :formatter="formatRowNum" align="center"></el-table-column>
               <el-table-column prop="DepartCode" label="科室编码" sortable width="180"></el-table-column>
               <el-table-column prop="DepartName" label="科室名称" sortable width="180"></el-table-column>
               <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"></el-table-column>
@@ -120,6 +121,9 @@
         },
         handleCurrentChange(val) {
           this.selectedRow = val;
+        },
+        formatRowNum:function(row,column,cellValue,index){
+          return (this.$refs.cPagination.paginationJson.pageIndex - 1) * this.$refs.cPagination.paginationJson.pageSize + index  + 1;
         }
       },
       mounted() {

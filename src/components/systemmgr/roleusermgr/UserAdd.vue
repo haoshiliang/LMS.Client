@@ -24,7 +24,7 @@
           <el-input auto-complete="off" placeholder="电话" v-model="userForm.Tel"></el-input>
         </el-form-item>
         <el-form-item label="启用"  prop="IsEnabled">
-          <el-switch v-model="userForm.IsEnabled"></el-switch>
+          <el-switch v-model="userForm.IsEnable"></el-switch>
         </el-form-item>
         <el-form-item label="超级管理员"  prop="IsSuperAdmin">
           <el-switch v-model="userForm.IsSuperAdmin"></el-switch>
@@ -70,7 +70,7 @@
             DepartmentModel:{DepartName:''},
             PositionId:'',
             PositionModel:{PositionName:''},
-            IsEnabled:true
+            IsEnable:true
           },
           title: "",
           addFormVisible: false,
@@ -86,10 +86,12 @@
           if (id != "") {
             this.title = "修改用户信息";
             this.userForm = editFormData;
-            console.log(this.userForm);
           } else {
             this.title = "添加用户信息";
             this.userForm = Object.assign({}, this.defalutData);
+            this.userForm.CorporationModel.CorpName = '';
+            this.userForm.DepartmentModel.DepartName = '';
+            this.userForm.PositionModel.PositionName = '';
           }
           this.addFormVisible = true;
         },

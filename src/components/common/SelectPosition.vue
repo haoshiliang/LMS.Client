@@ -1,15 +1,14 @@
 <template>
-  <div v-if="addFormVisible" style="width:400px;">
+  <div style="width:400px;">
     <el-dialog title="选择职位" :visible.sync="addFormVisible"  width="400px" :close-on-click-modal="false">
       <div style="height: 300px;overflow: auto;">
         <el-tree
           ref="tree"
           highlight-current
+          node-key="Id"
           :data="treeData"
           :props="defaultProps"
           :current-node-key = "currentNodeKey"
-          :expand-on-click-node="false"
-          :default-expand-all="false"
           @node-click="onClickNode">
         </el-tree>
       </div>
@@ -53,26 +52,32 @@
         openPosition: function (id) {
           this.addFormVisible = true;
           if (id) {
-            this.currentNodeKey = id;
+            this.$nextTick(() => {
+              this.$refs.tree.setCurrentKey(id);
+            });
           }
-          setTimeout(() => {
-            this.getPositionList();
-          }, 200);
+          if (this.treeData.length==0) {
+            setTimeout(() => {
+              this.getPositionList();
+            }, 200);
+          }
         },
         onClickNode: function (node) {
-          let ids = node[this.defaultProps.fullValue].split('$');
-          if (ids && ids.length > 0) {
-            let corpId = ids[0].split('^')[0];
-            let corpName = ids[0].split('^')[1];
-            let deptId = ids[1].split('^')[0];
-            let deptName = ids[1].split('^')[1];
-            let posId = ids[2].split('^')[0];
-            let posName = ids[2].split('^')[1];
-            if (this.select) {
-              this.select(corpId, corpName, deptId, deptName, posId, posName);
+          if(node[this.defaultProps.fullValue]) {
+            let ids = node[this.defaultProps.fullValue].split('$');
+            if (ids && ids.length > 0) {
+              let corpId = ids[0].split('^')[0];
+              let corpName = ids[0].split('^')[1];
+              let deptId = ids[1].split('^')[0];
+              let deptName = ids[1].split('^')[1];
+              let posId = ids[2].split('^')[0];
+              let posName = ids[2].split('^')[1];
+              if (this.select) {
+                this.select(corpId, corpName, deptId, deptName, posId, posName);
+              }
+              this.addFormVisible = false;
             }
           }
-          this.addFormVisible = false;
         }
       },
       mounted() {

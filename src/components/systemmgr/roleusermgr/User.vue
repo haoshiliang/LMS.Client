@@ -18,13 +18,14 @@
       <template>
         <el-table :data="data" style="width: 100%" @sort-change="handleSort"
                   :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
-          <el-table-column prop="Code" label="用户编码" sortable width="130"></el-table-column>
-          <el-table-column prop="Name" label="用户名称" sortable width="130"></el-table-column>
-          <el-table-column prop="LoginName" label="登录名称" sortable  width="130"></el-table-column>
+          <el-table-column label="序号" width="50" :formatter="formatRowNum" align="center"></el-table-column>
+          <el-table-column prop="Code" label="用户编码" sortable width="150"></el-table-column>
+          <el-table-column prop="Name" label="用户名称" sortable width="150"></el-table-column>
+          <el-table-column prop="LoginName" label="登录名称" sortable  width="150"></el-table-column>
           <el-table-column prop="IsEnable" sort-by="Enable" label="用户状态"  sortable :formatter="this.$format.rowEnabled"  width="110" align="center"></el-table-column>
-          <el-table-column prop="Tel" label="电话" width="180"></el-table-column>
-          <el-table-column prop="Address" label="地址" ></el-table-column>
-          <el-table-column prop="CorpName" label="所属职位" :formatter="corpFormatter"  width="220"></el-table-column>
+          <el-table-column prop="Tel" label="电话"></el-table-column>
+          <el-table-column prop="IsSuperAdmin" label="超级管理员" :formatter="this.$format.rowYesOrNo" align="center" width="130"></el-table-column>
+          <el-table-column prop="CorpName" label="所属职位" :formatter="corpFormatter"  width="250"></el-table-column>
           <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"  width="140"></el-table-column>
         </el-table>
       </template>
@@ -312,6 +313,9 @@
         },
         corpFormatter: function (row, column, cellValue) {
           return row.CorpName + "-" + row.DeptName + "-" + row.PositionName;
+        },
+        formatRowNum:function(row,column,cellValue,index){
+          return (this.$refs.cPagination.paginationJson.pageIndex - 1) * this.$refs.cPagination.paginationJson.pageSize + index  + 1;
         }
       },
       mounted() {
