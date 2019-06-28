@@ -50,18 +50,20 @@ Axios.interceptors.response.use(
     if (response && response.data) {
       Vue.prototype.$common.closeLoading();
       if (response.data.status == '-1') {
-        sessionStorage.removeItem('token');
-        if(router.currentRoute.path!='/login'){
-          Vue.prototype.$alert(response.data.message,'错误提示',{
-            confirmButtonText: '确定',
-            type: 'error',
-            callback:action => {
-              router.replace({
-                path: 'login',
-                query: {redirect: router.currentRoute.fullPath}
-              });
-            }
-          })
+        if (sessionStorage.getItem('token')) {
+          sessionStorage.removeItem('token');
+          if (router.currentRoute.path != '/login') {
+            Vue.prototype.$alert(response.data.message, '错误提示', {
+              confirmButtonText: '确定',
+              type: 'error',
+              callback: action => {
+                router.replace({
+                  path: 'login',
+                  query: {redirect: router.currentRoute.fullPath}
+                });
+              }
+            })
+          }
         }
       }
       else if (response.data.status == "0" && router.currentRoute.path!='/login'){
