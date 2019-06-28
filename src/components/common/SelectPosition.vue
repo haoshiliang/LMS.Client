@@ -1,14 +1,15 @@
 <template>
-  <div style="width:400px;">
+  <div style="width:400px;" v-if="addFormVisible">
     <el-dialog title="选择职位" :visible.sync="addFormVisible"  width="400px" :close-on-click-modal="false">
       <div style="height: 300px;overflow: auto;">
         <el-tree
           ref="tree"
           highlight-current
-          node-key="Id"
+          node-key="FullId"
           :data="treeData"
           :props="defaultProps"
-          :current-node-key = "currentNodeKey"
+          :default-checked-keys="[currentNodeKey]"
+          :default-expanded-keys="[currentNodeKey]"
           @node-click="onClickNode">
         </el-tree>
       </div>
@@ -25,9 +26,10 @@
             value: 'Id',
             label: 'Name',
             fullValue: 'FullId',
+            fullNameValue:'FullIdName',
             children: 'ChildList',
           },
-          currentNodeKey: "",
+          currentNodeKey: '',
           treeData: [],
           addFormVisible: false,
         }
@@ -49,22 +51,20 @@
             }
           );
         },
-        openPosition: function (id) {
+        openPosition: function (corpId,deptId,positionId) {
           this.addFormVisible = true;
-          if (id) {
-            this.$nextTick(() => {
-              this.$refs.tree.setCurrentKey(id);
-            });
+          if (corpId) {
+            this.currentNodeKey = (corpId + '$' + deptId + '$' + positionId);
           }
-          if (this.treeData.length==0) {
+          if (this.treeData.length == 0) {
             setTimeout(() => {
               this.getPositionList();
             }, 200);
           }
         },
         onClickNode: function (node) {
-          if(node[this.defaultProps.fullValue]) {
-            let ids = node[this.defaultProps.fullValue].split('$');
+          if(node[this.defaultProps.fullNameValue]) {
+            let ids = node[this.defaultProps.fullNameValue].split('$');
             if (ids && ids.length > 0) {
               let corpId = ids[0].split('^')[0];
               let corpName = ids[0].split('^')[1];

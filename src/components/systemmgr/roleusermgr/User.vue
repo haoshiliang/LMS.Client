@@ -8,7 +8,7 @@
         <el-button type="text" size="medium" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
         <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
         <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-        <el-button type="text" size="medium" v-if="fList.UserAllocation" icon="el-icon-c-scale-to-original">角色分配</el-button>
+        <el-button type="text" size="medium" v-if="fList.UserAllocation" icon="el-icon-c-scale-to-original" @click="handleAddUserRole">角色分配</el-button>
       </el-col>
       <el-col :span="16" style="text-align:right;">
         <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
@@ -31,14 +31,16 @@
       </template>
     </div>
     <add-user ref="addForm"/>
+    <add-user-role ref="addUserRole"/>
   </div>
 </template>
 
 <script>
   import addUser from "@/components/systemmgr/roleusermgr/UserAdd"
+  import addUserRole from "@/components/systemmgr/roleusermgr/UserRoleAdd"
     export default {
       name: "User",
-      components:{ addUser },
+      components:{addUserRole, addUser },
       data() {
         return {
           gridHeight: $(".custom-grid-container").height(),
@@ -316,6 +318,14 @@
         },
         formatRowNum:function(row,column,cellValue,index){
           return (this.$refs.cPagination.paginationJson.pageIndex - 1) * this.$refs.cPagination.paginationJson.pageSize + index  + 1;
+        },
+        handleAddUserRole:function () {
+          if (this.selectedRow != null) {
+            this.$refs.addUserRole.setAddForm(this.selectedRow.Id);
+          }
+          else {
+            this.$message.info("请选择要设置角色的行!");
+          }
         }
       },
       mounted() {

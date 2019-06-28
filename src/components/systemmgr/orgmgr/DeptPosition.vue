@@ -77,7 +77,6 @@
       mounted() {
       },
       created() {
-
       }
     }
 </script>

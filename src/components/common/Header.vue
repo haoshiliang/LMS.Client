@@ -7,8 +7,6 @@
         <div class="logo">至诚运营管理平台</div>
         <div class="header-right">
             <div class="header-user-con">
-                <!-- <marquee onMouseOver="this.start()" style="font-size:18px;padding-bottom:4px;width:100px;" scrollamount="1">{{getlev}}</marquee> -->
-                <div style="font-size:18px;padding-bottom:4px;width:90px;">{{getlev}}</div>
                 <!-- 全屏显示 -->
                 <div class="btn-fullscreen" @click="handleFullScreen">
                     <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
@@ -51,7 +49,7 @@
                 collapse: false,
                 fullscreen: false,
                 name: 'merciqiao',
-                lev:'青铜级',
+                lev:'',
                 message: 2
             }
         },
@@ -59,18 +57,6 @@
             username(){
                 let username = this.$common.getSessionStorage('username');
                 return username ? username : this.name;
-            },
-            getlev(){
-
-                let levList = this.$common.getSessionStorage('lev',true);
-                let lev='';
-                if(levList){
-                    for(var i=0;i<levList.length;i++){
-                        lev+=levList[i].RoleName;
-                    }
-                }
-
-                return lev ? lev : this.lev;
             }
         },
         methods:{

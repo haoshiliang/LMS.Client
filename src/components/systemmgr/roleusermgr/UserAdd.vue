@@ -120,7 +120,7 @@
           this.addFormVisible = false;
         },
         selectPosition() {
-          this.$refs.selPosition.openPosition(this.userForm.PositionId);
+          this.$refs.selPosition.openPosition(this.userForm.CorpId,this.userForm.DeptId,this.userForm.PositionId);
         },
         callbackPosition:function (corpId, corpName, deptId, deptName, posId, posName) {
           this.userForm.CorpId = corpId;

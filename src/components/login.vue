@@ -109,7 +109,6 @@ export default {
                             this.$common.setSessionStorage('token', json.data.Ticket);
                             this.$common.setSessionStorage('username',json.data.UserInfo.Name);
                             this.$common.setSessionStorage('loginName',json.data.UserInfo.LoginName);
-                            this.$common.setSessionStorage('lev',json.data.UserInfo.RoleList);
                             this.$common.setSessionStorage('menuList',json.data.SysRoleVoList);
                             //存入菜单,渲染菜单
                             this.$store.dispatch("add_Menus",json.data.SysRoleVoList);
