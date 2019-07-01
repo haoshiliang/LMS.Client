@@ -321,7 +321,11 @@
         },
         handleAddUserRole:function () {
           if (this.selectedRow != null) {
-            this.$refs.addUserRole.setAddForm(this.selectedRow.Id);
+            if (this.selectedRow.IsSuperAdmin==true){
+              this.$message.info("超级管理员无需设置角色,有全部模块权限!");
+            } else {
+              this.$refs.addUserRole.setAddForm(this.selectedRow.Id);
+            }
           }
           else {
             this.$message.info("请选择要设置角色的行!");

@@ -238,6 +238,9 @@ body .el-table th.gutter {
 .searchForm .el-col .searchItem .searchInput{
   width: 200px;
 }
+.searchForm .el-col .searchItem .searchMinInput{
+  width: 150px;
+}
 .searchForm .searchButton{
   float: left;
   width: 110px;

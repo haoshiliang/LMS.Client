@@ -21,8 +21,8 @@
         return {
           checkedRoles: [],
           roleList: [],
-          addFormVisible:false,
-          userId:''
+          addFormVisible: false,
+          userId: ''
         }
       },
       methods: {
@@ -34,7 +34,7 @@
             this.getUserRole(id);
           }, 200);
         },
-        getList:function(){
+        getList: function () {
           var _this = this;
           this.$ajax({
             method: "get",
@@ -48,11 +48,11 @@
             }
           );
         },
-        getUserRole:function(userId){
+        getUserRole: function (userId) {
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/UserRole/GetByUserId?userId="+userId
+            url: "/api/UserRole/GetByUserId?userId=" + userId
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
@@ -62,37 +62,42 @@
           );
         },
         submitForm: function () {
-          if(this.checkedRoles.length>0){
-            let param=[];
-            for(var i=0,len=this.checkedRoles.length;i<len;i++){
-              param.push({UserId:this.userId,RoleId:this.checkedRoles[i],IsRoleMaster:false});
+          let param = [];
+          if(this.checkedRoles.length>0) {
+            for (var i = 0, len = this.checkedRoles.length; i < len; i++) {
+              param.push({UserId: this.userId, RoleId: this.checkedRoles[i], IsRoleMaster: false});
             }
-            this.$ajax({
-              method: "post",
-              url: "/api/UserRole",
-              data: param
-            }).then(res => {
-              if (res.data.status == "1") {
-                this.$message({message: "提交成功", type: "success"});
-                this.closeForm();
-              }
-              else {
-                this.$message({message: res.data.message, type: "error"});
-              }
-            });
-          }else{
-            this.$message({message: "请选择角色", type: "warning"});
+          }else {
+            param.push({UserId: this.userId, RoleId: '', IsRoleMaster: false});
           }
+          this.$ajax({
+            method: "post",
+            url: "/api/UserRole",
+            data: param
+          }).then(res => {
+            if (res.data.status == "1") {
+              this.$message({message: "提交成功", type: "success"});
+              this.closeForm();
+            }
+            else {
+              this.$message({message: res.data.message, type: "error"});
+            }
+          });
         },
         closeForm: function () {
           this.addFormVisible = false;
         }
       },
-      mounted() {},
-      created() {}
+      mounted() {
+      },
+      created() {
+      }
     }
 </script>
 
 <style scoped>
-
+  .el-checkbox{
+    min-width: 130px;
+    margin-bottom:5px;
+  }
 </style>

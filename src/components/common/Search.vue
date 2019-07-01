@@ -6,7 +6,7 @@
           <div class="searchTitle">{{field.Title}}</div>
           <span class="searchFlag">：</span>
           <div class="searchInputDiv">
-            <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList"></el-input>
+            <el-input size="small" v-model="field.Value" :class="inputCss" @keyup.enter.native="getList"></el-input>
           </div>
           <div style="clear:both;"></div>
         </div>
@@ -14,7 +14,7 @@
           <div class="searchTitle">{{field.Title}}</div>
           <span class="searchFlag">：</span>
           <div class="searchInputDiv">
-            <select-tree v-model="field.Value" width="200" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
+            <select-tree v-model="field.Value" :width="inputWidth" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
           </div>
           <div style="clear:both;"></div>
         </div>
@@ -22,7 +22,7 @@
           <div class="searchTitle">{{field.Title}}</div>
           <span class="searchFlag">：</span>
           <div class="searchInputDiv">
-            <el-select size="small" clearable v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
+            <el-select size="small" clearable v-model="field.Value" placeholder="--全部--" :class="inputCss" @change="selectChange(field.Value,field.TargetName)">
               <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
             </el-select>
           </div>
@@ -32,7 +32,7 @@
           <div class="searchTitle">{{field.Title}}</div>
           <span class="searchFlag">：</span>
           <div class="searchInputDiv">
-            <el-select size="small" clearable multiple v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
+            <el-select size="small" clearable multiple v-model="field.Value" placeholder="--全部--" :class="inputCss" @change="selectChange(field.Value,field.TargetName)">
               <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
             </el-select>          </div>
           <div style="clear:both;"></div>
@@ -40,7 +40,7 @@
       </template>
       <div class="searchButton">
         <el-button type="primary" size="small" @click="this.getList">查询</el-button>
-        <el-button type="primary" size="small" icon="el-icon-more" style="margin: 0" @click="opensAdvanced"></el-button>
+        <el-button type="primary" size="small" icon="el-icon-more" style="margin: 0" @click="opensAdvanced"  v-if="this.isShowdvanced"></el-button>
       </div>
     </el-col>
     <search-advanced ref="sAdvanced" :query-param="this.queryParam" :handle-get-list="this.handleGetList"/>
@@ -71,7 +71,15 @@
           },
           required: true
         },
-        handleGetList: {}
+        handleGetList: {},
+        isShowdvanced:{
+          type:Boolean,
+          default:true
+        },
+        size:{
+          type:String,
+          default:''
+        }
       },
       methods: {
         getList() {
@@ -144,6 +152,14 @@
             }
           }
           return returnValue;
+        }
+      },
+      computed:{
+        inputCss:function () {
+          return this.size=='small'?'searchMinInput':'searchInput';
+        },
+        inputWidth:function () {
+          return this.size=='small'?'150':'200';
         }
       },
       created: function () {
