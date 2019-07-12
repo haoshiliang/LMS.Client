@@ -93,6 +93,12 @@ const dynamicRouter = [
     meta: { title: '模块管理' }
   },
   {
+    name: 'SysModuleQuery',
+    path: '/ModuleMgr/SysModuleQuery',
+    component: resolve => require(['@/components/systemmgr/modulemgr/ModuleQuery.vue'], resolve),
+    meta: { title: '查询设置' }
+  },
+  {
     name: 'SysRole',
     path: '/RoleUserMgr/SysRole',
     component: resolve => require(['@/components/systemmgr/roleusermgr/Role.vue'], resolve),

@@ -1,7 +1,7 @@
 <template>
   <div v-if="addFormVisible">
     <el-dialog :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
-      <el-form :model="moduleForm" :inline="true" ref="moduleForm" label-width="80px" :rules="moduleRules">
+      <el-form :model="moduleForm" :inline="true" ref="moduleForm" label-width="100px" :rules="moduleRules">
         <el-form-item label="模块父级" prop="ParentId">
           <select-tree v-model="moduleForm.ParentId" :showText="moduleForm.ParentName" :options="moduleList" :props="defaultProps" width="207" />
         </el-form-item>
@@ -19,6 +19,9 @@
         </el-form-item>
         <el-form-item label="启用"  prop="IsEnabled">
           <el-switch v-model="moduleForm.IsEnabled"></el-switch>
+        </el-form-item>
+        <el-form-item label="允许设置查询"  prop="IsAllowQuery">
+          <el-switch v-model="moduleForm.IsAllowQuery"></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -57,7 +60,8 @@
             Name: '',
             Icon:'',
             ModulePath:'',
-            IsEnabled:true
+            IsEnabled:true,
+            IsAllowQuery:true
           },
           title: "",
           addFormVisible: false,
