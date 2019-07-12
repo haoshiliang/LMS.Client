@@ -9,7 +9,7 @@
         <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
         <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
         <el-button type="text" size="medium" v-if="fList.UserAllocation" icon="el-icon-c-scale-to-original" @click="handleAddUserRole">用户分配</el-button>
-        <el-button type="text" size="medium" v-if="fList.ModuleAllocation" icon="el-icon-coin">模块分配</el-button>
+        <el-button type="text" size="medium" v-if="fList.ModuleAllocation" icon="el-icon-coin" @click="handleAddRoleModule">模块分配</el-button>
       </el-col>
       <el-col :span="16" style="text-align:right;">
         <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
@@ -28,15 +28,18 @@
     </div>
     <add-role ref="addForm"/>
     <add-role-user ref="addRoleUser"/>
+    <add-role-module ref="addRoleModule"/>
   </div>
 </template>
 
 <script>
   import addRole from "@/components/systemmgr/roleusermgr/RoleAdd"
   import addRoleUser from "@/components/systemmgr/roleusermgr/RoleUserAdd"
+  import addRoleModule from "@/components/systemmgr/roleusermgr/RoleModuleAdd"
+
     export default {
       name: "Role",
-      components: {addRole,addRoleUser},
+      components: {addRole,addRoleUser,addRoleModule},
       data() {
         return {
           gridHeight:$(".custom-grid-container").height(),
@@ -135,6 +138,14 @@
           }
           else {
             this.$message.info("请选择要设置用户的行!");
+          }
+        },
+        handleAddRoleModule:function () {
+          if (this.selectedRow != null) {
+            this.$refs.addRoleModule.setAddForm(this.selectedRow.Id);
+          }
+          else {
+            this.$message.info("请选择要设置模块的行!");
           }
         }
       },

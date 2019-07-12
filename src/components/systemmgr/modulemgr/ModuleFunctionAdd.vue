@@ -57,6 +57,9 @@
           this.$refs.ruleForm.validate(valid => {
             if (valid) {
               let param = Object.assign([], this.ruleForm.functionList);
+              if (param.length==0){
+                param.push({Id:'-1',Name:'',ParentId:this.mId,IsEnabled:true});
+              }
               this.$ajax({
                 method: "post",
                 url: "/api/Function",
