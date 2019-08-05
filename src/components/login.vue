@@ -108,6 +108,7 @@ export default {
                         if (json.status == '1') {
                             this.$common.setSessionStorage('token', json.data.Ticket);
                             this.$common.setSessionStorage('username',json.data.UserInfo.Name);
+                            this.$common.setSessionStorage("userId",json.data.UserInfo.Id);
                             this.$common.setSessionStorage('loginName',json.data.UserInfo.LoginName);
                             this.$common.setSessionStorage('menuList',json.data.SysRoleVoList);
                             //存入菜单,渲染菜单

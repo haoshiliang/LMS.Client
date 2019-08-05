@@ -2,10 +2,10 @@
   <div class="sidebar">
     <div :class="titleStyle">{{title}}</div><!--deepblue:506aa9;green:009676-->
     <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#506aa9"
-             text-color="#eee" active-text-color="#ccca37" unique-opened router>
+             text-color="#eee" active-text-color="#ccca37" unique-opened router :defaultOpeneds='defaultOpeneds'>
       <template v-for="(item,i) in menuList">
         <template v-if="item.subs&&item.subs.length">
-          <el-submenu :index="'i+1'" :key="i">
+          <el-submenu :index="(i+1).toString()" :key="i">
             <template slot="title">
               <i :class="item.icon+' sidebar-icon-color'"></i><span slot="title">{{ item.title }}</span>
             </template>
@@ -40,7 +40,8 @@
     data() {
       return {
         collapse: false,
-        items: []
+        items: [],
+        defaultOpeneds:['1']
       }
     },
     computed:mapState({

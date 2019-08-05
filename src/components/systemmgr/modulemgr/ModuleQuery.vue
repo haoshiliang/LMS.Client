@@ -32,13 +32,11 @@
                 <el-table-column label="序号" width="50" :formatter="formatRowNum" align="center"></el-table-column>
                 <el-table-column prop="ModuleName" label="模块名称" sortable width="150"></el-table-column>
                 <el-table-column prop="Title" label="标题" width="150"></el-table-column>
-                <el-table-column prop="Field" label="查询字段"  width="150"></el-table-column>
+                <el-table-column prop="Field" label="查询字段"  width="250"></el-table-column>
                 <el-table-column prop="ParamName" label="参数名"  width="150"></el-table-column>
-                <el-table-column prop="Field" label="操作类型"  width="150"></el-table-column>
-                <el-table-column prop="DataType" label="数据类型"  width="150"></el-table-column>
-                <el-table-column prop="ControlType" label="控件类型"  width="150"></el-table-column>
-                <el-table-column prop="DefaultValue" label="默认查询值"  width="150"></el-table-column>
-                <el-table-column prop="Field" label="操作类型"  width="150"></el-table-column>
+                <el-table-column prop="Operator" label="操作类型"  width="150"></el-table-column>
+                <el-table-column prop="DataTypeLabel" label="数据类型"  width="150"></el-table-column>
+                <el-table-column prop="ControlTypeLabel" label="控件类型"  width="150"></el-table-column>
                 <el-table-column prop="IsDefaultQuery" sort-by="IS_DEFAULT_QUERY" label="是否默认查询"  sortable :formatter="this.$format.rowYesOrNo"  width="150" align="center"></el-table-column>
                 <el-table-column prop="DisplayOrder" label="显示顺序" sortable width="150"></el-table-column>
                 <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"  width="140"></el-table-column>
@@ -65,7 +63,7 @@
           recondTotal: 0,
           queryParam: {
             IsAdvancedQuery: false,
-            WhereList: [{Title: '模块ID', Field: 'mq.ID', Operator: '=', Value: '', DataType: 'String'}],
+            WhereList: [{Title: '模块ID', Field: 'mq.MODULE_ID',ParamName: 'ModuleId', Operator: '=', Value: '', DataType: 'String',IsDefaultQuery: true}],
             SortList: []
           },
           extendKeys: [],
@@ -113,8 +111,10 @@
           );
         },
         handleOnClick:function (d,n,obj) {
-          this.queryParam.WhereList[0].Value = d.Id;
-          this.getList();
+          if (d.ChildList.length==0) {
+            this.queryParam.WhereList[0].Value = d.Id;
+            this.getList();
+          }
         },
         handleSort: function (column) {
           var sortLen = this.queryParam.SortList.length;
@@ -136,22 +136,18 @@
           return (this.$refs.cPagination.paginationJson.pageIndex - 1) * this.$refs.cPagination.paginationJson.pageSize + index  + 1;
         },
         handleAdd: function () {
-          this.$refs.addForm.setAddForm("", {});
+          if (this.queryParam.WhereList[0].Value!=""){
+            this.$refs.addForm.setAddForm("", this.queryParam.WhereList[0].Value);
+          } else{
+            this.$message.info("请选择左侧要添加查询的模块!");
+          }
         },
         handleEdit: function () {
           if (this.selectedRow != null) {
             var _this = this;
             var id = this.selectedRow.Id;
-            this.$ajax({
-              method: "get",
-              url: "/api/User?id=" + id
-            }).then(
-              function (resultData) {
-                if (resultData.data.status == '1') {
-                  _this.$refs.addForm.setAddForm(id, Object.assign({}, resultData.data.data));
-                }
-              }
-            );
+            var moduleId = this.selectedRow.ModuleId;
+            _this.$refs.addForm.setAddForm(id,moduleId);
           }
           else {
             this.$message.info("请选择要修改的行!");
@@ -163,7 +159,7 @@
               .then(() => {
                 this.$ajax({
                   method: "delete",
-                  url: "/api/User?id=" + this.selectedRow.Id,
+                  url: "/api/ModuleQuery?id=" + this.selectedRow.Id,
                 }).then(res => {
                   if (res.data.status == "1") {
                     this.$message({message: "删除成功", type: "success"});

@@ -40,10 +40,7 @@
           recondTotal:0,
           queryParam:{
             IsAdvancedQuery:false,
-            WhereList:[
-              {Title:'科室编码',Field:'DepartCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],AllBinderList:[],TargetName:'',SourceName:'',IsDefaultQuery:true},
-              {Title:'部门名称',Field:'DepartName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],AllBinderList:[],TargetName:'',SourceName:'',IsDefaultQuery:true}
-              ],
+            WhereList:[],
             SortList:[]
           },
           selectedRow:null,
@@ -51,6 +48,21 @@
         };
       },
       methods: {
+        getWhereList: function () {
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid+"&userId="+this.$common.getSessionStorage("userId"),
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                console.log(resultData.data.data);
+                _this.queryParam = resultData.data.data;
+                _this.getList();
+              }
+            }
+          );
+        },
         getList: function () {
           var _this = this;
           this.$ajax({
@@ -127,7 +139,7 @@
         }
       },
       mounted() {
-        this.getList();
+        this.getWhereList();
         this.$nextTick(() => {
           var that = this;
           this.gridHeight = $(".custom-grid-container").height();

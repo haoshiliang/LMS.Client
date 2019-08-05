@@ -47,10 +47,7 @@
           recondTotal:0,
           queryParam:{
             IsAdvancedQuery:false,
-            WhereList:[
-              {Title:'角色编码',Field:'RoleCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],AllBinderList:[],TargetName:'',SourceName:'',IsDefaultQuery:true},
-              {Title:'角色名称',Field:'RoleName|PyCode',Operator:'like',Value:'',DataType:'String',ControlType:'TextBox',BinderList:[],AllBinderList:[],TargetName:'',SourceName:'',IsDefaultQuery:true}
-            ],
+            WhereList:[],
             SortList:[]
           },
           selectedRow:null,
@@ -58,6 +55,20 @@
         };
       },
       methods: {
+        getWhereList: function () {
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid+"&userId="+this.$common.getSessionStorage("userId"),
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                _this.queryParam = resultData.data.data;
+                _this.getList();
+              }
+            }
+          );
+        },
         getList: function () {
           var _this = this;
           this.$ajax({
@@ -150,7 +161,7 @@
         }
       },
       mounted() {
-        this.getList();
+        this.getWhereList();
         this.$nextTick(() => {
           var that = this;
           this.gridHeight = $(".custom-grid-container").height();

@@ -46,32 +46,32 @@
         </el-form-item>
 
         <el-form-item label="目标参数名"  prop="TargetName">
-          <el-select v-model="moduleQueryForm.TargetName" placeholder="需要级联更新的目标参数名" style="width: 150px;">
+          <el-select v-model="moduleQueryForm.TargetName" placeholder="需要级联更新的目标参数名" style="width: 150px;"  :disabled="targetEnabled">
             <el-option
-              v-for="item in defaultDateList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in queryList"
+              :key="item.Id"
+              :label="item.Title"
+              :value="item.Id">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="源参数名1"  prop="RelationId_1">
-          <el-select v-model="moduleQueryForm.RelationId_1" placeholder="需要级联更新的源参数名1" style="width: 150px;">
+          <el-select v-model="moduleQueryForm.RelationId_1" placeholder="需要级联更新的源参数名1" style="width: 150px;" :disabled="dropEnabled">
             <el-option
-              v-for="item in defaultDateList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in queryList"
+              :key="item.Id"
+              :label="item.Title"
+              :value="item.Id">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="源参数名2"  prop="RelationId_2">
-          <el-select v-model="moduleQueryForm.RelationId_2" placeholder="需要级联更新的源参数名2" style="width: 150px;">
+          <el-select v-model="moduleQueryForm.RelationId_2" placeholder="需要级联更新的源参数名2" style="width: 150px;" :disabled="dropEnabled">
             <el-option
-              v-for="item in defaultDateList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in queryList"
+              :key="item.Id"
+              :label="item.Title"
+              :value="item.Id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -96,7 +96,7 @@
           <el-switch v-model="moduleQueryForm.IsDefaultQuery"></el-switch>
         </el-form-item>
         <el-form-item label="下拉数据源"  prop="DropdownDataSource">
-          <el-select v-model="moduleQueryForm.DropdownDataSource" placeholder="请选择下拉数据源" style="width: 150px;">
+          <el-select v-model="moduleQueryForm.DropdownDataSource" placeholder="请选择下拉数据源" style="width: 150px;" :disabled="dropEnabled">
             <el-option
               v-for="item in dropdownDataSource"
               :key="item.value"
@@ -114,10 +114,10 @@
 选项2ID|选项2名称
 数据库数据
 SELECT ID,NAME FROM DUAL
-" v-model="moduleQueryForm.DownListValue" style="width: 300px;"></el-input>
+" v-model="moduleQueryForm.DownListValue" style="width: 300px;" :disabled="dropEnabled"></el-input>
         </el-form-item>
         <el-form-item label="Exists条件"  prop="Exists">
-          <el-input type="textarea" :rows="5" placeholder="Exists条件" v-model="moduleQueryForm.Exists" style="width: 300px;"></el-input>
+          <el-input type="textarea" :rows="5" placeholder="Exists条件" v-model="moduleQueryForm.Exists" style="width: 300px;" :disabled="existsEnabled"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -143,36 +143,37 @@ SELECT ID,NAME FROM DUAL
             ControlType: [{required: true, message: '请选择控件类型', trigger: 'blur'}]
           },
           moduleQueryForm: {
-            Id:'',
+            Id: '',
             ModuleId: '',
             Title: '',
             Field: '',
             ParamName: '',
-            Operator:'',
-            DefaultValue:'',
-            DownListValue:'',
-            Exists:'',
-            TargetName:'',
-            DataType:'',
-            ControlType:'',
-            DropdownDataSource:0,
-            IsDefaultQuery:true,
-            RelationId_1:'',
-            RelationId_2:'',
-            RelationId_3:'',
-            DisplayOrder:0
+            Operator: '',
+            DefaultValue: '',
+            DownListValue: '',
+            Exists: '',
+            TargetName: '',
+            DataType: '',
+            ControlType: '',
+            DropdownDataSource: 0,
+            IsDefaultQuery: true,
+            RelationId_1: '',
+            RelationId_2: '',
+            RelationId_3: '',
+            DisplayOrder: 0
           },
           title: "",
           addFormVisible: false,
-          defalutData:{},
-          defaultDateList:[],
-          controlTypeList:[],
-          dataTypeList:[],
-          dropdownDataSource:[{label:'自定义',value:0},{label:'数据库',value:1}]
+          defalutData: {},
+          defaultDateList: [],
+          controlTypeList: [],
+          dataTypeList: [],
+          queryList:[],
+          dropdownDataSource: [{label: '自定义', value: 0}, {label: '数据库', value: 1}]
         }
       },
       methods: {
-        getControlType:function(){
+        getControlType: function () {
           var _this = this;
           this.$ajax({
             method: "get",
@@ -185,7 +186,7 @@ SELECT ID,NAME FROM DUAL
             }
           );
         },
-        getDataType:function(){
+        getDataType: function () {
           var _this = this;
           this.$ajax({
             method: "get",
@@ -198,7 +199,7 @@ SELECT ID,NAME FROM DUAL
             }
           );
         },
-        getDefaultList:function(){
+        getDefaultList: function () {
           var _this = this;
           this.$ajax({
             method: "get",
@@ -211,19 +212,54 @@ SELECT ID,NAME FROM DUAL
             }
           );
         },
+        getRelationList: function () {
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/Common/DateDefalutValueType",
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                _this.defaultDateList = resultData.data.data;
+              }
+            }
+          );
+        },
+        getData: function (id) {
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/ModuleQuery?id=" + id
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                _this.moduleQueryForm = resultData.data.data;
+              }
+            }
+          );
+        },
         resetForm: function () {
           if (this.$refs["moduleQueryForm"])
             this.$refs["moduleQueryForm"].resetFields();
         },
-        setAddForm: function (id,editFormData) {
+        setAddForm: function (id, moduleId) {
+          this.addFormVisible = true;
           if (id != "") {
             this.title = "修改查询设置信息";
-            this.moduleQueryForm = editFormData;
+            this.moduleQueryForm.ModuleId = moduleId;
           } else {
             this.title = "添加查询设置信息";
+            this.defalutData.ModuleId = moduleId;
             this.moduleQueryForm = Object.assign({}, this.defalutData);
           }
-          this.addFormVisible = true;
+          setTimeout(() => {
+            this.getControlType();
+            this.getDataType();
+            this.getDefaultList();
+            if (id != "") {
+              this.getData(id);
+            }
+          }, 200);
         },
         submitForm: function () {
           this.$refs.moduleQueryForm.validate(valid => {
@@ -231,7 +267,7 @@ SELECT ID,NAME FROM DUAL
               let param = Object.assign({}, this.moduleQueryForm);
               this.$ajax({
                 method: "post",
-                url: "/api/User",
+                url: "/api/ModuleQuery",
                 data: param
               }).then(res => {
                 if (res.data.status == "1") {
@@ -250,13 +286,37 @@ SELECT ID,NAME FROM DUAL
           this.addFormVisible = false;
         }
       },
-      computed:{
+      computed: {
+        existsEnabled:function () {
+          if (this.moduleQueryForm.Operator=="exists"){
+            return false;
+          }else{
+            this.moduleQueryForm.Exists='';
+            return true;
+          }
+        },
+        dropEnabled:function () {
+          if (this.moduleQueryForm.ControlType=="3" || this.moduleQueryForm.ControlType=="4"){
+            return false;
+          }else{
+            this.moduleQueryForm.RelationId_1='';
+            this.moduleQueryForm.RelationId_2='';
+            this.moduleQueryForm.DownListValue='';
+            this.moduleQueryForm.DropdownDataSource = 0;
+            return true;
+          }
+        },
+        targetEnabled:function () {
+          if (this.moduleQueryForm.ControlType=="3" || this.moduleQueryForm.ControlType=="4" || this.moduleQueryForm.ControlType=="5"){
+            return false;
+          }else{
+            this.moduleQueryForm.TargetName='';
+            return true;
+          }
+        }
       },
       mounted() {
         this.defalutData = Object.assign({}, this.moduleQueryForm);
-        this.getControlType();
-        this.getDataType();
-        this.getDefaultList();
       },
       created() {
       }
