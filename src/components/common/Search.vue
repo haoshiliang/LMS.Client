@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isShow">
     <el-col :span="24">
       <template v-for="field in this.queryParam.WhereList">
         <div class="searchItem" v-if="field.ControlType=='TextBox' && field.IsDefaultQuery">
@@ -160,6 +160,15 @@
         },
         inputWidth:function () {
           return this.size=='small'?'150':'200';
+        },
+        isShow:function () {
+          for(var i=0,len=this.queryParam.WhereList.length;i<len;i++){
+            if (this.queryParam.WhereList[i].ControlType == "TextBox" || this.queryParam.WhereList[i].ControlType == "ComboTreeBox" ||
+                 this.queryParam.WhereList[i].ControlType=="ComboRadioBox" || this.queryParam.WhereList[i].ControlType=="ComboMultipleBox"){
+              return true;
+            }
+          }
+          return false;
         }
       },
       created: function () {

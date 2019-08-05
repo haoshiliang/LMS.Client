@@ -216,11 +216,11 @@ SELECT ID,NAME FROM DUAL
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/Common/DateDefalutValueType",
+            url: "/api/ModuleQuery/GetByModuleId?moduleId="+this.moduleQueryForm.ModuleId+"&id="+this.moduleQueryForm.Id,
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
-                _this.defaultDateList = resultData.data.data;
+                _this.queryList = resultData.data.data;
               }
             }
           );
@@ -246,6 +246,7 @@ SELECT ID,NAME FROM DUAL
           this.addFormVisible = true;
           if (id != "") {
             this.title = "修改查询设置信息";
+            this.moduleQueryForm.Id = id;
             this.moduleQueryForm.ModuleId = moduleId;
           } else {
             this.title = "添加查询设置信息";
@@ -256,6 +257,7 @@ SELECT ID,NAME FROM DUAL
             this.getControlType();
             this.getDataType();
             this.getDefaultList();
+            this.getRelationList();
             if (id != "") {
               this.getData(id);
             }

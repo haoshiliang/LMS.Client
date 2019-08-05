@@ -48,131 +48,7 @@
           recondTotal: 0,
           queryParam: {
             IsAdvancedQuery: false,
-            WhereList: [
-              {
-                Title: '用户编码',
-                Field: 'u.CODE',
-                ParamName: 'Code',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'TextBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: '',
-                IsDefaultQuery: true
-              },
-              {
-                Title: '用户名称',
-                Field: 'u.NAME|u.PY_CODE',
-                ParamName: 'Name',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'TextBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: '',
-                IsDefaultQuery: true
-              },
-              {
-                Title: '登录名称',
-                Field: 'u.LOGIN_NAME',
-                ParamName: 'LoginName',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'TextBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: '',
-                IsDefaultQuery: true
-              },
-              {
-                Title: '电话',
-                Field: 'u.TELEPHONE',
-                ParamName: 'Telephone',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'TextBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: '',
-                IsDefaultQuery: false
-              },
-              {
-                Title: '地址',
-                Field: 'u.ADDRESS',
-                ParamName: 'Addr',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'TextBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: '',
-                IsDefaultQuery: false
-              },
-              {
-                Title: '用户状态',
-                Field: 'u.IS_ENABLE',
-                ParamName: 'IsEnable',
-                Operator: '=',
-                Value: '1',
-                DataType: 'String',
-                ControlType: 'ComboRadioBox',
-                BinderList: [{Id:'1',Name:'可用'},{Id:'0',Name:'禁用'}],
-                AllBinderList: [],
-                TargetName: '',
-                IsDefaultQuery: true
-              },
-              {
-                Title: '所属公司',
-                Field: 'u.CORP_ID',
-                ParamName: 'CorpId',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'ComboTreeBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: 'DeptId',
-                IsDefaultQuery: true
-              },
-              {
-                Title: '所属部门',
-                Field: 'u.DEPT_ID',
-                ParamName: 'DeptId',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'ComboRadioBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: 'PositionId',
-                RelationId_1:'CorpId',
-                RelationId_2:'',
-                RelationId_3:'',
-                IsDefaultQuery: true
-              },
-              {
-                Title: '所属职位',
-                Field: 'u.POSITION_ID',
-                ParamName: 'PositionId',
-                Operator: 'like',
-                Value: '',
-                DataType: 'String',
-                ControlType: 'ComboRadioBox',
-                BinderList: [],
-                AllBinderList: [],
-                TargetName: '',
-                RelationId_1:'CorpId',
-                RelationId_2:'DeptId',
-                RelationId_3:'',
-                IsDefaultQuery: true
-              }
-            ],
+            WhereList: [],
             SortList: []
           },
           selectedRow: null,
@@ -180,6 +56,20 @@
         };
       },
       methods: {
+        getWhereList: function () {
+          var _this = this;
+          this.$ajax({
+            method: "get",
+            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid+"&userId="+this.$common.getSessionStorage("userId"),
+          }).then(
+            function (resultData) {
+              if (resultData.data.status == '1') {
+                _this.queryParam = resultData.data.data;
+                _this.getList();
+              }
+            }
+          );
+        },
         getList: function () {
           var _this = this;
           this.$ajax({
@@ -336,7 +226,7 @@
         this.getCorp();
         this.getDept();
         this.getPosition();
-        this.getList();
+        this.getWhereList();
         this.$nextTick(() => {
           var that = this;
           this.gridHeight = $(".custom-grid-container").height();
