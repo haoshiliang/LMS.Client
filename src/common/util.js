@@ -56,13 +56,15 @@ exports.install = function (Vue,options){
      * 关闭Loading
      */
     Common.closeLoading=function(){
-      loadingCnt-=1;
-      if (loading && loadingCnt<=0){
-        loadingCnt = 0;
-        loading.close();
-        loading = null;
-        loadingTarget=".loading-area";
-      }
+      setTimeout(() => {
+        loadingCnt-=1;
+        if (loading && loadingCnt<=0){
+          loadingCnt = 0;
+          loading.close();
+          loading = null;
+          loadingTarget=".loading-area";
+        }
+      }, 100);
     }
   /**
    * 获取菜单功能
