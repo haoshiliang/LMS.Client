@@ -65,6 +65,7 @@
               if (resultData.data.status == '1') {
                 _this.queryParam = resultData.data.data;
                 _this.getList();
+                _this.handleTableHeight();
               }
             }
           );
@@ -158,18 +159,20 @@
           else {
             this.$message.info("请选择要设置模块的行!");
           }
+        },
+        handleTableHeight:function () {
+          this.$nextTick(() => {
+            var that = this;
+            this.gridHeight = $(".custom-grid-container").height();
+            // 通过捕获系统的onresize事件触发去改变原有的高度
+            window.onresize = function () {
+              that.gridHeight = $(".custom-grid-container").height();
+            }
+          });
         }
       },
       mounted() {
         this.getWhereList();
-        this.$nextTick(() => {
-          var that = this;
-          this.gridHeight = $(".custom-grid-container").height();
-          // 通过捕获系统的onresize事件触发去改变原有的高度
-          window.onresize = function() {
-            that.gridHeight = $(".custom-grid-container").height();
-          }
-        });
       }
     }
 </script>

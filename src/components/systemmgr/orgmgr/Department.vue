@@ -56,9 +56,9 @@
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
-                console.log(resultData.data.data);
                 _this.queryParam = resultData.data.data;
                 _this.getList();
+                _this.handleTableHeight();
               }
             }
           );
@@ -136,18 +136,20 @@
         },
         formatRowNum:function(row,column,cellValue,index){
           return (this.$refs.cPagination.paginationJson.pageIndex - 1) * this.$refs.cPagination.paginationJson.pageSize + index  + 1;
+        },
+        handleTableHeight:function () {
+          this.$nextTick(() => {
+            var that = this;
+            this.gridHeight = $(".custom-grid-container").height();
+            // 通过捕获系统的onresize事件触发去改变原有的高度
+            window.onresize = function () {
+              that.gridHeight = $(".custom-grid-container").height();
+            }
+          });
         }
       },
       mounted() {
         this.getWhereList();
-        this.$nextTick(() => {
-          var that = this;
-          this.gridHeight = $(".custom-grid-container").height();
-          // 通过捕获系统的onresize事件触发去改变原有的高度
-          window.onresize = function() {
-            that.gridHeight = $(".custom-grid-container").height();
-          }
-        });
       }
     }
 </script>
