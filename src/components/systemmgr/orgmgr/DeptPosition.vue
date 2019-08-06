@@ -41,6 +41,7 @@
           this.getList(corpId);
         },
         getList:function(corpId){
+          this.$common.setLoadingTarget(".el-dialog");
           var _this = this;
           this.$ajax({
             method: "get",
@@ -55,6 +56,7 @@
           );
         },
         submitForm: function () {
+          this.$common.setLoadingTarget(".el-dialog");
           let param=Object.assign([],this.dpList);
           this.$ajax({
             method: "post",

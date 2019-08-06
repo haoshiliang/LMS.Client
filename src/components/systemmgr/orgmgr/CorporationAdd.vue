@@ -55,6 +55,7 @@
       },
       methods: {
         async getCorpList() {
+          this.$common.setLoadingTarget(".el-dialog");
           var _this = this;
           var res = await this.$ajax({
             method: "get",
@@ -95,6 +96,7 @@
               if(param.parent){
                 delete param.parent;
               }
+              this.$common.setLoadingTarget(".el-dialog");
               this.$ajax({
                 method: "post",
                 url: "/api/Corporation",

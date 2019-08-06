@@ -71,6 +71,7 @@
       methods: {
         async getModuleList() {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           var res = await this.$ajax({
             method: "get",
             url: "/api/Module?id="+this.moduleForm.Id+"&isTree=true"
@@ -107,6 +108,7 @@
               if(param.parent){
                 delete param.parent;
               }
+              this.$common.setLoadingTarget(".el-dialog");
               this.$ajax({
                 method: "post",
                 url: "/api/Module",

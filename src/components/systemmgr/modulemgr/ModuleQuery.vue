@@ -147,7 +147,16 @@
             var _this = this;
             var id = this.selectedRow.Id;
             var moduleId = this.selectedRow.ModuleId;
-            _this.$refs.addForm.setAddForm(id,moduleId);
+            this.$ajax({
+              method: "get",
+              url: "/api/ModuleQuery?id=" + id
+            }).then(
+              function (resultData) {
+                if (resultData.data.status == '1') {
+                  _this.$refs.addForm.setAddForm(id,moduleId,resultData.data.data);
+                }
+              }
+            );
           }
           else {
             this.$message.info("请选择要修改的行!");

@@ -175,6 +175,7 @@ SELECT ID,NAME FROM DUAL
       methods: {
         getControlType: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/Common/ControlType",
@@ -188,6 +189,7 @@ SELECT ID,NAME FROM DUAL
         },
         getDataType: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/Common/DataType",
@@ -201,6 +203,7 @@ SELECT ID,NAME FROM DUAL
         },
         getDefaultList: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/Common/DateDefalutValueType",
@@ -214,6 +217,7 @@ SELECT ID,NAME FROM DUAL
         },
         getRelationList: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/ModuleQuery/GetByModuleId?moduleId="+this.moduleQueryForm.ModuleId+"&id="+this.moduleQueryForm.Id,
@@ -225,29 +229,15 @@ SELECT ID,NAME FROM DUAL
             }
           );
         },
-        getData: function (id) {
-          var _this = this;
-          this.$ajax({
-            method: "get",
-            url: "/api/ModuleQuery?id=" + id
-          }).then(
-            function (resultData) {
-              if (resultData.data.status == '1') {
-                _this.moduleQueryForm = resultData.data.data;
-              }
-            }
-          );
-        },
         resetForm: function () {
           if (this.$refs["moduleQueryForm"])
             this.$refs["moduleQueryForm"].resetFields();
         },
-        setAddForm: function (id, moduleId) {
+        setAddForm: function (id, moduleId,editFormData) {
           this.addFormVisible = true;
           if (id != "") {
             this.title = "修改查询设置信息";
-            this.moduleQueryForm.Id = id;
-            this.moduleQueryForm.ModuleId = moduleId;
+            this.moduleQueryForm = editFormData;
           } else {
             this.title = "添加查询设置信息";
             this.defalutData.ModuleId = moduleId;
@@ -258,15 +248,13 @@ SELECT ID,NAME FROM DUAL
             this.getDataType();
             this.getDefaultList();
             this.getRelationList();
-            if (id != "") {
-              this.getData(id);
-            }
           }, 200);
         },
         submitForm: function () {
           this.$refs.moduleQueryForm.validate(valid => {
             if (valid) {
               let param = Object.assign({}, this.moduleQueryForm);
+              this.$common.setLoadingTarget(".el-dialog");
               this.$ajax({
                 method: "post",
                 url: "/api/ModuleQuery",

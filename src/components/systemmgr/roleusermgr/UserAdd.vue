@@ -1,5 +1,5 @@
 <template>
-  <div v-if="addFormVisible">
+  <div v-if="addFormVisible" id="loadingDiv">
     <el-dialog :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
       <el-form :model="userForm" :inline="true" ref="userForm" label-width="90px" :rules="userRules">
         <el-form-item label="用户编码" prop="Code">
@@ -99,6 +99,7 @@
           this.$refs.userForm.validate(valid => {
             if (valid) {
               let param = Object.assign({}, this.userForm);
+              this.$common.setLoadingTarget(".el-dialog");
               this.$ajax({
                 method: "post",
                 url: "/api/User",

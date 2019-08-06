@@ -60,6 +60,7 @@
               if (param.length==0){
                 param.push({Id:'-1',Name:'',ParentId:this.mId,IsEnabled:true});
               }
+              this.$common.setLoadingTarget(".el-dialog");
               this.$ajax({
                 method: "post",
                 url: "/api/Function",

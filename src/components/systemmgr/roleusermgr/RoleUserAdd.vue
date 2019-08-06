@@ -248,6 +248,7 @@
         },
         getList: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "post",
             url: "/api/User/List",
@@ -263,6 +264,7 @@
         },
         getNoList: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "post",
             url: "/api/User/List",
@@ -290,6 +292,7 @@
         },
         getCorp: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/Corporation/TreeList",
@@ -310,6 +313,7 @@
         },
         getDept: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/CorpDepartPosition/DeptList",
@@ -384,6 +388,7 @@
           } else {
             this.$confirm("确认删除用户吗?", "提示", {type: "warning"})
               .then(() => {
+                this.$common.setLoadingTarget(".el-dialog");
                 this.$ajax({
                   method: "post",
                   url: "/api/UserRole/DelRoleUser",
@@ -407,6 +412,7 @@
           } else {
             this.$confirm("确认添加用户吗?", "提示", {type: "warning"})
               .then(() => {
+                this.$common.setLoadingTarget(".el-dialog");
                 this.$ajax({
                   method: "post",
                   url: "/api/UserRole/AddRoleUser",

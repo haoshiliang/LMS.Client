@@ -4,8 +4,9 @@
 exports.install = function (Vue,options){
   var _this=Vue.prototype;
   var Common=Vue.prototype.$common={};
-  var loading=null;
-  var loadingCnt = 0;
+  let loading=null;
+  let loadingCnt = 0;
+  let loadingTarget=".loading-area";
   /**
    * 在新页面打开
    * @param {*} $this
@@ -31,18 +32,25 @@ exports.install = function (Vue,options){
     }
 
   }
+  Common.setLoadingTarget=function(lTarget){
+    loadingTarget = lTarget;
+  },
   /**
    *  加载Loading
    */
   Common.openLoading=function(loadText){
     loadText=(loadText=="" || loadText==null)?"正在加载，请稍候...":loadText;
     loadingCnt+=1;
-    loading = _this.$loading({
-      lock: true,
-      text: loadText,
-      spinner: 'el-icon-loading',
-      background: "rgba(127, 127, 127, 0.7)"
-    });
+    if(loading==null) {
+      loading = _this.$loading({
+        fullscreen: false,
+        target: document.querySelector(loadingTarget),
+        lock: true,
+        text: loadText,
+        spinner: 'el-icon-loading',
+        background: "rgba(127, 127, 127, 0.7)"
+      });
+    }
   },
     /**
      * 关闭Loading
@@ -52,6 +60,8 @@ exports.install = function (Vue,options){
       if (loading && loadingCnt<=0){
         loadingCnt = 0;
         loading.close();
+        loading = null;
+        loadingTarget=".loading-area";
       }
     }
   /**

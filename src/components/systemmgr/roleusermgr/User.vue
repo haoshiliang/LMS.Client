@@ -85,54 +85,6 @@
             }
           );
         },
-        getCorp:function(){
-          var _this = this;
-          this.$ajax({
-            method: "get",
-            url: "/api/Corporation/TreeList",
-          }).then(
-            function (resultData) {
-              if (resultData.data.status == '1') {
-                var whereItem=_this.getWhereItem("CorpId");
-                if (whereItem) {
-                  whereItem.BinderList = resultData.data.data;
-                }
-              }
-            }
-          );
-        },
-        getDept:function(){
-          var _this = this;
-          this.$ajax({
-            method: "get",
-            url: "/api/CorpDepartPosition/DeptList",
-          }).then(
-            function (resultData) {
-              if (resultData.data.status == '1') {
-                var whereItem=_this.getWhereItem("DeptId");
-                if (whereItem) {
-                  whereItem.AllBinderList = resultData.data.data;
-                }
-              }
-            }
-          );
-        },
-        getPosition:function(){
-          var _this = this;
-          this.$ajax({
-            method: "get",
-            url: "/api/CorpDepartPosition/PositionList",
-          }).then(
-            function (resultData) {
-              if (resultData.data.status == '1') {
-                var whereItem=_this.getWhereItem("PositionId");
-                if (whereItem) {
-                  whereItem.AllBinderList = resultData.data.data;
-                }
-              }
-            }
-          );
-        },
         getWhereItem:function (targetName) {
           var whereValue = null;
           if (targetName != "") {
@@ -223,9 +175,6 @@
         }
       },
       mounted() {
-        this.getCorp();
-        this.getDept();
-        this.getPosition();
         this.getWhereList();
         this.$nextTick(() => {
           var that = this;

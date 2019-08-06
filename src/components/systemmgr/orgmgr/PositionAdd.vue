@@ -57,6 +57,7 @@
           this.$refs.formData.validate(valid => {
             if (valid) {
               let param = Object.assign({}, this.formData);
+              this.$common.setLoadingTarget(".el-dialog");
               this.$ajax({
                 method: "post",
                 url: "/api/Position",

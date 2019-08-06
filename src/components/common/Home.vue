@@ -5,7 +5,7 @@
         <div class="content-box" :class="{'content-collapse':collapse}">
             <div class="content_wrapper">
                 <v-tags></v-tags>
-                <div class="content"  style="flex: 1;">
+                <div class="content loading-area"  style="flex: 1;">
                         <transition name="move" mode="out-in">
                         <keep-alive :include="tagsList">
                             <router-view></router-view>

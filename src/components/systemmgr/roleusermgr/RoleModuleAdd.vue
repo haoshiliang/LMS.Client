@@ -47,6 +47,7 @@
           }, 200);
         },
         getList: function () {
+          this.$common.setLoadingTarget(".el-dialog");
           var _this = this;
           this.$ajax({
             method: "get",
@@ -67,6 +68,7 @@
         },
         getRoleModule: function (roleId) {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/RoleModule?roleId=" + roleId
@@ -88,6 +90,7 @@
             }
           }
           param[this.roleId] = selRoleMouleList;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "post",
             url: "/api/RoleModule",

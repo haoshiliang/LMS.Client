@@ -36,6 +36,7 @@
         },
         getList: function () {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/Role"
@@ -50,6 +51,7 @@
         },
         getUserRole: function (userId) {
           var _this = this;
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "get",
             url: "/api/UserRole/GetByUserId?userId=" + userId
@@ -70,6 +72,7 @@
           }else {
             param.push({UserId: this.userId, RoleId: '', IsRoleMaster: false});
           }
+          this.$common.setLoadingTarget(".el-dialog");
           this.$ajax({
             method: "post",
             url: "/api/UserRole",
