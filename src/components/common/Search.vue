@@ -37,6 +37,14 @@
             </el-select>          </div>
           <div style="clear:both;"></div>
         </div>
+        <div class="searchItem" v-else-if="field.ControlType=='TimeText' && field.IsDefaultQuery">
+          <div class="searchTitle">{{field.Title}}</div>
+          <span class="searchFlag">：</span>
+          <div class="searchInputDiv">
+            <el-date-picker size="small" v-model="field.Value" type="datetime" :class="inputCss"  style="width:200px;" placeholder="选择日期时间" @change="getList"></el-date-picker>
+          </div>
+          <div style="clear:both;"></div>
+        </div>
       </template>
       <div class="searchButton">
         <el-button type="primary" size="small" @click="this.getList">查询</el-button>

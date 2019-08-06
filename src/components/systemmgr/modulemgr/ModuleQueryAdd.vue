@@ -211,6 +211,9 @@ SELECT ID,NAME FROM DUAL
             function (resultData) {
               if (resultData.data.status == '1') {
                 _this.defaultDateList = resultData.data.data;
+                for(var i=0,len=_this.defaultDateList.length;i<len;i++){
+                  _this.defaultDateList[i]["Id"]=_this.defaultDateList[i]["Id"].toString();
+                }
               }
             }
           );
