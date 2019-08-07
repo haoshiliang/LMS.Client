@@ -12,7 +12,7 @@ function toRoutes(routerList,routeHideList, sysMenuList) {
       if (!sysMenuNode.ChildList || sysMenuNode.ChildList.length == 0) {
         var code = sysMenuNode.ModulePath;
         var routeNode = {
-          name: code,
+          name: sysMenuNode.ModuleName,
           path: '/' + code + '/:mid',
           component: lazy(code),
           meta: {title: sysMenuNode.Name},

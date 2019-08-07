@@ -8,6 +8,9 @@
                 <span class="tags-li-icon" @click="closeTags(index)" v-if="item.path!='/index' && item.path!='/'"><i class="el-icon-close"></i></span>
             </li>
         </ul>
+        <div class="tags-reload-box">
+          <el-button icon="el-icon-refresh" size="medium" type="primary" @click="this.$parent.reload"></el-button>
+        </div>
         <div class="tags-close-box">
             <el-dropdown @command="handleTags">
                 <el-button size="medium" type="primary">
@@ -102,7 +105,7 @@
         height: $tag_height;
         overflow: hidden;
         background: #fff;
-        padding-right: 120px;
+        padding-right: 170px;
         flex: 0 0 auto;
     }
 
@@ -151,5 +154,17 @@
         box-shadow: -3px 0 15px 3px rgba(0, 0, 0, .1);
         z-index: 10;
     }
+  .tags-reload-box{
+    position: absolute;
+    right: 111px;
+    top: 0;
+    box-sizing: border-box;
+    padding-top: 1px;
+    text-align: center;
+    height: $tag_height;
+    background: #fff;
+    z-index: 10;
+
+  }
 
 </style>

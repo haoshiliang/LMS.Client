@@ -8,11 +8,14 @@
         <el-form-item label="模块编码"  prop="Code">
           <el-input auto-complete="off" placeholder="模块编码" v-model="moduleForm.Code"></el-input>
         </el-form-item>
-        <el-form-item label="模块名称"  prop="Name">
+        <el-form-item label="模块标题"  prop="Name">
           <el-input auto-complete="off" placeholder="模块名称" v-model="moduleForm.Name"></el-input>
         </el-form-item>
         <el-form-item label="模块图标"  prop="Icon">
           <el-input auto-complete="off" placeholder="模块图标" v-model="moduleForm.Icon"></el-input>
+        </el-form-item>
+        <el-form-item label="模块标识"  prop="ModuleName">
+          <el-input auto-complete="off" placeholder="模块标识" v-model="moduleForm.ModuleName"></el-input>
         </el-form-item>
         <el-form-item label="模块路径"  prop="ModulePath">
           <el-input auto-complete="off" placeholder="模块路径" v-model="moduleForm.ModulePath"></el-input>
@@ -59,6 +62,7 @@
             Code: '',
             Name: '',
             Icon:'',
+            ModuleName:'',
             ModulePath:'',
             IsEnabled:true,
             IsAllowQuery:true

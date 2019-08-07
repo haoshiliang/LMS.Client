@@ -25,11 +25,12 @@
       data() {
         return {
           columns: [
-            {text: "模块名称", value: "Name", width: 200},
+            {text: "模块标题", value: "Name", width: 200},
             {text: "模块编号", value: "Code"},
             {text: "父模块", value: "ParentName"},
             {text:"显示图标",value:"Icon"},
-            {text:"模块路径",value:"ModulePath"},
+            {text:"模块标识",value:"ModuleName"},
+            {text:"模块路径",value:"ModulePath" ,width: 230},
             {text:"模块状态",value:"IsEnabled",formatter:function (cellValue) {return cellValue=="1"?"启用":"禁用";}}
           ],
           data: [],
