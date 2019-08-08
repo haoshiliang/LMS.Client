@@ -17,21 +17,6 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/tree',
-      component: resolve => require(['@/components/mayi/tree.vue'], resolve),
-      meta: {
-        title: '蚂蚁种树'
-      }
-    },
-    {
-      path: '/zanzhu',
-      component: resolve => require(['../components/zanzhu.vue'], resolve)
-    },
-    {
-      path: '/bottom',
-      component: resolve => require(['../components/flex/bottom.vue'], resolve)
-    },
-    {
       path: '/404',
       component: resolve => require(['../components/common/404.vue'], resolve)
     },
