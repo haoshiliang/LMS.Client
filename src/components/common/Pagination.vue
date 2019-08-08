@@ -2,7 +2,7 @@
   <el-pagination
     class="el-pagination-background"
     layout="total, sizes, prev, pager, next"
-    :page-sizes="[15, 30, 50, 100, 500, 1000, 5000, 10000]"
+    :page-sizes="[15, 30, 50, 100, 500]"
     :page-size="this.pageSize"
     :current-page="this.pageIndex"
     @size-change="handleSizeChange"
