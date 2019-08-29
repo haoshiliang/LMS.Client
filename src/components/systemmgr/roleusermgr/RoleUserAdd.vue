@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog ref="dailog" title="角色用户维护" :visible.sync="addFormVisible" width="910px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag ref="dailog" title="角色用户维护" :visible.sync="addFormVisible" width="910px" :close-on-click-modal="false">
       <div style="height: 400px; overflow-y: auto; overflow-x: hidden; margin:-22px -15px;width:900px;">
         <el-tabs type="border-card" v-model="activeTabName" @tab-click="handleTabClick">
           <el-tab-pane label="已分配用户" name="allocateUsers" style="margin:-15px;">

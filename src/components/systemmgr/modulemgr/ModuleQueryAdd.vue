@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog :title="title" :visible.sync="addFormVisible"  width="900px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag :title="title" :visible.sync="addFormVisible"  width="900px" :close-on-click-modal="false">
       <el-form :model="moduleQueryForm" :inline="true" ref="moduleQueryForm" label-width="100px" size="mini" :rules="moduleQueryRules" :show-message="true" :hide-required-asterisk="false">
         <el-form-item label="搜索项名称" prop="Title">
           <el-input auto-complete="off" placeholder="搜索项名称" v-model="moduleQueryForm.Title" style="width: 150px;"></el-input>

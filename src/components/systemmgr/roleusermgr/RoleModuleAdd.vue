@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog ref="dailog" title="角色模块维护" :visible.sync="addFormVisible" width="450px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag ref="dailog" title="角色模块维护" :visible.sync="addFormVisible" width="450px" :close-on-click-modal="false">
       <div style="height: 400px; overflow-y: auto; overflow-x: hidden">
         <el-tree
           :data="roleModuleList"

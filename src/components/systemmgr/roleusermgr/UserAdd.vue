@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible" id="loadingDiv">
-    <el-dialog :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
       <el-form :model="userForm" :inline="true" ref="userForm" label-width="90px" :rules="userRules">
         <el-form-item label="用户编码" prop="Code">
           <el-input auto-complete="off" placeholder="用户编码" v-model="userForm.Code"></el-input>

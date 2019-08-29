@@ -1,6 +1,6 @@
 <template>
   <div v-if="showAdvancedQuery">
-    <el-dialog title="高级查询" :visible.sync="showAdvancedQuery" :width="dialogWidth" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag title="高级查询" :visible.sync="showAdvancedQuery" :width="dialogWidth" :close-on-click-modal="false">
       <el-row style="margin: -20px 0 0 0;">
         <el-col :span="24">
           <template v-for="field in this.queryParam.WhereList">

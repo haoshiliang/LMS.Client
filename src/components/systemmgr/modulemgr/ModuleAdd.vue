@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
+    <el-dialog v-dialogDrag :title="title" :visible.sync="addFormVisible"  width="700px" :close-on-click-modal="false">
       <el-form :model="moduleForm" :inline="true" ref="moduleForm" label-width="100px" :rules="moduleRules">
         <el-form-item label="模块父级" prop="ParentId">
           <select-tree v-model="moduleForm.ParentId" :showText="moduleForm.ParentName" :options="moduleList" :props="defaultProps" width="207" />

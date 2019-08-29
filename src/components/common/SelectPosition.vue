@@ -1,6 +1,6 @@
 <template>
   <div style="width:400px;" v-if="addFormVisible">
-    <el-dialog title="选择职位" :visible.sync="addFormVisible"  width="400px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag title="选择职位" :visible.sync="addFormVisible"  width="400px" :close-on-click-modal="false">
       <div style="height: 300px;overflow: auto;" id="selectPositionDiv">
         <el-tree
           ref="tree"

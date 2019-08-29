@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog title="模块功能维护" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag title="模块功能维护" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
       <el-form label-position="right" :rules="rules" :model="ruleForm" ref="ruleForm" size="small" inline-message inline>
         <el-table :data="ruleForm.functionList" style="width: 100%"
                    size="medium" border  highlight-current-row

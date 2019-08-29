@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
       <el-form :model="formData" ref="formData" label-width="80px" :rules="rules">
         <el-form-item label="角色编码"  prop="DepartCode">
           <el-input auto-complete="off" placeholder="角色编码" v-model="formData.RoleCode"></el-input>

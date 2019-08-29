@@ -17,6 +17,7 @@ import store from './store'
 import Axios from "axios";
 import commonComponent from "./components/common/component";
 import qs from "qs";
+import './common/directives'
 
 window.moment=require('moment')
 

@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag :title="title" :visible.sync="addFormVisible"  width="600px" :close-on-click-modal="false">
       <el-form :model="corpForm" ref="corpForm" label-width="80px" :rules="corpRules">
         <el-form-item label="公司父级" prop="ParentId">
           <select-tree v-model="corpForm.ParentId" :showText="corpForm.ParentCorp.CorpName" :options="corpList" :props="defaultProps" />

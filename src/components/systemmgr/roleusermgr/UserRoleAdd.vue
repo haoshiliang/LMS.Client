@@ -1,6 +1,6 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog ref="dailog" title="用户角色维护" :visible.sync="addFormVisible" width="700px" :close-on-click-modal="false">
+    <el-dialog  v-dialogDrag ref="dailog" title="用户角色维护" :visible.sync="addFormVisible" width="700px" :close-on-click-modal="false">
       <div style="height: 300px; overflow-y: auto; overflow-x: hidden">
         <el-checkbox-group v-model="checkedRoles">
           <el-checkbox v-for="role in roleList" v-model="role.Id" :label="role.Id" :key="role.Id">{{role.RoleName}}</el-checkbox>
