@@ -29,7 +29,7 @@
             <template>
               <el-table :data="queryList" style="width: 100%" @sort-change="handleSort"
                         :height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
-                <el-table-column label="序号" width="50" :formatter="formatRowNum" align="center"></el-table-column>
+                <el-table-column label="序号" width="80" :formatter="formatRowNum" align="center"></el-table-column>
                 <el-table-column prop="ModuleName" label="模块名称" sortable width="150"></el-table-column>
                 <el-table-column prop="Title" label="标题" width="150"></el-table-column>
                 <el-table-column prop="Field" label="查询字段"  width="250"></el-table-column>

@@ -19,7 +19,7 @@
       <template>
         <el-table :data="data" style="width: 100%" @sort-change="handleSort"
                   :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
-          <el-table-column label="序号" width="50" :formatter="formatRowNum" align="center"></el-table-column>
+          <el-table-column label="序号" width="80" :formatter="formatRowNum" align="center"></el-table-column>
           <el-table-column prop="RoleCode" label="角色编码" sortable width="180"></el-table-column>
           <el-table-column prop="RoleName" label="角色名称" sortable width="180"></el-table-column>
           <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"></el-table-column>

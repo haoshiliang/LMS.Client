@@ -18,7 +18,7 @@
       <template>
         <el-table :data="data" style="width: 100%" @sort-change="handleSort"
                   :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
-          <el-table-column label="序号" width="50" :formatter="formatRowNum" align="center"></el-table-column>
+          <el-table-column label="序号" width="80" :formatter="formatRowNum" align="center"></el-table-column>
           <el-table-column prop="Code" label="用户编码" sortable width="150"></el-table-column>
           <el-table-column prop="Name" label="用户名称" sortable width="150"></el-table-column>
           <el-table-column prop="LoginName" label="登录名称" sortable  width="150"></el-table-column>
