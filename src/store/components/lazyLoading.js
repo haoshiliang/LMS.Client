@@ -77,6 +77,12 @@ const dynamicRouter = [
     path: '/ckeditor',
     component: resolve => require(['@/components/ckeditor/index.vue'], resolve),
     meta:{title:'文本编辑器'}
+  },
+  {
+    name:'WLDayLogMgr',
+    path: '/DayLogMgr/DayLog',
+    component: resolve => require(['@/components/worklogmgr/daylogmgr/DayLog.vue'], resolve),
+    meta:{title:'日志管理'}
   }
 ]
 export { lazy }

@@ -221,7 +221,7 @@ body .el-table th.gutter {
 }
 .searchForm .el-col .searchItem .searchTitle{
   float:left;
-  min-width: 70px;
+  min-width: 84px;
   margin: 0 5px 0 0;
   text-align: justify;
   text-align-last:justify;

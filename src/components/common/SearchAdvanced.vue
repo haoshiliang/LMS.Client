@@ -166,7 +166,7 @@
           if (wCount <= 5) {
             return '400px';
           } else if (wCount <= 10) {
-            return '650px';
+            return '670px';
           } else {
             return '940px';
           }

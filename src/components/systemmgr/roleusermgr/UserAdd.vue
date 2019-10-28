@@ -15,7 +15,9 @@
           <el-input type="password" placeholder="登录密码" v-model="userForm.Password"></el-input>
         </el-form-item>
         <el-form-item label="所属职位"  prop="getPosition">
-             <el-input @click.native="selectPosition" auto-complete="off" placeholder="所属职位" style="width:516px;" readonly v-model="getPosition" suffix-icon="el-icon-search"></el-input>
+          <div class="demo-input-suffix" style="height:40px;">
+             <el-input @click.native="selectPosition" auto-complete="off" placeholder="所属职位"  suffix-icon="el-icon-search" style="width:516px;" readonly v-model="getPosition"></el-input>
+          </div>
         </el-form-item>
         <el-form-item label="地址"  prop="Address">
           <el-input auto-complete="off" placeholder="地址" v-model="userForm.Address" style="width:516px;"></el-input>
@@ -154,7 +156,3 @@
       }
     }
 </script>
-
-<style scoped>
-
-</style>

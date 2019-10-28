@@ -17,6 +17,14 @@ const router = new VueRouter({
       }
     },
     {
+      name:"DayLogMgr_DayLogAdd",
+      path: '/DayLogMgr/DayLogAdd',
+      component: resolve => require(['@/components/worklogmgr/daylogmgr/DayLogAdd.vue'], resolve),
+      meta: {
+        title: '添加日志'
+      }
+    },
+    {
       path: '/404',
       component: resolve => require(['../components/common/404.vue'], resolve)
     },
