@@ -260,4 +260,7 @@ body .el-table th.gutter {
   line-height: 25px;
   overflow: hidden;
 }
+.el-dialog__title{
+  line-height: 10px;
+}
 
