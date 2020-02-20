@@ -97,7 +97,7 @@ Axios.interceptors.response.use(
   });
 //设置全局token,防止刷新页面状态丢失
 Axios.defaults.headers.common["Authorization"] = Vue.prototype.$common.getSessionStorage("token");
-
+//Axios.defaults.headers.common["User-Info"] = "{UserId:'"+Vue.prototype.$common.getSessionStorage("userId")+"',UserName:'"+Vue.prototype.$common.getSessionStorage("username")+"'}";
 process.env.MOCK && require('@/apimock')
 
 /* eslint-disable no-new */

@@ -1,13 +1,13 @@
 <template>
   <div v-if="addFormVisible">
-    <el-dialog  v-dialogDrag ref="dailog" title="角色用户维护" :visible.sync="addFormVisible" width="910px" :close-on-click-modal="false">
-      <div style="height: 400px; overflow-y: auto; overflow-x: hidden; margin:-22px -15px;width:900px;">
+    <el-dialog  v-dialogDrag ref="dailog" title="角色用户维护" :visible.sync="addFormVisible" width="950px" :close-on-click-modal="false">
+      <div style="height: 400px; overflow-y: auto; overflow-x: hidden; margin:-22px -15px;width:940px;">
         <el-tabs type="border-card" v-model="activeTabName" @tab-click="handleTabClick">
           <el-tab-pane label="已分配用户" name="allocateUsers" style="margin:-15px;">
             <el-row class="searchForm">
               <common-search :handle-get-list="this.getList" :query-param="this.queryParam" :isShowdvanced="false" size="small"/>
             </el-row>
-            <el-row class="buttonForm">
+            <el-row class="buttonForm" style="text-align:right;">
                 <common-pagination ref="cAllocatePagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
             </el-row>
             <div class="custom-grid-container">
@@ -26,7 +26,7 @@
             <el-row class="searchForm">
               <common-search :handle-get-list="this.getNoList" :query-param="this.queryParamNo" :isShowdvanced="false" size="small"/>
             </el-row>
-            <el-row class="buttonForm">
+            <el-row class="buttonForm" style="text-align:right;">
               <common-pagination ref="cNoPagination" :handle-get-list="this.getNoList" :record-total="this.recondTotalNo"/>
             </el-row>
             <div class="custom-grid-container">

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-row class="searchForm">
+    <el-row class="searchForm" v-if="this.queryParam.WhereList.Length>0">
       <common-search :handle-get-list="this.getList" :query-param="this.queryParam"/>
     </el-row>
     <el-row class="buttonForm">
@@ -41,7 +41,7 @@
             SortList:[]
           },
           selectedRow:null,
-          fList: this.$common.getFList(this.$route.params.mid)
+          fList: this.$common.getFList(this.$route.params.mid),          
         };
       },
       methods: {
@@ -56,6 +56,7 @@
                 _this.queryParam = resultData.data.data;
                 _this.getList();
                 _this.handleTableHeight();
+                console.log(_this.queryParam);
               }
             }
           );
