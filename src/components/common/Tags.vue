@@ -2,7 +2,7 @@
     <div class="tags" v-if="showTags">
         <ul>
             <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index">
-                <router-link :to="item.path" class="tags-li-title">
+                <router-link :to="item.path" class="tags-li-title" @click.native="flushCom">
                     {{item.title}}
                 </router-link>
                 <span class="tags-li-icon" @click="closeTags(index)" v-if="item.path!='/index' && item.path!='/'"><i class="el-icon-close"></i></span>
@@ -31,13 +31,20 @@
     export default {
         data() {
             return {
-                tagsList: []
+                tagsList: [],
+                routerAlive:true
             }
         },
         methods: {
             isActive(path) {
                 return path === this.$route.fullPath;
             },
+            flushCom:function(){
+
+　　　　　　this.$parent.isRouterAlive=false;
+this.$parent.isRouterAlive=true; 
+
+　　　　},
             // 关闭单个标签
             closeTags(index) {
                 const delItem = this.tagsList.splice(index, 1)[0];

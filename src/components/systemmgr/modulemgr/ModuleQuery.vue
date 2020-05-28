@@ -25,7 +25,7 @@
               <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
             </el-col>
           </el-row>
-          <div class="custom-grid-container">
+          <div class="custom-grid-container" id="custom-grid-container">
             <template>
               <el-table :data="queryList" style="width: 100%" @sort-change="handleSort"
                         :height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
@@ -184,16 +184,18 @@
         }
       },
       mounted() {
-        this.$nextTick(() => {
-          var that = this;
-          this.gridHeight = $(".custom-grid-container").height();
-          // 通过捕获系统的onresize事件触发去改变原有的高度
-          window.onresize = function () {
-            that.gridHeight = $(".custom-grid-container").height();
-          }
-        });
         this.getModuleList();
         this.getList();
+
+        //设置列表高度
+        var elementResizeDetectorMaker = require("element-resize-detector");//导入
+        var _this = this;
+        var erd = elementResizeDetectorMaker();
+        erd.listenTo(document.getElementById("custom-grid-container"), element => {
+          _this.$nextTick(() => {
+            _this.gridHeight = element.offsetHeight;
+          });
+        });        
       }
     }
 </script>

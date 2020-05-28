@@ -1,5 +1,5 @@
 <template>
-  <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :max-height="gridHeight"
+  <el-table id="tableGrid" :data="formatData" :row-style="showRow" v-bind="$attrs" :height="gridHeight"
              size="medium" highlight-current-row @current-change="handleCurrentChange">   <!--  @header-click="chooseall" -->
     <el-table-column :render-header="renderHeader" width="50" align="center" v-if="isShowCheck">
       <template slot-scope="scope">
@@ -220,12 +220,16 @@
             }
           };
         }
-        this.gridHeight = $(".custom-grid-container").height();
-        // 通过捕获系统的onresize事件触发去改变原有的高度
-        window.onresize = function() {
-          that.gridHeight = $(".custom-grid-container").height();
-        }
       });
+        //设置列表高度
+        var elementResizeDetectorMaker = require("element-resize-detector");//导入
+        var _this = this;
+        var erd = elementResizeDetectorMaker();
+        erd.listenTo(document.getElementById("custom-grid-container"), element => {
+          _this.$nextTick(() => {
+            _this.gridHeight = element.offsetHeight;
+          });
+        });
     }
   };
 </script>

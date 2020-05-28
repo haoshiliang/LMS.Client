@@ -15,10 +15,10 @@
         <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
       </el-col>
     </el-row>
-    <div class="custom-grid-container">
+    <div class="custom-grid-container" id="custom-grid-container">
       <template>
         <el-table :data="data" style="width: 100%" @sort-change="handleSort"
-                  :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
+                  :height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
           <el-table-column label="序号" width="80" :formatter="formatRowNum" align="center"></el-table-column>
           <el-table-column prop="RoleCode" label="角色编码" sortable width="180"></el-table-column>
           <el-table-column prop="RoleName" label="角色名称" sortable width="180"></el-table-column>
@@ -59,13 +59,12 @@
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid+"&userId="+this.$common.getSessionStorage("userId"),
+            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid,
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
                 _this.queryParam = resultData.data.data;
                 _this.getList();
-                _this.handleTableHeight();
               }
             }
           );
@@ -159,20 +158,19 @@
           else {
             this.$message.info("请选择要设置模块的行!");
           }
-        },
-        handleTableHeight:function () {
-          this.$nextTick(() => {
-            var that = this;
-            this.gridHeight = $(".custom-grid-container").height();
-            // 通过捕获系统的onresize事件触发去改变原有的高度
-            window.onresize = function () {
-              that.gridHeight = $(".custom-grid-container").height();
-            }
-          });
         }
       },
       mounted() {
         this.getWhereList();
+        //设置列表高度
+        var elementResizeDetectorMaker = require("element-resize-detector");//导入
+        var _this = this;
+        var erd = elementResizeDetectorMaker();
+        erd.listenTo(document.getElementById("custom-grid-container"), element => {
+          _this.$nextTick(() => {
+            _this.gridHeight = element.offsetHeight;
+          });
+        });
       }
     }
 </script>

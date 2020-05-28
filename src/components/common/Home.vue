@@ -8,7 +8,7 @@
                 <div class="content loading-area"  style="flex: 1;">
                         <transition name="move" mode="out-in">
                         <keep-alive :include="tagsList">
-                            <router-view v-if="isRouterAlive"></router-view>
+                            <router-view v-if="isRouterAlive"></router-view><!-- :key="key" 切换时刷新-->
                         </keep-alive>
                     </transition>
                 </div>
@@ -22,7 +22,7 @@
     .content_wrapper{
        display: flex;
        flex-direction: column;
-       height:100%;
+       height:100%;       
     }
 
 </style>
@@ -56,6 +56,11 @@ export default {
   },
   components: {
     vHead, vSidebar, vTags, vFooter
+  },
+  computed: {
+    key() {
+        return this.$route.name !== undefined? this.$route.name + +new Date(): this.$route + +new Date()
+    }
   },
   created() {
     bus.$on('collapse', msg => {

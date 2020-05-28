@@ -49,7 +49,7 @@
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid+"&userId="+this.$common.getSessionStorage("userId"),
+            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid,
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {

@@ -206,9 +206,8 @@ body .el-table th.gutter {
   align-items: flex-start;
   justify-content: space-between;
   padding:0;
-  height: 100%;
-  flex:1;
   vertical-align: top;
+  overflow: hidden;
 }
 .searchForm{
   padding: 5px 10px;

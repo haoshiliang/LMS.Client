@@ -8,7 +8,7 @@
           <el-button type="text" size="medium" v-if="fList.DeptPosition" icon="el-icon-c-scale-to-original" @click="handleDeptPostion">部门职位维护</el-button>
         </el-col>
       </el-row>
-        <div class="custom-grid-container">
+        <div class="custom-grid-container" id="custom-grid-container">
         <common-tree-table ref="tGrid" :data="data" :columns="columns" :isShowCheck="isShowCheck" :expandAll="true" border/>
       </div>
       <add-corp ref="addForm"/>

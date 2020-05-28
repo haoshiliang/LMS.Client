@@ -5,45 +5,35 @@
         <el-col :span="24">
           <template v-for="field in this.queryParam.WhereList">
             <div class="searchItem" v-if="field.ControlType=='TextBox'">
-              <div class="searchTitle">{{field.Title}}</div>
-              <span class="searchFlag">：</span>
               <div class="searchInputDiv">
-                <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList"></el-input>
+                <el-input size="small" v-model="field.Value" class="searchInput" @keyup.enter.native="getList" :placeholder="field.Title"></el-input>
               </div>
               <div style="clear:both;"></div>
             </div>
             <div class="searchItem" v-else-if="field.ControlType=='ComboTreeBox'">
-              <div class="searchTitle">{{field.Title}}</div>
-              <span class="searchFlag">：</span>
               <div class="searchInputDiv">
-                <select-tree v-model="field.Value" width="200" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange" placeholder="--全部--"  :props="treeDefaultProps"/>
+                <select-tree v-model="field.Value" width="200" size="small" :options="field.BinderList" :targetName="field.TargetName" :change="selectChange"  :placeholder="field.Title"  :props="treeDefaultProps"/>
               </div>
               <div style="clear:both;"></div>
             </div>
             <div class="searchItem" v-else-if="field.ControlType=='ComboRadioBox'">
-              <div class="searchTitle">{{field.Title}}</div>
-              <span class="searchFlag">：</span>
               <div class="searchInputDiv">
-                <el-select size="small" clearable v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
+                <el-select size="small" clearable v-model="field.Value"  :placeholder="field.Title" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
                   <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
                 </el-select>
               </div>
               <div style="clear:both;"></div>
             </div>
             <div class="searchItem" v-else-if="field.ControlType=='ComboMultipleBox'">
-              <div class="searchTitle">{{field.Title}}</div>
-              <span class="searchFlag">：</span>
               <div class="searchInputDiv">
-                <el-select size="small" clearable multiple v-model="field.Value" placeholder="--全部--" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
+                <el-select size="small" clearable multiple v-model="field.Value"  :placeholder="field.Title" class="searchInput" @change="selectChange(field.Value,field.TargetName)">
                   <el-option v-for="item in field.BinderList":key="item.Id" :label="item.Name" :value="item.Id"></el-option>
                 </el-select>          </div>
               <div style="clear:both;"></div>
             </div>
             <div class="searchItem" v-else-if="field.ControlType=='TimeText'">
-              <div class="searchTitle">{{field.Title}}</div>
-              <span class="searchFlag">：</span>
               <div class="searchInputDiv">
-                <el-date-picker size="small" v-model="field.Value" type="datetime" :class="inputCss" style="width:200px;" placeholder="选择日期时间" @change="getList"></el-date-picker>
+                <el-date-picker size="small" v-model="field.Value" type="datetime" :class="inputCss" style="width:200px;"  :placeholder="field.Title" @change="getList"></el-date-picker>
               </div>
               <div style="clear:both;"></div>
             </div>

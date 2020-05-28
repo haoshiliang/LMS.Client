@@ -29,7 +29,7 @@
             <el-row class="buttonForm" style="text-align:right;">
               <common-pagination ref="cNoPagination" :handle-get-list="this.getNoList" :record-total="this.recondTotalNo"/>
             </el-row>
-            <div class="custom-grid-container">
+            <div class="custom-grid-container" id="custom-grid-container">
               <el-table :data="noAllocateList" style="width: 100%" @sort-change="handleSortNo" size="small" height="270" border  highlight-current-row @selection-change="handleSelectionChangeNo">
                 <el-table-column  type="selection" width="34"></el-table-column>
                 <el-table-column label="序号" width="50" :formatter="formatRowNumNo" align="center"></el-table-column>

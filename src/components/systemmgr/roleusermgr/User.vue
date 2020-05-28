@@ -14,10 +14,9 @@
         <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
       </el-col>
     </el-row>
-    <div class="custom-grid-container">
-      <template>
-        <el-table :data="data" style="width: 100%" @sort-change="handleSort"
-                  :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
+    <div class="custom-grid-container" id="custom-grid-container">
+        <el-table :data="data" style="width: 100%;" @sort-change="handleSort"
+                   :height = "gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
           <el-table-column label="序号" width="80" :formatter="formatRowNum" align="center"></el-table-column>
           <el-table-column prop="Code" label="用户编码" sortable width="150"></el-table-column>
           <el-table-column prop="Name" label="用户名称" sortable width="150"></el-table-column>
@@ -28,7 +27,6 @@
           <el-table-column prop="CorpName" label="所属职位" :formatter="corpFormatter"  width="250"></el-table-column>
           <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"  width="140"></el-table-column>
         </el-table>
-      </template>
     </div>
     <add-user ref="addForm"/>
     <add-user-role ref="addUserRole"/>
@@ -45,6 +43,7 @@
         return {
           gridHeight: $(".custom-grid-container").height(),
           data: [],
+          timer:false,
           recondTotal: 0,
           queryParam: {
             IsAdvancedQuery: false,
@@ -60,13 +59,12 @@
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid+"&userId="+this.$common.getSessionStorage("userId"),
+            url: "/api/ModuleQuery/GetSearchList?moduleId="+this.$route.params.mid,
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
                 _this.queryParam = resultData.data.data;
                 _this.getList();
-                _this.handleTableHeight();
               }
             }
           );
@@ -173,20 +171,19 @@
           else {
             this.$message.info("请选择要设置角色的行!");
           }
-        },
-        handleTableHeight:function () {
-          this.$nextTick(() => {
-            var that = this;
-            this.gridHeight = $(".custom-grid-container").height();
-            // 通过捕获系统的onresize事件触发去改变原有的高度
-            window.onresize = function () {
-              that.gridHeight = $(".custom-grid-container").height();
-            }
-          });
         }
       },
       mounted() {
         this.getWhereList();
+
+        var elementResizeDetectorMaker = require("element-resize-detector");//导入
+        var _this = this;
+        var erd = elementResizeDetectorMaker();
+        erd.listenTo(document.getElementById("custom-grid-container"), element => {
+          _this.$nextTick(() => {
+            _this.gridHeight = element.offsetHeight;
+          });
+        });     
       }
     }
 </script>
