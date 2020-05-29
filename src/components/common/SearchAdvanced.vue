@@ -1,7 +1,7 @@
 <template>
   <div v-if="showAdvancedQuery">
     <el-dialog  v-dialogDrag title="高级查询" :visible.sync="showAdvancedQuery" :width="dialogWidth" :close-on-click-modal="false">
-      <el-row style="margin: -20px 0 0 0;">
+      <el-row>
         <el-col :span="24">
           <template v-for="field in this.queryParam.WhereList">
             <div class="searchItem" v-if="field.ControlType=='TextBox'">

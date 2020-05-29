@@ -52,3 +52,6 @@
 .el-pagination button:disabled{
   background-color: transparent;
 }
+.el-dialog__body{
+  padding: 30px 10px 10px 20px;
+}
