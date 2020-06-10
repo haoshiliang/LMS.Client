@@ -3,17 +3,6 @@
     <el-row class="searchForm">
       <common-search :handle-get-list="this.getList" :query-param="this.queryParam"/>
     </el-row>
-    <el-row class="buttonForm">
-      <el-col :span="8">
-        <el-button type="text" size="medium" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
-        <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
-        <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-        <el-button type="text" size="medium" v-if="fList.UserAllocation" icon="el-icon-c-scale-to-original" @click="handleAddUserRole">角色分配</el-button>
-      </el-col>
-      <el-col :span="16" style="text-align:right;">
-        <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
-      </el-col>
-    </el-row>
     <div class="custom-grid-container" id="custom-grid-container">
         <el-table :data="data" style="width: 100%;" @sort-change="handleSort"
                    :height = "gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
@@ -28,6 +17,17 @@
           <el-table-column prop="CreateDate" label="创建日期" sortable :formatter="this.$format.rowDateTime"  width="140"></el-table-column>
         </el-table>
     </div>
+    <el-row class="buttonForm">
+      <el-col :span="8">
+        <el-button type="text" size="medium" v-if="fList.Add" icon="el-icon-circle-plus-outline" @click="handleAdd">添加</el-button>
+        <el-button type="text" size="medium" v-if="fList.Edit" icon="el-icon-edit" @click="handleEdit">修改</el-button>
+        <el-button type="text" size="medium" v-if="fList.Del" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+        <el-button type="text" size="medium" v-if="fList.UserAllocation" icon="el-icon-c-scale-to-original" @click="handleAddUserRole">角色分配</el-button>
+      </el-col>
+      <el-col :span="16" style="text-align:right;">
+        <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
+      </el-col>
+    </el-row>    
     <add-user ref="addForm"/>
     <add-user-role ref="addUserRole"/>
   </div>
@@ -41,7 +41,7 @@
       components:{addUserRole, addUser },
       data() {
         return {
-          gridHeight: $(".custom-grid-container").height(),
+          gridHeight: $("#custom-grid-container").height(),
           data: [],
           timer:false,
           recondTotal: 0,

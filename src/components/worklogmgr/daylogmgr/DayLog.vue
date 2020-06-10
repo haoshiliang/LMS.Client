@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <el-row class="searchForm" v-if="this.queryParam.WhereList.Length>0">
-      <common-search :handle-get-list="this.getList" :query-param="this.queryParam"/>
+    <el-row class="searchForm" v-if="this.queryParam.WhereList.length>0">
+      <common-search :handle-get-list="this.getList" :query-param="this.queryParam" :is-showdvanced="false"/>
     </el-row>
     <el-row class="buttonForm">
       <el-col :span="8">
@@ -13,11 +13,12 @@
         <common-pagination ref="cPagination" :handle-get-list="this.getList" :record-total="this.recondTotal"/>
       </el-col>
     </el-row>
-    <div class="custom-grid-container">
+    <div class="custom-grid-container" id="custom-grid-container">
       <template>
         <el-table :data="data" style="width: 100%" @sort-change="handleSort"
-                  :max-height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
+                  :height="gridHeight" size="medium" border  highlight-current-row @current-change="handleCurrentChange">
           <el-table-column label="序号" width="80" :formatter="formatRowNum" align="center"></el-table-column>
+          <el-table-column prop="LogTitle" label="标题"></el-table-column>
           <el-table-column prop="CreateUser" label="创建人" sortable width="180"></el-table-column>
           <el-table-column prop="CreateDate" label="创建日期" sortable width="180" :formatter="this.$format.rowDateTime"></el-table-column>
           <el-table-column prop="LogDate" label="日志日期" sortable :formatter="this.$format.rowDateTime"></el-table-column>
@@ -55,7 +56,6 @@
               if (resultData.data.status == '1') {
                 _this.queryParam = resultData.data.data;
                 _this.getList();
-                _this.handleTableHeight();
                 console.log(_this.queryParam);
               }
             }
@@ -134,20 +134,19 @@
         },
         formatRowNum:function(row,column,cellValue,index){
           return (this.$refs.cPagination.paginationJson.pageIndex - 1) * this.$refs.cPagination.paginationJson.pageSize + index  + 1;
-        },
-        handleTableHeight:function () {
-          this.$nextTick(() => {
-            var that = this;
-            this.gridHeight = $(".custom-grid-container").height();
-            // 通过捕获系统的onresize事件触发去改变原有的高度
-            window.onresize = function () {
-              that.gridHeight = $(".custom-grid-container").height();
-            }
-          });
         }
       },
       mounted() {
         this.getWhereList();
+
+        var elementResizeDetectorMaker = require("element-resize-detector");//导入
+        var _this = this;
+        var erd = elementResizeDetectorMaker();
+        erd.listenTo(document.getElementById("custom-grid-container"), element => {
+          _this.$nextTick(() => {
+            _this.gridHeight = element.offsetHeight;
+          });
+        }); 
       }
     }
 </script>

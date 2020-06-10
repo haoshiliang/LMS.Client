@@ -78,7 +78,7 @@
           this.$common.setLoadingTarget(".el-dialog");
           var res = await this.$ajax({
             method: "get",
-            url: "/api/Module?id="+this.moduleForm.Id+"&isTree=true"
+            url: "/api/Module/TreeList?id="+this.moduleForm.Id
           });
           if (res.data.status == '1') {
             _this.moduleList = res.data.data;

@@ -43,7 +43,7 @@
           var _this = this;
           this.$ajax({
             method: "get",
-            url: "/api/Module"
+            url: "/api/Module/TreeList?id="
           }).then(
             function (resultData) {
               if (resultData.data.status == '1') {
